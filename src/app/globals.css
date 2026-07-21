@@ -48,73 +48,82 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+ * VOLT brand tokens — built on exactly two colors:
+ *   Orange Red  #FF4103  oklch(0.632 0.2229 32.36)   — accent / energy (hue 32.36)
+ *   Abyss Navy  #001621  oklch(0.1957 0.0281 232.38) — deep base       (hue 232.38)
+ * All neutrals are derived from the navy hue (232.38) at very low chroma;
+ * accents are derived from the orange hue (32.36). No gray-0-chroma leftovers.
+ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* Light mode — white paper, Abyss Navy ink, Orange Red energy */
+  --background: oklch(0.994 0.002 232.38);
+  --foreground: oklch(0.1957 0.0281 232.38);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.1957 0.0281 232.38);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.1957 0.0281 232.38);
+  --primary: oklch(0.632 0.2229 32.36);
+  --primary-foreground: oklch(0.1957 0.0281 232.38);
+  --secondary: oklch(0.95 0.009 232.38);
+  --secondary-foreground: oklch(0.1957 0.0281 232.38);
+  --muted: oklch(0.955 0.008 232.38);
+  --muted-foreground: oklch(0.46 0.026 232.38);
+  --accent: oklch(0.95 0.055 40);
+  --accent-foreground: oklch(0.45 0.16 32.36);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --border: oklch(0.9 0.012 232.38);
+  --input: oklch(0.9 0.012 232.38);
+  --ring: oklch(0.632 0.2229 32.36);
+  --chart-1: oklch(0.632 0.2229 32.36);
+  --chart-2: oklch(0.72 0.17 40);
+  --chart-3: oklch(0.5 0.05 232.38);
+  --chart-4: oklch(0.66 0.04 232.38);
+  --chart-5: oklch(0.8 0.028 232.38);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: oklch(0.99 0.003 232.38);
+  --sidebar-foreground: oklch(0.1957 0.0281 232.38);
+  --sidebar-primary: oklch(0.632 0.2229 32.36);
+  --sidebar-primary-foreground: oklch(0.1957 0.0281 232.38);
+  --sidebar-accent: oklch(0.95 0.055 40);
+  --sidebar-accent-foreground: oklch(0.45 0.16 32.36);
+  --sidebar-border: oklch(0.9 0.012 232.38);
+  --sidebar-ring: oklch(0.632 0.2229 32.36);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  /* Dark mode — the brand lives here. Abyss Navy base, near-white ink, Orange Red energy */
+  --background: oklch(0.1957 0.0281 232.38);
+  --foreground: oklch(0.97 0.006 232.38);
+  --card: oklch(0.24 0.032 232.38);
+  --card-foreground: oklch(0.97 0.006 232.38);
+  --popover: oklch(0.24 0.032 232.38);
+  --popover-foreground: oklch(0.97 0.006 232.38);
+  --primary: oklch(0.632 0.2229 32.36);
+  --primary-foreground: oklch(0.1957 0.0281 232.38);
+  --secondary: oklch(0.29 0.036 232.38);
+  --secondary-foreground: oklch(0.97 0.006 232.38);
+  --muted: oklch(0.29 0.034 232.38);
+  --muted-foreground: oklch(0.72 0.024 232.38);
+  --accent: oklch(0.32 0.05 32.36);
+  --accent-foreground: oklch(0.85 0.13 40);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --border: oklch(0.7 0.03 232.38 / 18%);
+  --input: oklch(0.7 0.03 232.38 / 24%);
+  --ring: oklch(0.632 0.2229 32.36);
+  --chart-1: oklch(0.632 0.2229 32.36);
+  --chart-2: oklch(0.74 0.16 42);
+  --chart-3: oklch(0.55 0.05 232.38);
+  --chart-4: oklch(0.68 0.04 232.38);
+  --chart-5: oklch(0.82 0.03 232.38);
+  --sidebar: oklch(0.22 0.03 232.38);
+  --sidebar-foreground: oklch(0.97 0.006 232.38);
+  --sidebar-primary: oklch(0.632 0.2229 32.36);
+  --sidebar-primary-foreground: oklch(0.1957 0.0281 232.38);
+  --sidebar-accent: oklch(0.32 0.05 32.36);
+  --sidebar-accent-foreground: oklch(0.85 0.13 40);
+  --sidebar-border: oklch(0.7 0.03 232.38 / 18%);
+  --sidebar-ring: oklch(0.632 0.2229 32.36);
 }
 
 @layer base {
@@ -126,5 +135,57 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* Kinetic motion — CSS only, respects reduced-motion */
+@keyframes volt-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes volt-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes volt-sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.animate-marquee {
+  animation: volt-marquee 24s linear infinite;
+}
+
+.animate-volt-pulse {
+  animation: volt-pulse 3.2s ease-in-out infinite;
+}
+
+.animate-volt-sweep {
+  background-size: 200% auto;
+  animation: volt-sweep 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-volt-pulse,
+  .animate-volt-sweep {
+    animation: none;
   }
 }
