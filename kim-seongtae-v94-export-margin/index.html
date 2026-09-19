@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>김성태전: 제국의 시대 v9.4</title>
+<style>
+:root{--bg:#07101a;--panel:#0e1926;--panel2:#152436;--line:#4e3d24;--gold:#d7a84d;--gold2:#ffe19a;--text:#f7f2e8;--muted:#9eabbb;--good:#62d394;--bad:#ff7373;--blue:#69a9ff;--warn:#ffb15a}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;color:var(--text);background:radial-gradient(circle at 50% -20%,#19314b 0,transparent 42%),var(--bg);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;padding-bottom:84px}button,input,select{font:inherit}.wrap{max-width:1440px;margin:auto;padding:14px}.top{position:sticky;top:0;z-index:30;display:flex;gap:12px;justify-content:space-between;align-items:center;padding:12px 14px;margin:-14px -14px 14px;background:#07101aee;border-bottom:1px solid #2e4055;backdrop-filter:blur(12px)}.title{font-size:22px;font-weight:950;color:var(--gold2)}.version{padding:6px 10px;border:1px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:12px;font-weight:900}.topStats{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.chip{background:#111f2e;border:1px solid #33475d;border-radius:12px;padding:7px 10px;font-size:12px}.nav{display:flex;gap:8px;overflow:auto;padding-bottom:8px}.nav button,.btn{border:1px solid #40546b;background:#122132;color:var(--text);border-radius:14px;padding:11px 14px;font-weight:850;cursor:pointer;transition:.18s;white-space:nowrap}.nav button.active,.btn.gold{border-color:var(--gold);background:linear-gradient(135deg,#7d5624,#d7a84d);color:#160f06}.btn.good{background:#194c38;border-color:#46a878}.btn.bad{background:#52252a;border-color:#c35b65}.btn.sm{padding:8px 10px;font-size:12px;border-radius:11px}.btn:active{transform:scale(.97)}.btn[disabled]{opacity:.45;cursor:not-allowed}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.card{background:linear-gradient(145deg,var(--panel),#09131f);border:1px solid #34475c;border-radius:22px;padding:16px;margin-bottom:14px}.card h2,.card h3{margin:0 0 10px}.sub{color:var(--muted);font-size:13px;line-height:1.55}.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.metric{background:#101d2b;border:1px solid #304257;border-radius:16px;padding:12px}.metric span{display:block;color:var(--muted);font-size:12px}.metric b{display:block;font-size:20px;margin-top:5px}.brands{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.brand{position:relative;overflow:hidden;min-height:230px;border:1px solid #3e5167;border-radius:20px;background:#101d2b}.brand img{width:100%;height:115px;object-fit:cover;display:block;background:linear-gradient(135deg,#25394e,#101d2b)}.brandBody{padding:13px}.brandTitle{display:flex;justify-content:space-between;align-items:center;gap:8px}.brandTitle b{font-size:18px}.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#24384e;color:#b9d6ff;font-size:11px}.tag.ok{background:#17402f;color:#9fe8c2}.tag.warn{background:#4a3517;color:#ffd39a}.tag.bad{background:#4c2026;color:#ffb3b3}.strategy{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:10px}.strategy button{border:1px solid #3b4e64;background:#0c1724;color:#c8d3df;border-radius:9px;padding:7px 3px;font-size:11px;cursor:pointer}.strategy button.on{background:#7d5624;color:#fff3d1;border-color:var(--gold)}.bar{height:8px;background:#26374a;border-radius:99px;overflow:hidden;margin-top:7px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--good));width:50%}.bar i.warn{background:linear-gradient(90deg,#c9862f,var(--warn))}.bar i.bad{background:linear-gradient(90deg,#8e2c34,var(--bad))}.sku{border:1px solid #34475c;border-radius:16px;padding:13px;background:#0d1825;margin-bottom:10px}.skuHead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.skuGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.mini{background:#101d2b;border:1px solid #2c3d51;border-radius:12px;padding:9px}.mini span{display:block;color:var(--muted);font-size:11px}.mini b{display:block;font-size:15px;margin-top:3px}.market{border:1px solid #3e5167;border-radius:18px;padding:14px;background:#0d1825;margin-bottom:11px}.marketHead{display:flex;justify-content:space-between;align-items:center;gap:8px}.marketHead b{font-size:17px}.contracts{display:grid;gap:9px}.contract{border:1px solid #34475c;border-radius:15px;padding:12px;background:#0d1825}.contractHead{display:flex;justify-content:space-between;gap:8px}.contractActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.event{border:1px solid #4e3d24;border-radius:18px;padding:14px;background:linear-gradient(145deg,#1a2027,#101722);margin-bottom:10px}.event.hot{box-shadow:0 0 0 1px #8c642c inset}.eventChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.eventChoices button{border:1px solid #46586b;background:#101e2c;color:#fff;border-radius:12px;padding:10px;cursor:pointer;font-size:13px}.log{max-height:220px;overflow:auto;font-size:12px;color:#c9d3dd}.log div{border-bottom:1px solid #27384a;padding:7px 0}.page{display:none}.page.active{display:block}.formrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.formrow.four{grid-template-columns:repeat(4,1fr)}.field{display:grid;gap:5px}.field label{font-size:12px;color:var(--muted)}.field input,.field select{width:100%;background:#091522;border:1px solid #3a4d62;color:#fff;border-radius:12px;padding:10px}.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);padding:11px 16px;background:#f5e5bd;color:#201406;border-radius:999px;font-weight:900;opacity:0;pointer-events:none;transition:.25s;z-index:100;max-width:88vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,-8px)}.burst{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--gold2);pointer-events:none;z-index:99;animation:burst .55s ease-out forwards}@keyframes burst{to{transform:scale(9);opacity:0}}.mobileNav{display:none;position:fixed;bottom:0;left:0;right:0;background:#07101af5;border-top:1px solid #314357;padding:8px 4px;grid-template-columns:repeat(7,1fr);z-index:40}.mobileNav button{background:transparent;color:#dce7f2;border:0;font-size:10px;padding:7px 1px}.dangerText{color:var(--bad)}.goodText{color:var(--good)}.warnText{color:var(--warn)}.blueText{color:var(--blue)}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.brands{grid-template-columns:1fr}.nav{display:none}.mobileNav{display:grid}.top{align-items:flex-start}.topStats{max-width:55%}.formrow,.formrow.four{grid-template-columns:1fr}.eventChoices{grid-template-columns:1fr}.strategy{grid-template-columns:repeat(2,1fr)}.skuGrid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div><div class="title">김성태전: 제국의 시대</div><div class="version">BUILD v9.4 · EXPORT &amp; MARGIN</div></div><div class="topStats" id="topStats"></div></header>
+<nav class="nav" id="nav"></nav>
+
+<section class="page active" id="page-dashboard">
+<div class="card"><h2>제국 현황</h2><p class="sub">v9.4는 매출이 아니라 <b>기여이익</b>으로 싸웁니다. 원가율이 무너진 품목은 아무리 팔아도 적자입니다.</p><div class="metrics" id="metrics"></div></div>
+<div class="card"><h3>월순익 1억 달성률</h3><p class="sub" id="goalText"></p><div class="bar"><i id="goalBar" style="width:0%"></i></div></div>
+<div class="grid"><div><div class="card"><h2>브랜드 채널 전략</h2><div class="brands" id="brands"></div></div></div><div><div class="card"><h2>활성 사건</h2><div id="eventMini"></div></div><div class="card"><h3>최근 로그</h3><div class="log" id="log"></div></div></div></div>
+</section>
+
+<section class="page" id="page-margin">
+<div class="card"><h2>원가율 엔진</h2><p class="sub">판매가 대비 원가율 목표는 <b>5~30%</b>입니다. 수수료·물류비까지 뺀 <b>기여이익률</b>이 진짜 실력입니다. 원가율이 50%를 넘으면 가격경쟁에서 구조적으로 집니다.</p><div class="metrics" id="marginSummary"></div></div>
+<div class="card"><h3>품목별 단위경제</h3><div id="skus"></div></div>
+<div class="card"><h3>신규 품목 등록</h3><div class="formrow four"><div class="field"><label>브랜드</label><select id="skuBrand"></select></div><div class="field"><label>품목명</label><input id="skuName" type="text" placeholder="예: 차량용 디퓨저 리필"></div><div class="field"><label>판매가(원)</label><input id="skuPrice" type="number" value="39000"></div><div class="field"><label>제조원가(원)</label><input id="skuCogs" type="number" value="7800"></div></div><div class="formrow" style="margin-top:8px"><div class="field"><label>채널수수료(%)</label><input id="skuFee" type="number" value="12"></div><div class="field"><label>물류·포장(원)</label><input id="skuLogi" type="number" value="3000"></div><div class="field"><label>월 판매수량</label><input id="skuVol" type="number" value="300"></div></div><div style="margin-top:10px"><button class="btn gold" id="addSku">품목 등록</button></div></div>
+</section>
+
+<section class="page" id="page-export">
+<div class="card"><h2>수출 데스크</h2><p class="sub">인증을 먼저 통과해야 진출이 열립니다. 관세·현지물류·환율이 기여이익을 갉아먹으니 <b>FOB 기준 기여이익</b>으로 판단하세요.</p><div class="metrics" id="exportSummary"></div></div>
+<div class="card"><h3>환율 데스크</h3><div class="formrow"><div class="field"><label>USD/KRW 현재</label><input id="fxRate" type="number" value="1385"></div><div class="field"><label>수입 원자재 비중(%)</label><input id="importRatio" type="number" value="35"></div><div class="field"><label>&nbsp;</label><button class="btn" id="applyFx">환율 반영</button></div></div><p class="sub" id="fxNote" style="margin-top:10px"></p></div>
+<div class="card"><h3>목표 시장</h3><div id="markets"></div></div>
+</section>
+
+<section class="page" id="page-contracts"><div class="card"><h2>계약·미수금 통제실</h2><p class="sub">선금·잔금·회수기간을 관리합니다. 계약이 많아도 현금이 부족하면 위기입니다.</p><div class="formrow"><div class="field"><label>신규 계약 브랜드</label><select id="contractBrand"></select></div><div class="field"><label>계약금액(만원)</label><input id="contractAmount" type="number" value="3000"></div><div class="field"><label>선금 비율(%)</label><input id="contractDeposit" type="number" value="40"></div></div><div style="margin-top:10px"><button class="btn gold" id="addContract">계약 등록</button></div></div><div class="card"><div class="contracts" id="contracts"></div></div></section>
+
+<section class="page" id="page-events"><div class="card"><h2>경영 사건</h2><div id="events"></div></div></section>
+
+<section class="page" id="page-sim"><div class="card"><h2>월간 통합 시뮬레이션</h2><p class="sub">내수 채널 + 품목 기여이익 + 수출 + 환율 + 미수금 회수를 한 번에 계산합니다.</p><div class="formrow"><div class="field"><label>시장 변동성</label><input id="volatility" type="range" min="0" max="40" value="18"></div><div class="field"><label>광고비(만원)</label><input id="adSpend" type="number" value="500"></div><div class="field"><label>운영 집중도</label><select id="focus"><option value="growth">성장</option><option value="cash">현금회수</option><option value="brand">브랜드</option><option value="margin">원가절감</option></select></div></div><div style="margin-top:12px"><button class="btn gold" id="runMonth">다음 달 시뮬레이션</button></div><div id="simResult" class="card" style="margin-top:12px"></div></div></section>
+
+<section class="page" id="page-save"><div class="card"><h2>저장 복구 센터</h2><p class="sub">v9.3 데이터를 한 번만 가져오고, v9.4 저장 공간과 체크섬 백업 2개를 별도로 사용합니다.</p><div class="metrics" id="saveStatus"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn gold" id="saveNow">즉시 저장</button><button class="btn" id="exportBtn">JSON 내보내기</button><button class="btn" id="importBtn">JSON 가져오기</button><input type="file" id="importFile" accept="application/json" hidden><button class="btn bad" id="resetBtn">v9.4 초기화</button></div></div></section>
+</div>
+<nav class="mobileNav" id="mobileNav"></nav><div class="toast" id="toast"></div>
+<script>
+'use strict';
+const VERSION='9.4';
+const SAVE='kim_seongtae_empire_v94_save';
+const BACK1='kim_seongtae_empire_v94_backup_1';
+const BACK2='kim_seongtae_empire_v94_backup_2';
+const OLD_KEYS=['kim_seongtae_empire_v93_save','kim_seongtae_empire_v93_backup_1','kim_seongtae_empire_v92_save','kim_seongtae_empire_v91_save'];
+const FX_BASE=1385;
+const GOAL_PROFIT=10000;
+
+const brandSeed=[
+{id:'commov',name:'COMMOV',site:'https://commov-fragrance.baromina111.chatgpt.site/',image:'car-air.png',fallback:'linear-gradient(135deg,#0a0a0a,#5a412d)',brand:72,channel:'hybrid',conflict:20,monthly:1800,margin:38},
+{id:'dnj',name:'DAVID & JONATHAN',site:'https://davidnjonathan.com/',image:'https://davidnjonathan.cafe24.com/web/upload/zero/main/main1.jpg',fallback:'linear-gradient(135deg,#36312e,#121212)',brand:69,channel:'dtc',conflict:15,monthly:1200,margin:44},
+{id:'officek',name:'오피스K',site:'https://www.officek3.com/shop/',image:'',fallback:'linear-gradient(135deg,#26384e,#0b1420)',brand:61,channel:'b2b',conflict:10,monthly:2600,margin:18},
+{id:'makamoye',name:'마카모예 브레드바',site:'#',image:'',fallback:'linear-gradient(135deg,#7a4d2a,#22150c)',brand:66,channel:'local',conflict:12,monthly:3000,margin:24}
+];
+
+const skuSeed=[
+{id:'sku-diffuser',brand:'commov',name:'차량용 디퓨저',price:39000,cogs:7800,fee:12,logi:3000,vol:420,exportable:true},
+{id:'sku-perfume',brand:'commov',name:'시그니처 퍼퓸 50ml',price:68000,cogs:12500,fee:12,logi:3500,vol:180,exportable:true},
+{id:'sku-shirt',brand:'dnj',name:'오버핏 셔츠',price:89000,cogs:26000,fee:10,logi:3000,vol:150,exportable:true},
+{id:'sku-note',brand:'officek',name:'학교납품 노트 5종세트',price:12000,cogs:8400,fee:15,logi:2500,vol:1800,exportable:false},
+{id:'sku-bread',brand:'makamoye',name:'브레드박스 선물세트',price:25000,cogs:9000,fee:8,logi:4500,vol:260,exportable:false}
+];
+
+const marketSeed=[
+{id:'us',name:'미국',tariff:0,logi:18,cert:1200,certMonths:3,priceMult:1.15,demand:1.0,status:'none',progress:0,sku:'sku-diffuser',volume:400,note:'MoCRA 화장품 시설등록·성분보고 필요 · FTA 특혜관세 적용'},
+{id:'jp',name:'일본',tariff:3,logi:9,cert:600,certMonths:2,priceMult:1.10,demand:.85,status:'none',progress:0,sku:'sku-perfume',volume:300,note:'약기법 수입판매업 허가 · 물류 리드타임 최단'},
+{id:'sea',name:'동남아',tariff:8,logi:11,cert:400,certMonths:2,priceMult:.95,demand:.70,status:'none',progress:0,sku:'sku-diffuser',volume:600,note:'가격민감 시장 · 수량으로 승부'},
+{id:'uae',name:'중동(UAE)',tariff:5,logi:14,cert:900,certMonths:3,priceMult:1.25,demand:.60,status:'none',progress:0,sku:'sku-perfume',volume:220,note:'고가 향수 수용도 최상 · ESMA 인증 필수'}
+];
+
+const eventSeed=[
+{id:'mocra',title:'COMMOV 미국 MoCRA 등록 요구',desc:'아마존이 화장품 시설등록·성분보고 증빙을 요구한다. 미등록이면 리스팅이 내려간다.',done:false,choices:[['대행사 정식 등록',{cash:-900,brand:6,certBoost:'us'}],['자가 등록 시도',{cash:-250,brand:1,certBoost:'us',fail:.4}],['미국 보류·일본 우선',{cash:0,brand:-2,certBoost:'jp'}]]},
+{id:'fx-spike',title:'환율 급등 1,455원',desc:'수출 대금은 커지지만 수입 원자재 원가가 동시에 오른다. 어느 쪽 비중이 큰지가 답이다.',done:false,choices:[['선물환 헤지 계약',{cash:-180,fx:1400,brand:2}],['환율 그대로 수용',{cash:0,fx:1455,brand:0}],['수입 원자재 국산 전환',{cash:-420,fx:1455,cogsCut:8}]]},
+{id:'officek-margin',title:'오피스K 역마진 경보',desc:'노트 5종세트 원가율 70%. 오픈마켓 최저가 경쟁에서 팔수록 적자다. 구조를 바꿔야 한다.',done:false,choices:[['자체 제조 전환(금형투자)',{cash:-1500,cogsCutSku:'sku-note',cogsCutPct:38,brand:5}],['번들 재구성·판매가 인상',{cash:-120,priceUpSku:'sku-note',priceUpPct:25,brand:-1}],['해당 품목 단종',{cash:60,dropSku:'sku-note',brand:-3}]]},
+{id:'fba-delay',title:'아마존 FBA 입고 4주 지연',desc:'성수기 재고가 창고에 묶였다. 매출 기회를 잃거나 비용을 더 쓰거나.',done:false,choices:[['항공 긴급분 투입',{cash:-650,brand:4}],['현지 3PL 우회',{cash:-300,brand:2}],['대기·다음 분기 이월',{cash:0,brand:-4,ar:300}]]},
+{id:'dnj-wholesale',title:'D&J 일본 셀렉트샵 홀세일 제안',desc:'도매가 50% 조건. 브랜드 노출은 크지만 기여이익이 반토막 난다.',done:false,choices:[['홀세일 수락',{cash:1200,brand:6,conflict:8}],['위탁판매로 역제안',{cash:200,brand:3,ar:600}],['DTC 직진출 고수',{cash:-350,brand:4,certBoost:'jp'}]]}
+];
+
+function defaultState(){return{version:VERSION,month:1,cash:32000,debt:18000,revenue:8600,profit:1450,ar:2200,reputation:58,fx:FX_BASE,importRatio:35,brands:clone(brandSeed),skus:clone(skuSeed),markets:clone(marketSeed),contracts:[],events:clone(eventSeed),logs:['v9.4 수출·원가율 엔진 가동'],migratedFrom:null,lastSaved:0}}
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function checksum(x){const s=JSON.stringify(x);let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16)}
+function pack(data){return JSON.stringify({data,checksum:checksum(data)})}
+function unpack(raw){const p=JSON.parse(raw);if(!p||!p.data||p.checksum!==checksum(p.data))throw Error('checksum');return p.data}
+
+let state;
+function migrate(){for(const k of OLD_KEYS){try{const raw=localStorage.getItem(k);if(!raw)continue;const parsed=JSON.parse(raw);const old=parsed.data||parsed;const n=defaultState();['cash','debt','revenue','profit','ar','reputation','month'].forEach(x=>{if(Number.isFinite(old[x]))n[x]=old[x]});if(Array.isArray(old.brands)&&old.brands.length)n.brands=old.brands.map(b=>Object.assign({},brandSeed.find(s=>s.id===b.id)||brandSeed[0],b));if(Array.isArray(old.contracts))n.contracts=old.contracts;if(Array.isArray(old.logs))n.logs=old.logs.slice(0,20);n.migratedFrom=k;n.logs.unshift(k+' → v9.4 이전 완료 (브랜드·계약 포함)');return n}catch(e){}}return defaultState()}
+function load(){try{const raw=localStorage.getItem(SAVE);if(raw)return unpack(raw)}catch(e){}for(const k of [BACK1,BACK2]){try{const raw=localStorage.getItem(k);if(raw){const d=unpack(raw);d.logs.unshift('백업 자동 복구: '+k);return d}}catch(e){}}return migrate()}
+function save(){state.lastSaved=Date.now();try{const cur=localStorage.getItem(SAVE);const b1=localStorage.getItem(BACK1);if(b1)localStorage.setItem(BACK2,b1);if(cur)localStorage.setItem(BACK1,cur);localStorage.setItem(SAVE,pack(state));return true}catch(e){return false}}
+
+state=load();
+state.version=VERSION;
+state.brands=(state.brands&&state.brands.length)?state.brands:clone(brandSeed);
+state.skus=(state.skus&&state.skus.length)?state.skus:clone(skuSeed);
+state.markets=(state.markets&&state.markets.length)?state.markets:clone(marketSeed);
+state.events=(state.events&&state.events.length)?state.events:clone(eventSeed);
+state.contracts=state.contracts||[];state.logs=state.logs||[];
+if(!Number.isFinite(state.fx))state.fx=FX_BASE;
+if(!Number.isFinite(state.importRatio))state.importRatio=35;
+
+const pages=['dashboard','margin','export','contracts','events','sim','save'];
+const navNames={dashboard:'제국',margin:'원가율',export:'수출',contracts:'계약',events:'사건',sim:'시뮬',save:'저장'};
+function money(v){return Math.round(v).toLocaleString()+'만원'}
+function won(v){return Math.round(v).toLocaleString()+'원'}
+function pct(v){return (Math.round(v*10)/10)+'%'}
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2000)}
+function burst(x,y){const e=document.createElement('i');e.className='burst';e.style.left=x+'px';e.style.top=y+'px';document.body.appendChild(e);setTimeout(()=>e.remove(),600)}
+document.addEventListener('click',e=>{if(e.target.closest('button'))burst(e.clientX,e.clientY)});
+function go(p){pages.forEach(x=>document.getElementById('page-'+x).classList.toggle('active',x===p));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));location.hash='#/'+p;render()}
+function buildNav(){const html=pages.map(p=>'<button data-page="'+p+'">'+navNames[p]+'</button>').join('');document.getElementById('nav').innerHTML=html;document.getElementById('mobileNav').innerHTML=html;document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page))}
+
+/* ---------- 원가율 엔진 ---------- */
+function fxFactor(){return state.fx/FX_BASE}
+function effCogs(s){return s.cogs*(1+(fxFactor()-1)*(state.importRatio/100))}
+function cogsRate(s){return s.price>0?effCogs(s)/s.price*100:100}
+function unitContribution(s){return s.price-effCogs(s)-s.price*s.fee/100-s.logi}
+function contributionRate(s){return s.price>0?unitContribution(s)/s.price*100:0}
+function skuMonthly(s){return unitContribution(s)*s.vol/10000}
+function rateClass(r){return r<=30?'ok':r<=50?'warn':'bad'}
+function barClass(r){return r<=30?'':r<=50?'warn':'bad'}
+
+function renderMarginSummary(){
+  const totalRev=state.skus.reduce((a,s)=>a+s.price*s.vol,0)/10000;
+  const totalContrib=state.skus.reduce((a,s)=>a+unitContribution(s)*s.vol,0)/10000;
+  const wRate=totalRev>0?state.skus.reduce((a,s)=>a+effCogs(s)*s.vol,0)/10000/totalRev*100:0;
+  const bad=state.skus.filter(s=>cogsRate(s)>50).length;
+  document.getElementById('marginSummary').innerHTML=[
+    ['품목수',state.skus.length+'개'],['품목매출',money(totalRev)],['기여이익',money(totalContrib)],
+    ['가중원가율',pct(wRate)],['위험품목',bad+'개']
+  ].map(x=>'<div class="metric"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('');
+}
+
+function renderSkus(){
+  const el=document.getElementById('skus');
+  if(!state.skus.length){el.innerHTML='<p class="sub">등록된 품목이 없습니다.</p>';return}
+  el.innerHTML=state.skus.map(s=>{
+    const br=state.brands.find(b=>b.id===s.brand);
+    const cr=cogsRate(s),ct=contributionRate(s),m=skuMonthly(s);
+    const verdict=cr<=30?'목표 달성':cr<=50?'개선 필요':'구조적 적자위험';
+    return '<div class="sku"><div class="skuHead"><div><b>'+s.name+'</b> <span class="tag">'+(br?br.name:'미지정')+'</span></div>'+
+      '<span class="tag '+rateClass(cr)+'">원가율 '+pct(cr)+' · '+verdict+'</span></div>'+
+      '<div class="bar"><i class="'+barClass(cr)+'" style="width:'+Math.min(100,cr)+'%"></i></div>'+
+      '<div class="skuGrid">'+
+      [['판매가',won(s.price)],['실원가',won(effCogs(s))],['단위 기여이익',won(unitContribution(s))],['기여이익률',pct(ct)]]
+        .map(x=>'<div class="mini"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'+
+      '<div class="sub" style="margin-top:9px">월 '+s.vol.toLocaleString()+'개 · 월 기여이익 <b class="'+(m>0?'goodText':'dangerText')+'">'+money(m)+'</b> · 수수료 '+s.fee+'% · 물류 '+won(s.logi)+'</div>'+
+      '<div class="contractActions">'+
+      '<button class="btn sm" data-skuvol="'+s.id+'" data-d="-20">수량 -20%</button>'+
+      '<button class="btn sm" data-skuvol="'+s.id+'" data-d="20">수량 +20%</button>'+
+      '<button class="btn sm good" data-skucogs="'+s.id+'">원가 -10% 협상(투자 300만원)</button>'+
+      '<button class="btn sm bad" data-skudel="'+s.id+'">품목 단종</button>'+
+      '</div></div>';
+  }).join('');
+  document.querySelectorAll('[data-skuvol]').forEach(b=>b.onclick=()=>adjustVol(b.dataset.skuvol,Number(b.dataset.d)));
+  document.querySelectorAll('[data-skucogs]').forEach(b=>b.onclick=()=>negotiateCogs(b.dataset.skucogs));
+  document.querySelectorAll('[data-skudel]').forEach(b=>b.onclick=()=>dropSku(b.dataset.skudel));
+}
+function adjustVol(id,d){const s=state.skus.find(x=>x.id===id);if(!s)return;s.vol=Math.max(0,Math.round(s.vol*(1+d/100)));save();render();toast(s.name+' 월 수량 '+s.vol.toLocaleString()+'개')}
+function negotiateCogs(id){const s=state.skus.find(x=>x.id===id);if(!s)return;if(state.cash<300)return toast('현금 부족 · 협상 투자금 300만원 필요');state.cash-=300;s.cogs=Math.round(s.cogs*.9);state.logs.unshift(s.name+' 원가 10% 인하 협상 성공 → '+won(s.cogs));save();render();toast('원가 인하 반영 · 원가율 '+pct(cogsRate(s)))}
+function dropSku(id){const s=state.skus.find(x=>x.id===id);if(!s)return;if(!confirm(s.name+' 품목을 단종할까요?'))return;state.skus=state.skus.filter(x=>x.id!==id);state.markets.forEach(m=>{if(m.sku===id){m.sku=(state.skus[0]||{}).id||'';if(m.status==='live'){m.status='none';m.progress=0}}});state.logs.unshift(s.name+' 단종 처리');save();render();toast('단종 완료')}
+function addSku(){
+  const brand=document.getElementById('skuBrand').value;
+  const name=(document.getElementById('skuName').value||'').trim();
+  const price=Number(document.getElementById('skuPrice').value)||0;
+  const cogs=Number(document.getElementById('skuCogs').value)||0;
+  const fee=Math.max(0,Math.min(80,Number(document.getElementById('skuFee').value)||0));
+  const logi=Math.max(0,Number(document.getElementById('skuLogi').value)||0);
+  const vol=Math.max(0,Number(document.getElementById('skuVol').value)||0);
+  if(!name)return toast('품목명을 입력하세요');
+  if(price<=0)return toast('판매가를 확인하세요');
+  const s={id:'sku'+Date.now(),brand,name,price,cogs,fee,logi,vol,exportable:true};
+  state.skus.unshift(s);
+  state.logs.unshift(name+' 품목 등록 · 원가율 '+pct(cogsRate(s)));
+  document.getElementById('skuName').value='';
+  save();render();
+  toast(cogsRate(s)<=30?'등록 완료 · 목표 원가율 달성':'등록 완료 · 원가율 '+pct(cogsRate(s))+' 개선 필요');
+}
+
+/* ---------- 수출 데스크 ---------- */
+function marketUnitContribution(m){
+  const s=state.skus.find(x=>x.id===m.sku);
+  if(!s)return 0;
+  const fob=s.price*m.priceMult*fxFactor();
+  const duty=fob*m.tariff/100;
+  const ship=fob*m.logi/100;
+  return fob-duty-ship-effCogs(s);
+}
+function marketPotential(m){return marketUnitContribution(m)*m.volume*m.demand/10000}
+function marketMonthly(m){return m.status==='live'?marketPotential(m):0}
+function renderExportSummary(){
+  const live=state.markets.filter(m=>m.status==='live');
+  const total=state.markets.reduce((a,m)=>a+marketMonthly(m),0);
+  const domestic=state.skus.reduce((a,s)=>a+unitContribution(s)*s.vol,0)/10000;
+  const share=(total+domestic)>0?total/(total+domestic)*100:0;
+  document.getElementById('exportSummary').innerHTML=[
+    ['진출시장',live.length+'/'+state.markets.length],['수출 기여이익',money(total)],
+    ['수출비중',pct(share)],['환율',Math.round(state.fx).toLocaleString()+'원'],
+    ['환율효과',(fxFactor()>=1?'+':'')+pct((fxFactor()-1)*100)]
+  ].map(x=>'<div class="metric"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('');
+  document.getElementById('fxRate').value=Math.round(state.fx);
+  document.getElementById('importRatio').value=state.importRatio;
+  const f=fxFactor();
+  document.getElementById('fxNote').innerHTML=f>1
+    ? '환율 상승 구간입니다. 수출 대금은 <b class="goodText">'+pct((f-1)*100)+'</b> 늘지만, 수입 원자재 비중 '+state.importRatio+'% 만큼 원가도 함께 오릅니다. 수출비중이 수입원가 비중보다 커야 순이익이 늘어납니다.'
+    : f<1 ? '환율 하락 구간입니다. 수입 원가는 내려가지만 수출 기여이익이 <b class="dangerText">'+pct((1-f)*100)+'</b> 줄어듭니다. 내수 마진 방어가 우선입니다.'
+    : '기준 환율(1,385원) 상태입니다.';
+}
+function renderMarkets(){
+  const opts=state.skus.filter(s=>s.exportable).map(s=>s).length?state.skus.filter(s=>s.exportable):state.skus;
+  document.getElementById('markets').innerHTML=state.markets.map(m=>{
+    const s=state.skus.find(x=>x.id===m.sku);
+    const uc=marketUnitContribution(m);
+    const mm=marketMonthly(m);
+    const pot=marketPotential(m);
+    const payback=pot>0?Math.ceil(m.cert/pot):0;
+    const statusTag=m.status==='live'?'<span class="tag ok">진출 중</span>':m.status==='cert'?'<span class="tag warn">인증 진행 '+m.progress+'/'+m.certMonths+'개월</span>':'<span class="tag">미진출</span>';
+    return '<div class="market"><div class="marketHead"><b>'+m.name+'</b>'+statusTag+'</div>'+
+      '<p class="sub">'+m.note+' · 관세 '+m.tariff+'% · 현지물류 '+m.logi+'% · 가격배수 '+m.priceMult+'배 · 수요계수 '+m.demand+'</p>'+
+      '<div class="formrow" style="margin-top:9px"><div class="field"><label>수출 품목</label><select data-msku="'+m.id+'">'+opts.map(o=>'<option value="'+o.id+'"'+(o.id===m.sku?' selected':'')+'>'+o.name+'</option>').join('')+'</select></div>'+
+      '<div class="field"><label>월 수출수량</label><input type="number" data-mvol="'+m.id+'" value="'+m.volume+'"></div>'+
+      '<div class="field"><label>단위 기여이익</label><input value="'+(s?won(uc):'품목없음')+'" readonly></div></div>'+
+      '<div class="sub" style="margin-top:8px">'+(m.status==='live'
+        ? '월 기여이익 <b class="'+(mm>0?'goodText':'dangerText')+'">'+money(mm)+'</b>'
+        : '진출 시 예상 월 기여이익 <b class="'+(pot>0?'blueText':'dangerText')+'">'+money(pot)+'</b>'+(pot>0?' · 인증비 회수 '+payback+'개월':''))+
+      (uc<=0&&s?' · <span class="dangerText">이 조합은 수출할수록 손해입니다</span>':'')+'</div>'+
+      '<div class="contractActions">'+
+      (m.status==='none'?'<button class="btn gold sm" data-cert="'+m.id+'">인증 착수 ('+money(m.cert)+')</button>':'')+
+      (m.status==='cert'?'<button class="btn sm" disabled>인증 심사 중</button>':'')+
+      (m.status==='live'?'<button class="btn bad sm" data-exit="'+m.id+'">철수</button>':'')+
+      '</div></div>';
+  }).join('');
+  document.querySelectorAll('[data-msku]').forEach(el=>el.onchange=()=>{const m=state.markets.find(x=>x.id===el.dataset.msku);m.sku=el.value;save();render()});
+  document.querySelectorAll('[data-mvol]').forEach(el=>el.onchange=()=>{const m=state.markets.find(x=>x.id===el.dataset.mvol);m.volume=Math.max(0,Number(el.value)||0);save();render()});
+  document.querySelectorAll('[data-cert]').forEach(b=>b.onclick=()=>startCert(b.dataset.cert));
+  document.querySelectorAll('[data-exit]').forEach(b=>b.onclick=()=>exitMarket(b.dataset.exit));
+}
+function startCert(id){const m=state.markets.find(x=>x.id===id);if(!m)return;if(state.cash<m.cert)return toast('현금 부족 · 인증비 '+money(m.cert)+' 필요');state.cash-=m.cert;m.status='cert';m.progress=0;state.logs.unshift(m.name+' 인증 착수 · '+money(m.cert)+' 집행 ('+m.certMonths+'개월 소요)');save();render();toast(m.name+' 인증 진행 시작')}
+function exitMarket(id){const m=state.markets.find(x=>x.id===id);if(!m)return;if(!confirm(m.name+' 시장에서 철수할까요? 인증 효력은 사라집니다.'))return;m.status='none';m.progress=0;state.reputation=Math.max(0,state.reputation-2);state.logs.unshift(m.name+' 철수');save();render();toast('철수 완료')}
+function applyFx(){const v=Number(document.getElementById('fxRate').value)||FX_BASE;const r=Math.max(0,Math.min(100,Number(document.getElementById('importRatio').value)||0));state.fx=Math.max(600,Math.min(2500,v));state.importRatio=r;state.logs.unshift('환율 '+Math.round(state.fx).toLocaleString()+'원 · 수입비중 '+r+'% 반영');save();render();toast('환율 반영 완료')}
+
+/* ---------- 기존 모듈 ---------- */
+function renderTop(){document.getElementById('topStats').innerHTML='<div class="chip">현금 <b>'+money(state.cash)+'</b></div><div class="chip">미수금 <b>'+money(state.ar)+'</b></div><div class="chip">월순익 <b>'+money(state.profit)+'</b></div>'}
+function renderMetrics(){
+  const avgConflict=Math.round(state.brands.reduce((a,b)=>a+b.conflict,0)/state.brands.length);
+  const exportContrib=state.markets.reduce((a,m)=>a+marketMonthly(m),0);
+  document.getElementById('metrics').innerHTML=[['월',state.month],['매출',money(state.revenue)],['순익',money(state.profit)],['수출기여',money(exportContrib)],['채널충돌',avgConflict+'점']].map(x=>'<div class="metric"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('');
+  const rate=Math.max(0,Math.min(100,state.profit/GOAL_PROFIT*100));
+  document.getElementById('goalBar').style.width=rate+'%';
+  document.getElementById('goalBar').className=rate>=100?'':rate>=40?'warn':'bad';
+  const gap=GOAL_PROFIT-state.profit;
+  document.getElementById('goalText').innerHTML='현재 월순익 <b>'+money(state.profit)+'</b> · 목표 1억까지 <b class="'+(gap>0?'warnText':'goodText')+'">'+(gap>0?money(gap)+' 부족':'달성')+'</b> · 달성률 '+pct(rate);
+}
+function imgTag(b){return '<div style="height:115px;background:'+b.fallback+'"><img src="'+b.image+'" alt="'+b.name+'" onerror="this.style.display=\'none\'"></div>'}
+function renderBrands(){document.getElementById('brands').innerHTML=state.brands.map(b=>'<article class="brand">'+imgTag(b)+'<div class="brandBody"><div class="brandTitle"><b>'+b.name+'</b><span class="tag">'+b.channel.toUpperCase()+'</span></div><div class="sub">브랜드력 '+Math.round(b.brand)+' · 충돌 '+Math.round(b.conflict)+' · 마진 '+b.margin+'%</div><div class="bar"><i style="width:'+b.brand+'%"></i></div><div class="strategy">'+[['dtc','DTC'],['b2b','B2B'],['hybrid','혼합'],['local','지역']].map(s=>'<button class="'+(b.channel===s[0]?'on':'')+'" data-brand="'+b.id+'" data-strategy="'+s[0]+'">'+s[1]+'</button>').join('')+'</div><button class="btn" data-site="'+b.site+'" style="margin-top:9px;width:100%">브랜드 사이트</button></div></article>').join('');document.querySelectorAll('[data-strategy]').forEach(btn=>btn.onclick=()=>setStrategy(btn.dataset.brand,btn.dataset.strategy));document.querySelectorAll('[data-site]').forEach(btn=>btn.onclick=()=>{if(btn.dataset.site==='#'){toast('매장·단체주문 랜딩 준비 중')}else window.open(btn.dataset.site,'_blank','noopener')})}
+function setStrategy(id,s){const b=state.brands.find(x=>x.id===id);if(!b)return;const old=b.channel;if(old===s)return;b.channel=s;b.conflict=Math.min(100,Math.max(0,b.conflict+(s==='hybrid'?4:-2)));b.brand=Math.min(100,b.brand+1);state.logs.unshift(b.name+' 채널 '+old+' → '+s+' 확정');save();render();toast('채널 전략 반영')}
+function renderContracts(){document.getElementById('contractBrand').innerHTML=state.brands.map(b=>'<option value="'+b.id+'">'+b.name+'</option>').join('');document.getElementById('contracts').innerHTML=state.contracts.length?state.contracts.map(c=>'<div class="contract"><div class="contractHead"><b>'+c.name+'</b><span class="tag">'+c.status+'</span></div><div class="sub">총액 '+money(c.amount)+' · 선금 '+c.deposit+'% · 잔금 '+money(c.balance)+' · 남은 '+c.days+'일</div><div class="contractActions"><button class="btn good sm" data-collect="'+c.id+'">미수금 회수</button><button class="btn sm" data-delay="'+c.id+'">7일 연장</button></div></div>').join(''):'<p class="sub">등록된 계약이 없습니다.</p>';document.querySelectorAll('[data-collect]').forEach(b=>b.onclick=()=>collect(b.dataset.collect));document.querySelectorAll('[data-delay]').forEach(b=>b.onclick=()=>delayContract(b.dataset.delay))}
+function addContract(){const brand=state.brands.find(b=>b.id===document.getElementById('contractBrand').value);const amount=Number(document.getElementById('contractAmount').value)||0;const deposit=Math.max(0,Math.min(100,Number(document.getElementById('contractDeposit').value)||0));if(amount<=0)return toast('계약금액 확인');const upfront=Math.round(amount*deposit/100);const balance=amount-upfront;state.cash+=upfront;state.ar+=balance;state.contracts.unshift({id:'c'+Date.now(),brand:brand.id,name:brand.name+' 신규 계약',amount,deposit,balance,days:30,status:'진행'});state.logs.unshift(brand.name+' 계약 '+money(amount)+' 등록 · 선금 '+money(upfront));save();render();toast('계약 등록 완료')}
+function collect(id){const c=state.contracts.find(x=>x.id===id);if(!c||c.balance<=0)return;const b=state.brands.find(x=>x.id===c.brand)||{conflict:20};const rate=Math.max(.55,1-b.conflict/180);const got=Math.round(c.balance*rate);state.cash+=got;state.ar=Math.max(0,state.ar-c.balance);c.status=got<c.balance?'일부회수':'완료';c.balance=0;state.reputation+=1;state.logs.unshift(c.name+' 회수 '+money(got));save();render();toast('미수금 회수 '+money(got))}
+function delayContract(id){const c=state.contracts.find(x=>x.id===id);if(!c)return;c.days+=7;state.reputation=Math.max(0,state.reputation-1);state.logs.unshift(c.name+' 회수 7일 연기');save();render();toast('회수일 연장')}
+function renderEvents(){const active=state.events.filter(e=>!e.done);document.getElementById('events').innerHTML=active.map(e=>'<article class="event hot"><h3>'+e.title+'</h3><p class="sub">'+e.desc+'</p><div class="eventChoices">'+e.choices.map((c,i)=>'<button data-event="'+e.id+'" data-choice="'+i+'">'+c[0]+'</button>').join('')+'</div></article>').join('')||'<p class="sub">모든 사건을 처리했습니다.</p>';document.getElementById('eventMini').innerHTML=active.slice(0,2).map(e=>'<div class="event"><b>'+e.title+'</b><p class="sub">'+e.desc+'</p></div>').join('')||'<p class="sub">활성 사건 없음</p>';document.querySelectorAll('[data-event]').forEach(b=>b.onclick=()=>resolveEvent(b.dataset.event,Number(b.dataset.choice)))}
+function resolveEvent(id,idx){
+  const e=state.events.find(x=>x.id===id);if(!e||e.done)return;
+  const ef=e.choices[idx][1];let extra='';
+  state.cash+=ef.cash||0;
+  state.ar=Math.max(0,state.ar+(ef.ar||0));
+  state.reputation=Math.max(0,state.reputation+(ef.brand||0));
+  state.brands.forEach(b=>{b.brand=Math.max(1,Math.min(100,b.brand+(ef.brand||0)/2));b.conflict=Math.max(0,Math.min(100,b.conflict+(ef.conflict||0)))});
+  if(Number.isFinite(ef.fx)){state.fx=ef.fx;extra+=' · 환율 '+ef.fx.toLocaleString()+'원'}
+  if(ef.cogsCut){state.skus.forEach(s=>s.cogs=Math.round(s.cogs*(1-ef.cogsCut/100)));extra+=' · 전품목 원가 -'+ef.cogsCut+'%'}
+  if(ef.cogsCutSku){const s=state.skus.find(x=>x.id===ef.cogsCutSku);if(s){s.cogs=Math.round(s.cogs*(1-ef.cogsCutPct/100));extra+=' · '+s.name+' 원가율 '+pct(cogsRate(s))}}
+  if(ef.priceUpSku){const s=state.skus.find(x=>x.id===ef.priceUpSku);if(s){s.price=Math.round(s.price*(1+ef.priceUpPct/100));s.vol=Math.round(s.vol*.75);extra+=' · '+s.name+' 판매가 인상, 수량 -25%'}}
+  if(ef.dropSku){const s=state.skus.find(x=>x.id===ef.dropSku);if(s){state.skus=state.skus.filter(x=>x.id!==ef.dropSku);extra+=' · '+s.name+' 단종'}}
+  if(ef.certBoost){const m=state.markets.find(x=>x.id===ef.certBoost);if(m&&m.status!=='live'){const failed=ef.fail&&Math.random()<ef.fail;if(failed){m.status='none';m.progress=0;extra+=' · '+m.name+' 자가등록 반려'}else{m.status='live';m.progress=m.certMonths;extra+=' · '+m.name+' 진출 확정'}}}
+  e.done=true;
+  state.logs.unshift(e.title+' → '+e.choices[idx][0]+extra);
+  save();render();toast('사건 결과 반영');
+}
+function renderLog(){document.getElementById('log').innerHTML=state.logs.slice(0,30).map(x=>'<div>'+x+'</div>').join('')}
+function renderSave(){let main='없음',b1='없음',b2='없음';try{main=localStorage.getItem(SAVE)?'정상':'없음';b1=localStorage.getItem(BACK1)?'정상':'없음';b2=localStorage.getItem(BACK2)?'정상':'없음'}catch(e){main='차단'}document.getElementById('saveStatus').innerHTML=[['본 저장',main],['백업1',b1],['백업2',b2],['이전버전',state.migratedFrom||'없음'],['저장시각',state.lastSaved?new Date(state.lastSaved).toLocaleTimeString():'미저장']].map(x=>'<div class="metric"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')}
+function renderSkuBrandOptions(){const el=document.getElementById('skuBrand');const cur=el.value;el.innerHTML=state.brands.map(b=>'<option value="'+b.id+'">'+b.name+'</option>').join('');if(cur)el.value=cur}
+
+/* ---------- 시뮬레이션 ---------- */
+function simulate(){
+  const vol=Number(document.getElementById('volatility').value)||0;
+  const ad=Number(document.getElementById('adSpend').value)||0;
+  const focus=document.getElementById('focus').value;
+  let rev=0,profit=0;
+
+  state.brands.forEach(b=>{
+    const fit={dtc:1.05,b2b:1.08,hybrid:1.12,local:1.02}[b.channel]||1;
+    const noise=1+(Math.random()-.5)*vol/100;
+    const conflictPenalty=1-b.conflict/250;
+    const focusBonus=focus==='growth'?1.09:focus==='brand'?1.04:1;
+    const r=Math.max(0,b.monthly*fit*noise*conflictPenalty*focusBonus);
+    rev+=r;profit+=r*b.margin/100;
+    b.brand=Math.min(100,b.brand+(focus==='brand'?2:.4));
+    b.conflict=Math.max(0,b.conflict-(focus==='cash'?2:0));
+  });
+
+  let skuContrib=0,skuRev=0;
+  state.skus.forEach(s=>{
+    if(focus==='margin')s.cogs=Math.round(s.cogs*.97);
+    const noise=1+(Math.random()-.5)*vol/140;
+    const q=Math.max(0,Math.round(s.vol*noise));
+    skuRev+=s.price*q/10000;
+    skuContrib+=unitContribution(s)*q/10000;
+  });
+  rev+=skuRev;profit+=skuContrib;
+
+  let exportContrib=0,exportRev=0;
+  state.markets.forEach(m=>{
+    if(m.status==='cert'){
+      m.progress+=1;
+      if(m.progress>=m.certMonths){m.status='live';state.logs.unshift(m.name+' 인증 완료 · 진출 개시')}
+    }
+    if(m.status==='live'){
+      const s=state.skus.find(x=>x.id===m.sku);
+      if(!s){m.status='none';m.progress=0;return}
+      const noise=1+(Math.random()-.5)*vol/110;
+      const q=Math.max(0,Math.round(m.volume*m.demand*noise));
+      exportRev+=s.price*m.priceMult*fxFactor()*q/10000;
+      exportContrib+=marketUnitContribution(m)*q/10000;
+    }
+  });
+  rev+=exportRev;profit+=exportContrib;
+  profit-=ad;
+
+  let collected=0;
+  state.contracts.forEach(c=>{
+    c.days-=30;
+    if(c.balance>0&&c.days<=0){
+      const b=state.brands.find(x=>x.id===c.brand)||{conflict:20};
+      const rate=Math.max(.45,1-b.conflict/160);
+      const got=Math.round(c.balance*rate);
+      collected+=got;state.ar=Math.max(0,state.ar-c.balance);c.balance=0;c.status=got>0?'자동회수':'부실';
+    }
+  });
+  if(focus==='cash'){const extra=Math.round(state.ar*.18);state.ar-=extra;collected+=extra}
+
+  const interest=Math.round(state.debt*.004);
+  state.debt+=interest;profit-=interest;
+  state.cash+=profit+collected;
+  state.revenue=Math.round(rev);
+  state.profit=Math.round(profit);
+  state.month+=1;
+
+  const wRate=skuRev>0?state.skus.reduce((a,s)=>a+effCogs(s)*s.vol,0)/10000/skuRev*100:0;
+  state.logs.unshift(state.month+'월 · 매출 '+money(rev)+' · 순익 '+money(profit)+' · 수출 '+money(exportContrib)+' · 회수 '+money(collected)+' · 가중원가율 '+pct(wRate));
+
+  document.getElementById('simResult').innerHTML='<h3>시뮬레이션 완료</h3><div class="metrics">'+
+    [['매출',money(rev)],['순익',money(profit)],['수출기여',money(exportContrib)],['회수',money(collected)],['현금',money(state.cash)]]
+    .map(x=>'<div class="metric"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'+
+    '<p class="sub" style="margin-top:10px">가중원가율 <b class="'+(wRate<=30?'goodText':wRate<=50?'warnText':'dangerText')+'">'+pct(wRate)+'</b> · 이자비용 '+money(interest)+' · 목표 1억 달성률 '+pct(Math.max(0,state.profit/GOAL_PROFIT*100))+
+    (profit<0?' · <b class="dangerText">적자입니다. 원가율부터 손보세요.</b>':'')+'</p>';
+  save();render();toast('다음 달 완료 · 순익 '+money(profit));
+}
+
+function render(){renderTop();renderMetrics();renderBrands();renderSkuBrandOptions();renderMarginSummary();renderSkus();renderExportSummary();renderMarkets();renderContracts();renderEvents();renderLog();renderSave()}
+function exportJSON(){const blob=new Blob([pack(state)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kim_seongtae_v94_save.json';a.click();URL.revokeObjectURL(a.href)}
+function importJSON(file){const r=new FileReader();r.onload=()=>{try{const d=unpack(r.result);d.version=VERSION;state=d;state.skus=state.skus&&state.skus.length?state.skus:clone(skuSeed);state.markets=state.markets&&state.markets.length?state.markets:clone(marketSeed);save();render();toast('복구 완료')}catch(e){toast('복구 실패: 파일 검증 오류')}};r.readAsText(file)}
+
+buildNav();
+document.getElementById('addContract').onclick=addContract;
+document.getElementById('addSku').onclick=addSku;
+document.getElementById('applyFx').onclick=applyFx;
+document.getElementById('runMonth').onclick=simulate;
+document.getElementById('saveNow').onclick=()=>{save();render();toast('저장 완료')};
+document.getElementById('exportBtn').onclick=exportJSON;
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=e=>e.target.files[0]&&importJSON(e.target.files[0]);
+document.getElementById('resetBtn').onclick=()=>{if(confirm('v9.4 데이터를 초기화할까요?')){localStorage.removeItem(SAVE);localStorage.removeItem(BACK1);localStorage.removeItem(BACK2);state=defaultState();save();render()}};
+const initial=(location.hash||'#/dashboard').replace('#/','');
+go(pages.includes(initial)?initial:'dashboard');
+save();render();
+</script>
+</body>
+</html>
