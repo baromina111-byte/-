@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ja" data-lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCENT BRIDGE | 韓国フレグランスOEMマッチング</title>
+<meta name="description" content="日本のブランドと韓国のフレグランスOEMメーカーをつなぐマッチングサービス。条件に合う3社を比較表でご提案します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f2ea; --surface:#fffdf8; --ink:#1d1b18; --muted:#6b655c;
+  --line:#ddd5c6; --accent:#7a5a2e; --accent-ink:#fffdf8; --deep:#23201b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.8;
+  font-family:"Noto Sans JP","Noto Sans KR",system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Noto Serif JP","Noto Serif KR",serif;font-weight:600;line-height:1.35;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.brand{font-family:"Noto Serif JP",serif;letter-spacing:.2em;font-size:15px;text-decoration:none;white-space:nowrap}
+.brand small{letter-spacing:.05em;color:var(--muted);font-size:11px;margin-left:6px}
+.nav-right{display:flex;align-items:center;gap:10px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{white-space:nowrap;border:0;background:transparent;padding:6px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);text-decoration:none;
+  padding:13px 26px;border-radius:2px;font-size:15px;letter-spacing:.04em;border:1px solid var(--accent);cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--deep);border-color:var(--deep)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.btn.small{padding:8px 16px;font-size:13px;white-space:nowrap}
+html[data-lang="ko"] body{word-break:keep-all}
+
+.hero{padding:88px 0 72px}
+.hero h1{font-size:clamp(30px,5.4vw,54px);margin:18px 0 22px;max-width:16em}
+.hero p.lead{font-size:clamp(16px,2vw,18px);color:var(--muted);max-width:36em}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.note{font-size:13px;color:var(--muted);margin-top:14px}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(24px,3.4vw,34px);margin:12px 0 36px;max-width:20em}
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);padding:28px}
+.card h3{font-size:19px;margin-bottom:10px}
+.card p{color:var(--muted);font-size:15px}
+.num{font-family:"Noto Serif JP",serif;font-size:34px;color:var(--accent);line-height:1;margin-bottom:16px}
+
+.dark{background:var(--deep);color:#efe9dc;border-top:0}
+.dark .eyebrow{color:#c9a871}
+.dark .card{background:transparent;border-color:#4a443a}
+.dark .card p{color:#b9b1a2}
+.tag{display:inline-block;font-size:12px;border:1px solid currentColor;padding:2px 10px;border-radius:999px;margin-bottom:14px;opacity:.85}
+
+.price{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-bottom:1px solid var(--line);padding:18px 0}
+.price:first-child{border-top:1px solid var(--line)}
+.price b{font-weight:500}
+.price span{color:var(--muted);font-size:14px;display:block}
+.price em{font-style:normal;font-family:"Noto Serif JP",serif;font-size:20px;white-space:nowrap}
+
+form{display:grid;gap:14px}
+label{font-size:13px;color:var(--muted);display:grid;gap:6px}
+input,select,textarea{font:inherit;padding:12px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:2px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+textarea{min-height:120px;resize:vertical}
+.row{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+#formMsg{font-size:14px;color:var(--accent);min-height:1.5em}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media (max-width:560px){.nav .btn.small{display:none} .hero{padding:56px 0 48px} section{padding:52px 0} .brand small{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">SCENT BRIDGE<small data-i18n="brandSub"></small></a>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-set="ja" aria-pressed="true">日本語</button>
+        <button type="button" data-set="ko" aria-pressed="false">한국어</button>
+      </div>
+      <a class="btn small" href="#contact" data-i18n="navCta"></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <p class="eyebrow">Korea × Japan Fragrance OEM</p>
+    <h1 data-i18n="heroTitle"></h1>
+    <p class="lead" data-i18n="heroLead"></p>
+    <div class="cta">
+      <a class="btn" href="#contact" data-i18n="heroCta1"></a>
+      <a class="btn ghost" href="#how" data-i18n="heroCta2"></a>
+    </div>
+    <p class="note" data-i18n="heroNote"></p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Why</p>
+      <h2 data-i18n="whyTitle"></h2>
+      <div class="grid g3">
+        <div class="card"><h3 data-i18n="why1t"></h3><p data-i18n="why1d"></p></div>
+        <div class="card"><h3 data-i18n="why2t"></h3><p data-i18n="why2d"></p></div>
+        <div class="card"><h3 data-i18n="why3t"></h3><p data-i18n="why3d"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2 data-i18n="howTitle"></h2>
+      <div class="grid g3">
+        <div class="card"><div class="num">01</div><h3 data-i18n="how1t"></h3><p data-i18n="how1d"></p></div>
+        <div class="card"><div class="num">02</div><h3 data-i18n="how2t"></h3><p data-i18n="how2d"></p></div>
+        <div class="card"><div class="num">03</div><h3 data-i18n="how3t"></h3><p data-i18n="how3d"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="wrap">
+      <p class="eyebrow">Regulation</p>
+      <h2 data-i18n="regTitle"></h2>
+      <div class="grid g2">
+        <div class="card"><span class="tag" data-i18n="reg1tag"></span><h3 data-i18n="reg1t"></h3><p data-i18n="reg1d"></p></div>
+        <div class="card"><span class="tag" data-i18n="reg2tag"></span><h3 data-i18n="reg2t"></h3><p data-i18n="reg2d"></p></div>
+      </div>
+      <p class="note" style="color:#b9b1a2" data-i18n="regNote"></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Pricing</p>
+      <h2 data-i18n="priceTitle"></h2>
+      <div>
+        <div class="price"><div><b data-i18n="p1t"></b><span data-i18n="p1d"></span></div><em data-i18n="p1v"></em></div>
+        <div class="price"><div><b data-i18n="p2t"></b><span data-i18n="p2d"></span></div><em data-i18n="p2v"></em></div>
+        <div class="price"><div><b data-i18n="p3t"></b><span data-i18n="p3d"></span></div><em data-i18n="p3v"></em></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">For manufacturers</p>
+      <h2 data-i18n="mfTitle"></h2>
+      <p class="lead" style="color:var(--muted);max-width:40em" data-i18n="mfLead"></p>
+      <div class="cta"><a class="btn ghost" href="#contact" data-i18n="mfCta"></a></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h2 data-i18n="ctTitle"></h2>
+      <form id="inq" novalidate>
+        <div class="row">
+          <label><span data-i18n="fType"></span>
+            <select name="type" required>
+              <option value="brand" data-i18n="fTypeA"></option>
+              <option value="maker" data-i18n="fTypeB"></option>
+            </select></label>
+          <label><span data-i18n="fCompany"></span><input name="company" required autocomplete="organization"></label>
+        </div>
+        <div class="row">
+          <label><span data-i18n="fName"></span><input name="name" required autocomplete="name"></label>
+          <label><span data-i18n="fEmail"></span><input name="email" type="email" required autocomplete="email"></label>
+        </div>
+        <div class="row">
+          <label><span data-i18n="fItem"></span>
+            <select name="item">
+              <option data-i18n="i1"></option><option data-i18n="i2"></option><option data-i18n="i3"></option>
+              <option data-i18n="i4"></option><option data-i18n="i5"></option><option data-i18n="i6"></option>
+            </select></label>
+          <label><span data-i18n="fQty"></span><input name="qty" inputmode="numeric" placeholder="500"></label>
+        </div>
+        <label><span data-i18n="fMsg"></span><textarea name="msg"></textarea></label>
+        <div><button class="btn" type="submit" data-i18n="fSend"></button></div>
+        <p id="formMsg" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>SCENT BRIDGE — <span data-i18n="footer"></span></p>
+  </div>
+</footer>
+
+<script>
+// 문의를 받을 법인 메일 주소. 비어 있으면 폼은 "준비 중" 안내만 표시한다.
+const CONTACT_EMAIL = "";
+
+const T = {
+ja:{
+  title:"SCENT BRIDGE | 韓国フレグランスOEMマッチング",
+  brandSub:"韓国フレグランスOEMマッチング", navCta:"無料相談",
+  heroTitle:"韓国の香りづくりを、小ロットから。条件に合う工場を3社、比較表で。",
+  heroLead:"香水・ディフューザー・ルームスプレー・キャンドル・ヘア/ボディミスト。日本のブランド様のご希望（数量・単価・納期・容器）を伺い、韓国のOEM/ODMメーカーの中から合う3社を選んでご提案します。やり取りは日本語で完結します。",
+  heroCta1:"無料で相談する", heroCta2:"ご利用の流れ",
+  heroNote:"オープン記念：先着10社様はマッチングレポートを無料でお作りします。",
+  whyTitle:"工場探しでつまずく3つの壁を、代わりに越えます。",
+  why1t:"探す時間", why1d:"韓国語のサイトを一社ずつ調べる必要はありません。公式サイトで実在と取扱品目を確認したメーカーだけを一覧にしています。",
+  why2t:"言葉と商習慣", why2d:"仕様の伝達、見積依頼、サンプル手配まで日本語でご依頼いただけます。韓国側とのやり取りは当方が行います。",
+  why3t:"輸入のルール", why3d:"品目によって必要な手続きが変わります。ご相談の段階で、どの区分に当たるかと必要な準備を整理してお伝えします。",
+  howTitle:"ご相談から比較表まで、3ステップ。",
+  how1t:"条件を伺う", how1d:"品目、数量、目標単価、納期、容器のイメージ。15分のオンライン相談、またはフォームだけでも構いません。",
+  how2t:"3社を比較表で", how2d:"条件に合うメーカーを3社選び、強み・注意点・最小ロット・認証を一枚の表にまとめてお渡しします。",
+  how3t:"サンプルと見積", how3d:"気になるメーカーへサンプルと見積を依頼します。韓国国内の集荷・検品・日本向け発送までまとめて手配できます。",
+  regTitle:"同じ「香り」でも、区分で手続きが変わります。",
+  reg1tag:"化粧品", reg1t:"香水・ボディミスト・ヘアミスト",
+  reg1d:"肌や髪に使う製品は、医薬品医療機器等法（薬機法）上の化粧品に当たります。輸入・販売には化粧品製造販売業の許可を持つ事業者が必要です。許可をお持ちでない場合の進め方もご案内します。",
+  reg2tag:"雑貨", reg2t:"リードディフューザー・ルームスプレー・キャンドル",
+  reg2d:"空間用の製品は一般に雑貨として扱われ、化粧品の許可は不要です。一方でアルコール量による危険物の扱いや輸送条件、表示など別の確認点があります。",
+  regNote:"※ 個別製品の区分・要否は、成分や使用目的の表示により異なります。最終判断は所管行政・専門家への確認をお願いします。",
+  priceTitle:"料金",
+  p1t:"初回相談", p1d:"オンライン15分、またはフォーム", p1v:"無料",
+  p2t:"マッチングレポート", p2d:"3社比較表。先着10社様は無料", p2v:"¥33,000（税込）",
+  p3t:"成約手数料", p3d:"ブランド様のご負担はありません（メーカー側負担）", p3v:"¥0",
+  mfTitle:"韓国のメーカー様へ",
+  mfLead:"日本のブランドからの引き合いを、日本語対応込みでお届けします。掲載は無料、成約時のみ手数料をいただく方式です。小ロット対応が可能な工場を優先してご紹介しています。",
+  mfCta:"掲載を申し込む",
+  ctTitle:"お問い合わせ",
+  fType:"ご区分", fTypeA:"日本のブランド・販売事業者", fTypeB:"韓国のメーカー",
+  fCompany:"会社名・ブランド名", fName:"ご担当者名", fEmail:"メールアドレス",
+  fItem:"品目", i1:"香水", i2:"ディフューザー", i3:"ルームスプレー", i4:"キャンドル", i5:"ヘア/ボディミスト", i6:"その他",
+  fQty:"希望数量（個）", fMsg:"ご相談内容", fSend:"送信する",
+  mNeed:"会社名・ご担当者名・メールアドレスをご入力ください。",
+  mOpen:"メールソフトが開きます。そのまま送信してください。",
+  mSoon:"お問い合わせ窓口は現在準備中です。まもなく受付を開始します。",
+  subj:"【SCENT BRIDGE】お問い合わせ",
+  footer:"日韓フレグランスOEMマッチング"
+},
+ko:{
+  title:"SCENT BRIDGE | 한일 프래그런스 OEM 매칭",
+  brandSub:"한일 프래그런스 OEM 매칭", navCta:"무료 상담",
+  heroTitle:"한국의 향 제조를 소량부터. 조건에 맞는 공장 3곳을 비교표로.",
+  heroLead:"향수·디퓨저·룸스프레이·캔들·헤어/바디 미스트. 일본 브랜드의 조건(수량·단가·납기·용기)을 듣고, 한국 OEM/ODM 제조사 중 맞는 3곳을 골라 제안합니다. 모든 소통은 일본어로 끝납니다.",
+  heroCta1:"무료로 상담하기", heroCta2:"이용 순서",
+  heroNote:"오픈 기념: 선착순 10개사는 매칭 리포트를 무료로 만들어 드립니다.",
+  whyTitle:"공장 찾기에서 막히는 3가지 벽을 대신 넘습니다.",
+  why1t:"찾는 시간", why1d:"한국어 사이트를 하나씩 뒤질 필요가 없습니다. 공식 홈페이지로 실재와 취급 품목을 확인한 제조사만 목록에 넣습니다.",
+  why2t:"언어와 거래 관행", why2d:"사양 전달, 견적 요청, 샘플 수배까지 일본어로 의뢰할 수 있습니다. 한국 측과의 소통은 저희가 합니다.",
+  why3t:"수입 규정", why3d:"품목에 따라 필요한 절차가 달라집니다. 상담 단계에서 어느 구분에 해당하는지와 준비할 것을 정리해 드립니다.",
+  howTitle:"상담부터 비교표까지 3단계.",
+  how1t:"조건 듣기", how1d:"품목, 수량, 목표 단가, 납기, 용기 이미지. 15분 온라인 상담 또는 문의 폼만으로도 됩니다.",
+  how2t:"3곳 비교표", how2d:"조건에 맞는 제조사 3곳을 골라 강점·주의점·최소 수량·인증을 한 장의 표로 드립니다.",
+  how3t:"샘플과 견적", how3d:"마음에 드는 제조사에 샘플과 견적을 요청합니다. 한국 내 집하·검수·일본 발송까지 한 번에 수배합니다.",
+  regTitle:"같은 '향'이라도 구분에 따라 절차가 달라집니다.",
+  reg1tag:"화장품", reg1t:"향수·바디 미스트·헤어 미스트",
+  reg1d:"피부나 머리카락에 쓰는 제품은 일본 약기법(薬機法)상 화장품에 해당합니다. 수입·판매에는 화장품 제조판매업 허가를 가진 사업자가 필요합니다. 허가가 없는 경우의 진행 방법도 안내합니다.",
+  reg2tag:"잡화", reg2t:"리드 디퓨저·룸스프레이·캔들",
+  reg2d:"공간용 제품은 일반적으로 잡화로 취급되어 화장품 허가가 필요 없습니다. 다만 알코올 함량에 따른 위험물 취급과 운송 조건, 표시 등 따로 확인할 점이 있습니다.",
+  regNote:"※ 개별 제품의 구분과 허가 필요 여부는 성분과 사용 목적 표시에 따라 달라집니다. 최종 판단은 소관 행정기관·전문가 확인이 필요합니다.",
+  priceTitle:"요금",
+  p1t:"첫 상담", p1d:"온라인 15분 또는 문의 폼", p1v:"무료",
+  p2t:"매칭 리포트", p2d:"3곳 비교표. 선착순 10개사 무료", p2v:"¥33,000 (세금 포함)",
+  p3t:"성사 수수료", p3d:"브랜드 부담 없음 (제조사 부담)", p3v:"¥0",
+  mfTitle:"한국 제조사 분들께",
+  mfLead:"일본 브랜드의 문의를 일본어 대응까지 포함해 전달합니다. 등록은 무료이고 거래가 성사될 때만 수수료를 받습니다. 소량 생산이 가능한 공장을 우선 소개합니다.",
+  mfCta:"등록 신청하기",
+  ctTitle:"문의하기",
+  fType:"구분", fTypeA:"일본 브랜드·판매 사업자", fTypeB:"한국 제조사",
+  fCompany:"회사명·브랜드명", fName:"담당자명", fEmail:"이메일",
+  fItem:"품목", i1:"향수", i2:"디퓨저", i3:"룸스프레이", i4:"캔들", i5:"헤어/바디 미스트", i6:"기타",
+  fQty:"희망 수량(개)", fMsg:"문의 내용", fSend:"보내기",
+  mNeed:"회사명·담당자명·이메일을 입력해 주세요.",
+  mOpen:"메일 프로그램이 열립니다. 그대로 보내 주세요.",
+  mSoon:"문의 창구를 준비하고 있습니다. 곧 접수를 시작합니다.",
+  subj:"[SCENT BRIDGE] 문의",
+  footer:"한일 프래그런스 OEM 매칭"
+}};
+
+let lang = "ja";
+function setLang(l){
+  lang = T[l] ? l : "ja";
+  document.documentElement.lang = lang;
+  document.documentElement.dataset.lang = lang;
+  document.title = T[lang].title;
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n] ?? ""; });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === lang)));
+  document.getElementById("formMsg").textContent = "";
+  try { localStorage.setItem("sb-lang", lang); } catch (e) {}
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.set)));
+
+let saved = null;
+try { saved = localStorage.getItem("sb-lang"); } catch (e) {}
+setLang(saved || ((navigator.language || "").toLowerCase().startsWith("ko") ? "ko" : "ja"));
+
+document.getElementById("inq").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = new FormData(e.target), msg = document.getElementById("formMsg"), t = T[lang];
+  if (!f.get("company") || !f.get("name") || !/^\S+@\S+\.\S+$/.test(f.get("email") || "")) { msg.textContent = t.mNeed; return; }
+  if (!CONTACT_EMAIL) { msg.textContent = t.mSoon; return; }
+  const sel = e.target.elements;
+  const body = [
+    t.fType + ": " + sel.type.selectedOptions[0].textContent,
+    t.fCompany + ": " + f.get("company"),
+    t.fName + ": " + f.get("name"),
+    t.fEmail + ": " + f.get("email"),
+    t.fItem + ": " + sel.item.selectedOptions[0].textContent,
+    t.fQty + ": " + (f.get("qty") || "-"),
+    "", f.get("msg") || ""
+  ].join("\n");
+  location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(t.subj) + "&body=" + encodeURIComponent(body);
+  msg.textContent = t.mOpen;
+});
+</script>
+</body>
+</html>
