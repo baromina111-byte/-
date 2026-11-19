@@ -12,7 +12,8 @@
 | `reports/` | 규제 가이드, 주간 시장 리포트, 매칭 리포트 |
 | `outbox/` | 보낼 메일 초안 (발송은 대표가 직접) |
 | `ops/` | 받은 의뢰(`inbox.md`), 주간 기록(`weekly-log.md`) |
-| `site/` | 한·일어 소개 페이지 (이 폴더만 배포한다) |
+| `site/` | 한·일어 소개 페이지(`index.html`)와 제조사 검색 화면(`find.html`). 이 폴더만 배포한다 |
+| `scripts/build-directory.py` | 제조사 DB를 공개용 익명 데이터(`site/data.js`)로 바꾼다 |
 
 ## 대표가 매일 하는 일
 1. 아침 보고 3줄을 읽는다.

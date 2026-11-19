@@ -18,6 +18,8 @@ data/manufacturers.csv를 읽고, 거기에 없는 한국 향 제품 OEM/ODM 제
 ## 저장 위치
 `data/manufacturers.csv` (행 추가)
 
+행을 추가한 뒤 `python3 scripts/build-directory.py`를 실행해 공개 검색 화면의 데이터(`site/data.js`)를 갱신한다. 이 파일에는 회사명과 연락처가 들어가지 않는다.
+
 ## 잘 됐는지 확인하는 법
 - 새 행 10개가 모두 근거URL을 갖고 있다.
 - `미확인`이 절반을 넘는 행은 "보강 필요"로 보고한다.
