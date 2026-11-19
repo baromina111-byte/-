@@ -2,6 +2,11 @@
 
 한국 향 제품 OEM 제조사와 일본 소규모 브랜드를 연결한다. 처음에는 플랫폼이 아니라 **사람이 연결하는 중개소**로 운영하고, 조사와 문서 작업은 에이전트가 맡는다.
 
+## 배포 주소
+- 소개 페이지: https://scent-bridge.vercel.app/
+- 제조사 검색: https://scent-bridge.vercel.app/find
+- Vercel 프로젝트 `scent-bridge`가 이 저장소의 `kj-oem-bridge/site` 폴더를 배포한다.
+
 ## 폴더 안내
 | 폴더 | 내용 |
 |---|---|
