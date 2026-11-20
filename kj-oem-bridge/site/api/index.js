@@ -81,7 +81,7 @@ async function route(req, res, r, method) {
     if (!u || u.disabled || !checkPassword(String(b.password || ""), u.pass)) { noteFail(ip); fail(401, "bad_credentials"); }
     if (b.admin && u.role !== "admin") fail(403, "not_admin");
     fails.delete(ip);
-    await mutate("users", list => { const x = list.find(y => y.id === u.id); if (x) x.lastLogin = now(); });
+    try { await mutate("users", list => { const x = list.find(y => y.id === u.id); if (x) x.lastLogin = now(); }); } catch (e) { console.error("lastLogin", e); }
     cookie(res, makeToken(u.id, u.role === "admin" ? 1 : 14), u.role === "admin" ? 86400 : 14 * 86400);
     return { user: publicUser(u) };
   }
