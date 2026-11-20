@@ -116,6 +116,7 @@ input[type=checkbox]{width:auto;padding:0;flex:none}
     <div class="row"><label><span data-i18n="qEm"></span><input id="q-em" name="em" type="email" autocomplete="email" required></label><label><span data-i18n="qQty"></span><input id="q-qty" name="qty" inputmode="numeric" placeholder="500"></label></div>
     <label><span data-i18n="qMsg"></span><textarea id="q-msg" name="msg"></textarea></label>
     <p id="fmsg" role="status"></p>
+    <p style="font-size:14px;color:var(--muted);margin:0">Email: <a href="mailto:baromina111@gmail.com">baromina111@gmail.com</a></p>
     <div class="acts"><button type="button" class="ghost" id="close" data-i18n="cancel"></button><button class="btn" type="submit" data-i18n="send"></button></div>
   </form>
 </div></dialog>
@@ -123,7 +124,7 @@ input[type=checkbox]{width:auto;padding:0;flex:none}
 <script src="data.js"></script>
 <script>
 // 견적 요청을 받을 법인 메일. 비어 있으면 "준비 중" 안내만 표시한다. (index.html과 같은 값으로 맞춘다)
-const CONTACT_EMAIL = "";
+const CONTACT_EMAIL = "baromina111@gmail.com";
 const MAX = 3;
 const T = {
 ja:{title:"SCENT BRIDGE | 韓国フレグランスOEMメーカーを探す",h1:"韓国の香り製品メーカーを探す",lead:"品目・最小ロット・認証で絞り込み、気になるメーカーを3社まで選んでまとめて見積依頼できます。やり取りは日本語で、当方が韓国側と調整します。",
@@ -134,7 +135,7 @@ add:"比較に追加",added:"選択中（外す）",full:"3社まで選択でき
 kGoods:"雑貨",kGoodsD:"日本では化粧品の許可なしで輸入できる品目",kCos:"化粧品",kCosD:"製造販売業許可を持つ事業者（輸入代行）が必要な品目",
 disc:"※ 掲載内容は各社が公開している情報をもとにした調査結果で、当社との提携を示すものではありません。社名は見積依頼の際にご案内します。区分は一般的な目安で、個別製品の扱いは成分や表示により異なります。",
 dTitle:"見積依頼",dSel:s=>`選択中：${s}`,qCo:"会社名・ブランド名",qNm:"ご担当者名",qEm:"メールアドレス",qQty:"希望数量（個）",qMsg:"品目・ご希望（香り、容器、納期など）",cancel:"閉じる",send:"送信する",
-need:"会社名・ご担当者名・メールアドレスをご入力ください。",soon:"受付窓口は現在準備中です。まもなく開始します。",opened:"メールソフトが開きます。そのまま送信してください。",subj:"【SCENT BRIDGE】見積依頼"},
+need:"会社名・ご担当者名・メールアドレスをご入力ください。",soon:"受付窓口は現在準備中です。まもなく開始します。",opened:"メールソフトが開きます。そのまま送信してください。開かない場合は baromina111@gmail.com 宛に直接お送りください。",subj:"【SCENT BRIDGE】見積依頼"},
 ko:{title:"SCENT BRIDGE | 한국 향 제품 OEM 제조사 찾기",h1:"한국 향 제품 제조사 찾기",lead:"품목·최소 수량·인증으로 좁히고, 마음에 드는 제조사를 3곳까지 골라 한 번에 견적을 요청할 수 있습니다. 소통은 일본어로 하고, 한국 측 조율은 저희가 합니다.",
 fItem:"품목",fMoq:"최소 수량",moqAny:"상관없음",moq100:"100개 이하부터",moq500:"500개 이하부터",moq2000:"2,000개 이하부터",fGmp:"ISO 22716 / CGMP 보유",fReg:"한국 공장등록 확인",regV:"확인 (한국산업단지공단 등록공장 명단, 2025년 말 기준)",regNo:"명단에서 미확인",regK:"공장등록",fJp:"일본 거래 기재 있음",fSmall:"대형사 제외",reset:"조건 초기화",
 count:n=>`${n}곳이 해당`,none:"조건에 맞는 제조사가 없습니다. 조건을 넓혀 보세요.",
@@ -143,7 +144,7 @@ add:"비교에 추가",added:"선택됨(빼기)",full:"3곳까지 고를 수 있
 kGoods:"잡화",kGoodsD:"일본에서 화장품 허가 없이 수입할 수 있는 품목",kCos:"화장품",kCosD:"제조판매업 허가를 가진 사업자(수입대행)가 필요한 품목",
 disc:"※ 게재 내용은 각 회사가 공개한 정보를 바탕으로 한 조사 결과이며, 당사와의 제휴를 뜻하지 않습니다. 회사명은 견적 요청 시 안내합니다. 구분은 일반적인 기준이며 개별 제품은 성분과 표시에 따라 달라집니다.",
 dTitle:"견적 요청",dSel:s=>`선택: ${s}`,qCo:"회사명·브랜드명",qNm:"담당자명",qEm:"이메일",qQty:"희망 수량(개)",qMsg:"품목·희망 사항(향, 용기, 납기 등)",cancel:"닫기",send:"보내기",
-need:"회사명·담당자명·이메일을 입력해 주세요.",soon:"접수 창구를 준비하고 있습니다. 곧 시작합니다.",opened:"메일 프로그램이 열립니다. 그대로 보내 주세요.",subj:"[SCENT BRIDGE] 견적 요청"}};
+need:"회사명·담당자명·이메일을 입력해 주세요.",soon:"접수 창구를 준비하고 있습니다. 곧 시작합니다.",opened:"메일 프로그램이 열립니다. 그대로 보내 주세요. 열리지 않으면 baromina111@gmail.com 로 직접 보내 주세요.",subj:"[SCENT BRIDGE] 견적 요청"}};
 
 const TAGS = window.SB_TAGS || [], MAKERS = window.SB_MAKERS || [];
 const tagById = Object.fromEntries(TAGS.map(t => [t.id, t]));

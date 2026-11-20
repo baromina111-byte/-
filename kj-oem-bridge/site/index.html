@@ -192,6 +192,7 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--muted);f
         <label><span data-i18n="fMsg"></span><textarea name="msg"></textarea></label>
         <div><button class="btn" type="submit" data-i18n="fSend"></button></div>
         <p id="formMsg" role="status"></p>
+        <p style="font-size:14px;color:var(--muted);margin:0">Email: <a href="mailto:baromina111@gmail.com">baromina111@gmail.com</a></p>
       </form>
     </div>
   </section>
@@ -205,7 +206,7 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--muted);f
 
 <script>
 // 문의를 받을 법인 메일 주소. 비어 있으면 폼은 "준비 중" 안내만 표시한다.
-const CONTACT_EMAIL = "";
+const CONTACT_EMAIL = "baromina111@gmail.com";
 
 const T = {
 ja:{
@@ -242,7 +243,7 @@ ja:{
   fItem:"品目", i1:"香水", i2:"ディフューザー", i3:"ルームスプレー", i4:"キャンドル", i5:"ヘア/ボディミスト", i6:"その他",
   fQty:"希望数量（個）", fMsg:"ご相談内容", fSend:"送信する",
   mNeed:"会社名・ご担当者名・メールアドレスをご入力ください。",
-  mOpen:"メールソフトが開きます。そのまま送信してください。",
+  mOpen:"メールソフトが開きます。そのまま送信してください。開かない場合は baromina111@gmail.com 宛に直接お送りください。",
   mSoon:"お問い合わせ窓口は現在準備中です。まもなく受付を開始します。",
   subj:"【SCENT BRIDGE】お問い合わせ",
   footer:"日韓フレグランスOEMマッチング"
@@ -281,7 +282,7 @@ ko:{
   fItem:"품목", i1:"향수", i2:"디퓨저", i3:"룸스프레이", i4:"캔들", i5:"헤어/바디 미스트", i6:"기타",
   fQty:"희망 수량(개)", fMsg:"문의 내용", fSend:"보내기",
   mNeed:"회사명·담당자명·이메일을 입력해 주세요.",
-  mOpen:"메일 프로그램이 열립니다. 그대로 보내 주세요.",
+  mOpen:"메일 프로그램이 열립니다. 그대로 보내 주세요. 열리지 않으면 baromina111@gmail.com 로 직접 보내 주세요.",
   mSoon:"문의 창구를 준비하고 있습니다. 곧 접수를 시작합니다.",
   subj:"[SCENT BRIDGE] 문의",
   footer:"한일 프래그런스 OEM 매칭"
@@ -311,11 +312,11 @@ document.getElementById("inq").addEventListener("submit", e => {
   if (!CONTACT_EMAIL) { msg.textContent = t.mSoon; return; }
   const sel = e.target.elements;
   const body = [
-    t.fType + ": " + sel.type.selectedOptions[0].textContent,
+    t.fType + ": " + sel.namedItem("type").selectedOptions[0].textContent,
     t.fCompany + ": " + f.get("company"),
     t.fName + ": " + f.get("name"),
     t.fEmail + ": " + f.get("email"),
-    t.fItem + ": " + sel.item.selectedOptions[0].textContent,
+    t.fItem + ": " + sel.namedItem("item").selectedOptions[0].textContent,
     t.fQty + ": " + (f.get("qty") || "-"),
     "", f.get("msg") || ""
   ].join("\n");
