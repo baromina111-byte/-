@@ -34,6 +34,7 @@ for i, r in enumerate(rows, 1):
         "certs": certs, "japan": "일본" in exp,
         "export": not exp.startswith("미확인"),
         "large": r["회사명"].startswith("[대형]"), "checked": r["확인일"],
+        "registered": r.get("공장등록", "") == "확인",
     })
 tags = [{"id": t[1], "ja": t[2], "ko": t[3], "kind": t[4]} for t in TAGS]
 js = "window.SB_TAGS=" + json.dumps(tags, ensure_ascii=False) + ";\nwindow.SB_MAKERS=" + json.dumps(out, ensure_ascii=False) + ";\n"

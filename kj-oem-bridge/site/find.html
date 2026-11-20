@@ -88,6 +88,7 @@ input[type=checkbox]{width:auto;padding:0;flex:none}
       <div><h2 data-i18n="fMoq"></h2><select id="fMoq"><option value="" data-i18n="moqAny"></option><option value="100" data-i18n="moq100"></option><option value="500" data-i18n="moq500"></option><option value="2000" data-i18n="moq2000"></option></select></div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <label class="ck"><input type="checkbox" id="fGmp"><span data-i18n="fGmp"></span></label>
+        <label class="ck"><input type="checkbox" id="fReg"><span data-i18n="fReg"></span></label>
         <label class="ck"><input type="checkbox" id="fJp"><span data-i18n="fJp"></span></label>
         <label class="ck"><input type="checkbox" id="fSmall"><span data-i18n="fSmall"></span></label>
       </div>
@@ -126,7 +127,7 @@ const CONTACT_EMAIL = "";
 const MAX = 3;
 const T = {
 ja:{title:"SCENT BRIDGE | 韓国フレグランスOEMメーカーを探す",h1:"韓国の香り製品メーカーを探す",lead:"品目・最小ロット・認証で絞り込み、気になるメーカーを3社まで選んでまとめて見積依頼できます。やり取りは日本語で、当方が韓国側と調整します。",
-fItem:"品目",fMoq:"最小ロット",moqAny:"指定なし",moq100:"100個以下から",moq500:"500個以下から",moq2000:"2,000個以下から",fGmp:"ISO 22716 / CGMP あり",fJp:"日本取引の記載あり",fSmall:"大手を除く",reset:"条件をリセット",
+fItem:"品目",fMoq:"最小ロット",moqAny:"指定なし",moq100:"100個以下から",moq500:"500個以下から",moq2000:"2,000個以下から",fGmp:"ISO 22716 / CGMP あり",fReg:"韓国の工場登録を確認済み",regV:"確認済み（韓国産業団地公団の登録工場リスト 2025年末時点）",regNo:"リストで未確認",regK:"工場登録",fJp:"日本取引の記載あり",fSmall:"大手を除く",reset:"条件をリセット",
 count:n=>`${n}社が該当`,none:"条件に合うメーカーがありません。条件をゆるめてお試しください。",
 moq:"最小ロット",moqV:n=>`${n.toLocaleString()}個〜`,moqNo:"非公開（要問合せ）",reg:"所在地",cert:"認証",certNo:"公開情報なし",exp:"海外取引",expJp:"日本取引の記載あり",expYes:"海外取引の記載あり",expNo:"公開情報なし",chk:"確認日",large:"大手",
 add:"比較に追加",added:"選択中（外す）",full:"3社まで選択できます",pick0:"メーカーを選ぶと、ここに表示されます",ask:"選んだメーカーに見積依頼",
@@ -135,7 +136,7 @@ disc:"※ 掲載内容は各社が公開している情報をもとにした調�
 dTitle:"見積依頼",dSel:s=>`選択中：${s}`,qCo:"会社名・ブランド名",qNm:"ご担当者名",qEm:"メールアドレス",qQty:"希望数量（個）",qMsg:"品目・ご希望（香り、容器、納期など）",cancel:"閉じる",send:"送信する",
 need:"会社名・ご担当者名・メールアドレスをご入力ください。",soon:"受付窓口は現在準備中です。まもなく開始します。",opened:"メールソフトが開きます。そのまま送信してください。",subj:"【SCENT BRIDGE】見積依頼"},
 ko:{title:"SCENT BRIDGE | 한국 향 제품 OEM 제조사 찾기",h1:"한국 향 제품 제조사 찾기",lead:"품목·최소 수량·인증으로 좁히고, 마음에 드는 제조사를 3곳까지 골라 한 번에 견적을 요청할 수 있습니다. 소통은 일본어로 하고, 한국 측 조율은 저희가 합니다.",
-fItem:"품목",fMoq:"최소 수량",moqAny:"상관없음",moq100:"100개 이하부터",moq500:"500개 이하부터",moq2000:"2,000개 이하부터",fGmp:"ISO 22716 / CGMP 보유",fJp:"일본 거래 기재 있음",fSmall:"대형사 제외",reset:"조건 초기화",
+fItem:"품목",fMoq:"최소 수량",moqAny:"상관없음",moq100:"100개 이하부터",moq500:"500개 이하부터",moq2000:"2,000개 이하부터",fGmp:"ISO 22716 / CGMP 보유",fReg:"한국 공장등록 확인",regV:"확인 (한국산업단지공단 등록공장 명단, 2025년 말 기준)",regNo:"명단에서 미확인",regK:"공장등록",fJp:"일본 거래 기재 있음",fSmall:"대형사 제외",reset:"조건 초기화",
 count:n=>`${n}곳이 해당`,none:"조건에 맞는 제조사가 없습니다. 조건을 넓혀 보세요.",
 moq:"최소 수량",moqV:n=>`${n.toLocaleString()}개~`,moqNo:"비공개(문의 필요)",reg:"소재지",cert:"인증",certNo:"공개 정보 없음",exp:"해외 거래",expJp:"일본 거래 기재 있음",expYes:"해외 거래 기재 있음",expNo:"공개 정보 없음",chk:"확인일",large:"대형",
 add:"비교에 추가",added:"선택됨(빼기)",full:"3곳까지 고를 수 있습니다",pick0:"제조사를 고르면 여기에 표시됩니다",ask:"고른 제조사에 견적 요청",
@@ -147,7 +148,7 @@ need:"회사명·담당자명·이메일을 입력해 주세요.",soon:"접수 �
 const TAGS = window.SB_TAGS || [], MAKERS = window.SB_MAKERS || [];
 const tagById = Object.fromEntries(TAGS.map(t => [t.id, t]));
 let lang = "ja";
-const st = { tags:new Set(), moq:"", gmp:false, jp:false, small:false, picked:[] };
+const st = { tags:new Set(), moq:"", gmp:false, jp:false, small:false, reg:false, picked:[] };
 const $ = id => document.getElementById(id);
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
@@ -156,6 +157,7 @@ function match(m){
   if (st.moq && !(m.moq != null && m.moq <= Number(st.moq))) return false;
   if (st.gmp && !m.certs.some(c => c === "ISO 22716" || c === "CGMP")) return false;
   if (st.jp && !m.japan) return false;
+  if (st.reg && !m.registered) return false;
   if (st.small && m.large) return false;
   return true;
 }
@@ -177,7 +179,7 @@ function render(){
     const tg = el("div","tags"); m.tags.forEach(id => tg.appendChild(el("span","tag " + tagById[id].kind, tagById[id][lang]))); c.appendChild(tg);
     const dl = el("dl");
     [[t.moq, m.moq != null ? t.moqV(m.moq) : t.moqNo],[t.reg, m.region[lang]],[t.cert, m.certs.length ? m.certs.join(", ") : t.certNo],
-     [t.exp, m.japan ? t.expJp : m.export ? t.expYes : t.expNo],[t.chk, m.checked]].forEach(([k,v]) => { dl.appendChild(el("dt",null,k)); dl.appendChild(el("dd",null,v)); });
+     [t.regK, m.registered ? t.regV : t.regNo],[t.exp, m.japan ? t.expJp : m.export ? t.expYes : t.expNo],[t.chk, m.checked]].forEach(([k,v]) => { dl.appendChild(el("dt",null,k)); dl.appendChild(el("dd",null,v)); });
     c.appendChild(dl);
     const b = el("button","pick", on ? t.added : t.add); b.type = "button";
     if (!on && st.picked.length >= MAX) { b.disabled = true; b.title = t.full; }
@@ -191,8 +193,8 @@ function render(){
 }
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.set; try { localStorage.setItem("sb-lang", lang); } catch(e){} render(); }));
 $("fMoq").addEventListener("change", e => { st.moq = e.target.value; render(); });
-[["fGmp","gmp"],["fJp","jp"],["fSmall","small"]].forEach(([id,k]) => $(id).addEventListener("change", e => { st[k] = e.target.checked; render(); }));
-$("reset").addEventListener("click", () => { st.tags.clear(); st.moq = ""; st.gmp = st.jp = st.small = false; $("fMoq").value = ""; ["fGmp","fJp","fSmall"].forEach(i => $(i).checked = false); render(); });
+[["fGmp","gmp"],["fJp","jp"],["fSmall","small"],["fReg","reg"]].forEach(([id,k]) => $(id).addEventListener("change", e => { st[k] = e.target.checked; render(); }));
+$("reset").addEventListener("click", () => { st.tags.clear(); st.moq = ""; st.gmp = st.jp = st.small = st.reg = false; $("fMoq").value = ""; ["fGmp","fJp","fSmall","fReg"].forEach(i => $(i).checked = false); render(); });
 $("open").addEventListener("click", () => { $("fmsg").textContent = ""; $("dlg").showModal(); });
 $("close").addEventListener("click", () => $("dlg").close());
 $("rq").addEventListener("submit", e => {

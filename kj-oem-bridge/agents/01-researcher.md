@@ -15,6 +15,9 @@ data/manufacturers.csv를 읽고, 거기에 없는 한국 향 제품 OEM/ODM 제
 다시 확인하고 확인일을 갱신해라. 죽은 곳은 지우지 말고 비고에 "폐쇄 의심"이라 적어라.
 ```
 
+## 후보 명단
+새 제조사는 웹 검색보다 먼저 `data/candidates-factory-register.csv`(공장등록 명단에서 뽑은 후보, 상태 `미조사`)에서 고른다. 디퓨저·캔들 태그를 우선한다. 홈페이지를 찾아 OEM 수주 여부를 확인한 곳만 `manufacturers.csv`에 넣고, 후보 파일의 상태를 `등록함` 또는 `제외(사유)`로 바꾼다.
+
 ## 저장 위치
 `data/manufacturers.csv` (행 추가)
 
