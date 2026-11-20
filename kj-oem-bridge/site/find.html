@@ -77,7 +77,8 @@ input[type=checkbox]{width:auto;padding:0;flex:none}
 <body>
 <header><div class="wrap nav">
   <a class="brand" href="index.html">SCENT BRIDGE</a>
-  <div class="lang" role="group" aria-label="Language"><button type="button" data-set="ja" aria-pressed="true">日本語</button><button type="button" data-set="ko" aria-pressed="false">한국어</button></div>
+  <div style="display:flex;gap:10px;align-items:center"><a href="/account" id="acct" class="ghost" style="text-decoration:none;font-size:13px;padding:6px 14px" data-i18n="login"></a>
+  <div class="lang" role="group" aria-label="Language"><button type="button" data-set="ja" aria-pressed="true">日本語</button><button type="button" data-set="ko" aria-pressed="false">한국어</button></div></div>
 </div></header>
 
 <main class="wrap">
@@ -114,7 +115,10 @@ input[type=checkbox]{width:auto;padding:0;flex:none}
   <form id="rq" novalidate>
     <div class="row"><label><span data-i18n="qCo"></span><input id="q-co" name="co" autocomplete="organization" required></label><label><span data-i18n="qNm"></span><input id="q-nm" name="nm" autocomplete="name" required></label></div>
     <div class="row"><label><span data-i18n="qEm"></span><input id="q-em" name="em" type="email" autocomplete="email" required></label><label><span data-i18n="qQty"></span><input id="q-qty" name="qty" inputmode="numeric" placeholder="500"></label></div>
+    <label><span data-i18n="qItem"></span><input id="q-item" name="item" placeholder="ディフューザー 100ml"></label>
     <label><span data-i18n="qMsg"></span><textarea id="q-msg" name="msg"></textarea></label>
+    <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+    <p id="q-member" style="font-size:13px;color:var(--muted)"></p>
     <p id="fmsg" role="status"></p>
     <p style="font-size:14px;color:var(--muted);margin:0">Email: <a href="mailto:baromina111@gmail.com">baromina111@gmail.com</a></p>
     <div class="acts"><button type="button" class="ghost" id="close" data-i18n="cancel"></button><button class="btn" type="submit" data-i18n="send"></button></div>
@@ -135,7 +139,7 @@ add:"比較に追加",added:"選択中（外す）",full:"3社まで選択でき
 kGoods:"雑貨",kGoodsD:"日本では化粧品の許可なしで輸入できる品目",kCos:"化粧品",kCosD:"製造販売業許可を持つ事業者（輸入代行）が必要な品目",
 disc:"※ 掲載内容は各社が公開している情報をもとにした調査結果で、当社との提携を示すものではありません。社名は見積依頼の際にご案内します。区分は一般的な目安で、個別製品の扱いは成分や表示により異なります。",
 dTitle:"見積依頼",dSel:s=>`選択中：${s}`,qCo:"会社名・ブランド名",qNm:"ご担当者名",qEm:"メールアドレス",qQty:"希望数量（個）",qMsg:"品目・ご希望（香り、容器、納期など）",cancel:"閉じる",send:"送信する",
-need:"会社名・ご担当者名・メールアドレスをご入力ください。",soon:"受付窓口は現在準備中です。まもなく開始します。",opened:"メールソフトが開きます。そのまま送信してください。開かない場合は baromina111@gmail.com 宛に直接お送りください。",subj:"【SCENT BRIDGE】見積依頼"},
+need:"会社名・ご担当者名・メールアドレスをご入力ください。",soon:"受付窓口は現在準備中です。まもなく開始します。",opened:"メールソフトが開きます。そのまま送信してください。開かない場合は baromina111@gmail.com 宛に直接お送りください。",subj:"【SCENT BRIDGE】見積依頼",qItem:"品目・容量",login:"ログイン",my:"マイページ",sending:"送信中…",done:"見積依頼を受け付けました。2営業日以内に、条件に合うメーカーの状況をご連絡します。",doneMember:"見積依頼を受け付けました。進み具合はマイページでご確認いただけます。",memberHint:"会員登録すると、見積とメッセージをマイページで確認できます。",memberOn:u=>`${u} としてログイン中。マイページに履歴が残ります。`},
 ko:{title:"SCENT BRIDGE | 한국 향 제품 OEM 제조사 찾기",h1:"한국 향 제품 제조사 찾기",lead:"품목·최소 수량·인증으로 좁히고, 마음에 드는 제조사를 3곳까지 골라 한 번에 견적을 요청할 수 있습니다. 소통은 일본어로 하고, 한국 측 조율은 저희가 합니다.",
 fItem:"품목",fMoq:"최소 수량",moqAny:"상관없음",moq100:"100개 이하부터",moq500:"500개 이하부터",moq2000:"2,000개 이하부터",fGmp:"ISO 22716 / CGMP 보유",fReg:"한국 공장등록 확인",regV:"확인 (한국산업단지공단 등록공장 명단, 2025년 말 기준)",regNo:"명단에서 미확인",regK:"공장등록",fJp:"일본 거래 기재 있음",fSmall:"대형사 제외",reset:"조건 초기화",
 count:n=>`${n}곳이 해당`,none:"조건에 맞는 제조사가 없습니다. 조건을 넓혀 보세요.",
@@ -144,10 +148,11 @@ add:"비교에 추가",added:"선택됨(빼기)",full:"3곳까지 고를 수 있
 kGoods:"잡화",kGoodsD:"일본에서 화장품 허가 없이 수입할 수 있는 품목",kCos:"화장품",kCosD:"제조판매업 허가를 가진 사업자(수입대행)가 필요한 품목",
 disc:"※ 게재 내용은 각 회사가 공개한 정보를 바탕으로 한 조사 결과이며, 당사와의 제휴를 뜻하지 않습니다. 회사명은 견적 요청 시 안내합니다. 구분은 일반적인 기준이며 개별 제품은 성분과 표시에 따라 달라집니다.",
 dTitle:"견적 요청",dSel:s=>`선택: ${s}`,qCo:"회사명·브랜드명",qNm:"담당자명",qEm:"이메일",qQty:"희망 수량(개)",qMsg:"품목·희망 사항(향, 용기, 납기 등)",cancel:"닫기",send:"보내기",
-need:"회사명·담당자명·이메일을 입력해 주세요.",soon:"접수 창구를 준비하고 있습니다. 곧 시작합니다.",opened:"메일 프로그램이 열립니다. 그대로 보내 주세요. 열리지 않으면 baromina111@gmail.com 로 직접 보내 주세요.",subj:"[SCENT BRIDGE] 견적 요청"}};
+need:"회사명·담당자명·이메일을 입력해 주세요.",soon:"접수 창구를 준비하고 있습니다. 곧 시작합니다.",opened:"메일 프로그램이 열립니다. 그대로 보내 주세요. 열리지 않으면 baromina111@gmail.com 로 직접 보내 주세요.",subj:"[SCENT BRIDGE] 견적 요청",qItem:"품목·용량",login:"로그인",my:"마이페이지",sending:"보내는 중…",done:"견적 요청을 접수했습니다. 영업일 2일 안에 조건에 맞는 제조사 상황을 연락드립니다.",doneMember:"견적 요청을 접수했습니다. 진행 상황은 마이페이지에서 볼 수 있습니다.",memberHint:"회원가입하면 견적과 메시지를 마이페이지에서 볼 수 있습니다.",memberOn:u=>`${u}(으)로 로그인 중. 마이페이지에 기록이 남습니다.`}};
 
-const TAGS = window.SB_TAGS || [], MAKERS = window.SB_MAKERS || [];
-const tagById = Object.fromEntries(TAGS.map(t => [t.id, t]));
+let TAGS = window.SB_TAGS || [], MAKERS = window.SB_MAKERS || [];
+let tagById = Object.fromEntries(TAGS.map(t => [t.id, t]));
+let ME = null;
 let lang = "ja";
 const st = { tags:new Set(), moq:"", gmp:false, jp:false, small:false, reg:false, picked:[] };
 const $ = id => document.getElementById(id);
@@ -196,20 +201,31 @@ document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click
 $("fMoq").addEventListener("change", e => { st.moq = e.target.value; render(); });
 [["fGmp","gmp"],["fJp","jp"],["fSmall","small"],["fReg","reg"]].forEach(([id,k]) => $(id).addEventListener("change", e => { st[k] = e.target.checked; render(); }));
 $("reset").addEventListener("click", () => { st.tags.clear(); st.moq = ""; st.gmp = st.jp = st.small = st.reg = false; $("fMoq").value = ""; ["fGmp","fJp","fSmall","fReg"].forEach(i => $(i).checked = false); render(); });
-$("open").addEventListener("click", () => { $("fmsg").textContent = ""; $("dlg").showModal(); });
+$("open").addEventListener("click", () => { $("fmsg").textContent = ""; memberLine(); $("dlg").showModal(); });
 $("close").addEventListener("click", () => $("dlg").close());
-$("rq").addEventListener("submit", e => {
-  e.preventDefault(); const t = T[lang], f = new FormData(e.target), msg = $("fmsg");
+function memberLine(){ $("q-member").textContent = ME ? T[lang].memberOn(ME.email) : T[lang].memberHint; }
+$("rq").addEventListener("submit", async e => {
+  e.preventDefault(); const t = T[lang], form = e.target, f = new FormData(form), msg = $("fmsg");
   if (!f.get("co") || !f.get("nm") || !/^\S+@\S+\.\S+$/.test(f.get("em") || "")) { msg.textContent = t.need; return; }
-  if (!CONTACT_EMAIL) { msg.textContent = t.soon; return; }
-  const body = ["Makers: " + st.picked.join(", "), t.qCo + ": " + f.get("co"), t.qNm + ": " + f.get("nm"), t.qEm + ": " + f.get("em"), t.qQty + ": " + (f.get("qty") || "-"), "", f.get("msg") || ""].join("\n");
-  location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(t.subj) + "&body=" + encodeURIComponent(body);
-  msg.textContent = t.opened;
+  const btn = form.querySelector("button[type=submit]"); btn.disabled = true; msg.textContent = t.sending;
+  try {
+    const r = await fetch("/api/public/request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ picks: st.picked, company: f.get("co"), name: f.get("nm"), email: f.get("em"), qty: f.get("qty"), item: f.get("item"), message: f.get("msg"), website: f.get("website"), lang }) });
+    if (!r.ok) throw new Error(r.status);
+    msg.textContent = ME ? t.doneMember : t.done;
+    st.picked = []; render(); $("q-msg").value = ""; $("q-qty").value = ""; $("q-item").value = "";
+  } catch (er) {
+    const body = ["Makers: " + st.picked.join(", "), t.qCo + ": " + f.get("co"), t.qNm + ": " + f.get("nm"), t.qEm + ": " + f.get("em"), t.qQty + ": " + (f.get("qty") || "-"), t.qItem + ": " + (f.get("item") || "-"), "", f.get("msg") || ""].join("\n");
+    location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(t.subj) + "&body=" + encodeURIComponent(body);
+    msg.textContent = t.opened;
+  } finally { btn.disabled = false; }
 });
 let saved = null; try { saved = localStorage.getItem("sb-lang"); } catch(e){}
 lang = saved || ((navigator.language || "").toLowerCase().startsWith("ko") ? "ko" : "ja");
 if (!T[lang]) lang = "ja";
 render();
+// 최신 제조사 목록(관리자 DB)과 로그인 상태를 불러온다. 실패하면 data.js 그대로 쓴다.
+fetch("/api/public/makers").then(r => r.ok ? r.json() : null).then(d => { if (d && d.makers && d.makers.length) { TAGS = d.tags; MAKERS = d.makers; tagById = Object.fromEntries(TAGS.map(t => [t.id, t])); render(); } }).catch(() => {});
+fetch("/api/auth/me").then(r => r.json()).then(d => { ME = d.user; if (ME) { const a = $("acct"); a.dataset.i18n = "my"; a.textContent = T[lang].my; if (ME.role === "admin") a.href = "/admin"; $("q-co").value = ME.company || ""; $("q-nm").value = ME.name || ""; $("q-em").value = ME.email || ""; } }).catch(() => {});
 </script>
 </body>
 </html>

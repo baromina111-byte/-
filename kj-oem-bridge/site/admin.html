@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>SCENT BRIDGE 관리자</title>
+<style>
+:root{--bg:#f4f2ee;--surface:#fff;--ink:#1d1b18;--muted:#6b655c;--line:#e2dcd0;--accent:#7a5a2e;--deep:#23201b;--ok:#2f5d50;--warn:#a33b2e;--soft:#f7f3ea}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR",system-ui,sans-serif;font-size:14px;line-height:1.6;word-break:keep-all}
+h1,h2,h3{margin:0;line-height:1.35} p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{padding:8px 10px;border:1px solid var(--line);background:#fff;border-radius:4px;width:100%}
+textarea{min-height:70px;resize:vertical}
+label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
+.btn{background:var(--deep);color:#fff;border:1px solid var(--deep);padding:8px 16px;border-radius:4px;cursor:pointer;white-space:nowrap}
+.btn.sec{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn.danger{background:#fff;color:var(--warn);border-color:#e7c4be}
+.btn:disabled{opacity:.5;cursor:wait}
+.msg{color:var(--warn);min-height:1.4em;font-size:13px} .msg.ok{color:var(--ok)}
+[hidden]{display:none!important}
+/* 로그인 */
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login form{background:#fff;border:1px solid var(--line);padding:32px;width:100%;max-width:380px;display:grid;gap:14px;border-radius:6px}
+.login h1{font-size:18px;letter-spacing:.12em}
+/* 레이아웃 */
+.app{display:grid;grid-template-columns:210px minmax(0,1fr);min-height:100vh}
+nav.side{background:var(--deep);color:#ddd6c8;padding:20px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+nav.side .logo{font-size:13px;letter-spacing:.18em;color:#fff;padding:0 10px 18px}
+nav.side button{background:none;border:0;color:inherit;text-align:left;padding:9px 12px;border-radius:4px;cursor:pointer;display:flex;justify-content:space-between;gap:8px}
+nav.side button[aria-current="page"]{background:#3a352d;color:#fff}
+nav.side .badge{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:0 7px}
+nav.side .foot{margin-top:auto;font-size:12px;color:#9c9384;padding:10px;display:grid;gap:6px}
+nav.side .foot button{padding:0;color:#ddd6c8;text-decoration:underline}
+main{padding:24px 28px 60px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.top h2{font-size:20px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tools input,.tools select{width:auto;min-width:160px}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:22px}
+.kpi{background:#fff;border:1px solid var(--line);padding:16px;border-radius:6px}
+.kpi b{display:block;font-size:26px;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:12px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px;margin-bottom:16px}
+.panel h3{font-size:15px;margin-bottom:10px}
+.tbl{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500;background:var(--soft);position:sticky;top:0}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--soft)}
+tr.unread td:first-child{border-left:3px solid var(--accent)}
+.pill{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.pill.new{background:#fbeee0;border-color:#efd3b3} .pill.won{background:#e3efe9;border-color:#bcd8ca} .pill.lost{color:var(--muted)}
+.muted{color:var(--muted)} .small{font-size:12px}
+.ellip{max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 상세 패널 */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(720px,100%);background:#fff;border-left:1px solid var(--line);box-shadow:-12px 0 30px rgba(0,0,0,.08);z-index:30;display:flex;flex-direction:column}
+.drawer header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.drawer .body{padding:18px;overflow:auto;display:grid;gap:14px;align-content:start}
+.drawer footer{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.shade{position:fixed;inset:0;background:rgba(20,18,15,.35);z-index:25}
+.g2{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:4px 12px;font-size:13px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;white-space:pre-wrap;word-break:break-all}
+.thread{display:grid;gap:8px}
+.bub{padding:8px 10px;border-radius:6px;background:var(--soft);font-size:13px;white-space:pre-wrap}
+.bub.admin{background:#efe6d4} .bub.internal{background:#fff;border:1px dashed var(--line)}
+.bub small{display:block;color:var(--muted);font-size:11px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;background:#fff;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--deep);color:#fff;border-color:var(--deep)}
+@media (max-width:860px){.app{grid-template-columns:1fr} nav.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap} nav.side .logo{width:100%;padding-bottom:6px} nav.side .foot{margin:0;width:100%;grid-auto-flow:column;justify-content:start} main{padding:18px 14px}}
+</style>
+</head>
+<body>
+<section class="login" id="loginBox" hidden>
+  <form id="fLogin" novalidate>
+    <h1>SCENT BRIDGE · ADMIN</h1>
+    <p class="muted small">운영자 전용 화면입니다.</p>
+    <label>이메일<input name="email" type="email" autocomplete="username" required></label>
+    <label>비밀번호<input name="password" type="password" autocomplete="current-password" required></label>
+    <p class="msg" id="mLogin" role="status"></p>
+    <button class="btn" type="submit">로그인</button>
+  </form>
+</section>
+
+<div class="app" id="appBox" hidden>
+  <nav class="side" aria-label="관리 메뉴">
+    <div class="logo">SCENT BRIDGE</div>
+    <button data-v="dash">대시보드</button>
+    <button data-v="requests">견적 요청 <span class="badge" id="bReq" hidden></span></button>
+    <button data-v="inquiries">문의 <span class="badge" id="bInq" hidden></span></button>
+    <button data-v="makers">제조사 DB</button>
+    <button data-v="brands">일본 브랜드 영업</button>
+    <button data-v="users">회원</button>
+    <button data-v="settings">설정</button>
+    <div class="foot"><span id="meLine"></span><a href="/" style="color:inherit">사이트 보기</a><button id="logout" type="button">로그아웃</button></div>
+  </nav>
+  <main id="view"></main>
+</div>
+<div id="drawerRoot"></div>
+
+<script src="/sb.js"></script>
+<script>
+const { api, el, fmt } = SB;
+const $ = id => document.getElementById(id);
+let me = null, view = "dash", cache = {};
+const ST = { new:"접수", reviewing:"검토 중", matched:"제조사 타진", quoted:"견적 도착", sample:"샘플 진행", won:"성사", lost:"종료" };
+const ERR = { bad_credentials:"이메일 또는 비밀번호가 틀렸습니다.", not_admin:"관리자 계정이 아닙니다.", too_many_attempts:"시도가 너무 많습니다. 10분 뒤에 다시 해 주세요.", email_taken:"이미 있는 이메일입니다.", weak_password:"비밀번호는 8자 이상이어야 합니다.", invalid:"입력값을 확인해 주세요.", empty_csv:"CSV에 데이터가 없습니다.", cannot_demote_self:"자기 계정의 관리자 권한은 뺄 수 없습니다.", cannot_disable_self:"자기 계정은 정지할 수 없습니다.", cannot_delete_self:"자기 계정은 삭제할 수 없습니다.", bad_current:"현재 비밀번호가 틀렸습니다.", maker_required:"제조사를 선택하세요.", network:"서버에 연결하지 못했습니다." };
+const errText = e => ERR[e.message] || (e.code === 0 ? ERR.network : "오류: " + e.message);
+const MAKER_F = ["회사명","영문명","홈페이지","소재지","주력품목","MOQ","수출경험","인증","문의창구","근거URL","확인일","비고","공장등록","등록생산품","등록주소"];
+const BRAND_F = ["브랜드명","운영법인","사이트","주력품목","대표제품","가격대(엔)","유형","문의창구","근거URL","상태","확인일","비고"];
+const BRAND_ST = ["신규","초안작성","발송","회신","미팅","의뢰","보류","제외"];
+const LONG = new Set(["비고","주력품목","수출경험","인증","등록생산품","대표제품"]);
+const link = v => /^https?:\/\//.test(v || "") ? el("a", { href: v, target: "_blank", rel: "noopener" }, v.replace(/^https?:\/\//, "").slice(0, 40)) : (v || "-");
+
+async function load(col, fresh){ if (fresh || !cache[col]) cache[col] = (await api("admin/" + col)).items; return cache[col]; }
+const invalidate = (...c) => c.forEach(k => delete cache[k]);
+async function act(btn, fn){ if (btn) btn.disabled = true; try { return await fn(); } catch (e) { alert(errText(e)); throw e; } finally { if (btn) btn.disabled = false; } }
+
+// ---------- 로그인 ----------
+$("fLogin").addEventListener("submit", async e => {
+  e.preventDefault(); const f = new FormData(e.target), b = e.target.querySelector("button"); b.disabled = true;
+  try { const d = await api("auth/login", { body: { email: f.get("email"), password: f.get("password"), admin: true } }); me = d.user; boot(); }
+  catch (er) { $("mLogin").textContent = errText(er); } finally { b.disabled = false; }
+});
+$("logout").onclick = async () => { await api("auth/logout", { method: "POST" }).catch(() => {}); location.reload(); };
+document.querySelectorAll("nav.side [data-v]").forEach(b => b.onclick = () => go(b.dataset.v));
+
+function go(v){ view = v; closeDrawer(); render(); }
+function boot(){ $("loginBox").hidden = true; $("appBox").hidden = false; $("meLine").textContent = me.email; render(); }
+
+// ---------- 상세 패널 ----------
+function closeDrawer(){ $("drawerRoot").replaceChildren(); }
+function drawer(title, bodyKids, footKids){
+  const d = el("div", { class: "drawer", role: "dialog", "aria-label": title },
+    el("header", null, el("h3", null, title), el("button", { class: "btn sec", type: "button", onclick: closeDrawer }, "닫기")),
+    el("div", { class: "body" }, bodyKids), el("footer", null, footKids || []));
+  $("drawerRoot").replaceChildren(el("div", { class: "shade", onclick: closeDrawer }), d);
+  return d;
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+// ---------- 화면 ----------
+async function render(){
+  document.querySelectorAll("nav.side [data-v]").forEach(b => b.dataset.v === view ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current"));
+  const box = $("view"); box.replaceChildren(el("p", { class: "muted" }, "불러오는 중…"));
+  try { await VIEWS[view](box); } catch (e) { if (e.code === 401 || e.code === 403) { location.reload(); return; } box.replaceChildren(el("p", { class: "msg" }, errText(e))); }
+  badges();
+}
+async function badges(){
+  try { const s = await api("admin/summary"); const r = s.requests.unread + (s.requests.byStatus.new || 0), q = s.inquiries.open;
+    $("bReq").hidden = !r; $("bReq").textContent = r; $("bInq").hidden = !q; $("bInq").textContent = q; } catch (e) {}
+}
+const head = (title, ...tools) => el("div", { class: "top" }, el("h2", null, title), el("div", { class: "tools" }, tools));
+function table(cols, rows, onClick, rowClass){
+  const tb = el("table", null, el("thead", null, el("tr", null, cols.map(c => el("th", null, c[0])))));
+  const body = el("tbody");
+  if (!rows.length) body.append(el("tr", null, el("td", { colspan: cols.length, class: "muted" }, "데이터가 없습니다.")));
+  rows.forEach(r => body.append(el("tr", { class: (onClick ? "click " : "") + (rowClass ? rowClass(r) : ""), onclick: onClick ? () => onClick(r) : null }, cols.map(c => el("td", { class: c[2] || "" }, c[1](r))))));
+  tb.append(body); return el("div", { class: "tbl" }, tb);
+}
+
+const VIEWS = {
+  async dash(box){
+    const s = await api("admin/summary");
+    const k = (n, l) => el("div", { class: "kpi" }, el("b", null, n), el("span", null, l));
+    box.replaceChildren(head("대시보드"),
+      el("div", { class: "kpis" },
+        k(s.requests.total, `견적 요청 (새 요청 ${s.requests.byStatus.new || 0} · 읽지 않음 ${s.requests.unread})`),
+        k(s.requests.byStatus.won || 0, "성사"),
+        k(s.inquiries.open, `처리 안 한 문의 (전체 ${s.inquiries.total})`),
+        k(s.makers.total, `제조사 (공장등록 ${s.makers.registered} · 최소수량 확인 ${s.makers.withMoq})`),
+        k(s.brands.total, "일본 브랜드 리스트"),
+        k(s.users.total, `회원 (브랜드 ${s.users.byRole.brand || 0} · 제조사 ${s.users.byRole.maker || 0})`)),
+      el("div", { class: "g2" },
+        el("div", { class: "panel" }, el("h3", null, "견적 요청 단계"), el("dl", { class: "kv" }, Object.entries(ST).flatMap(([k2, v]) => [el("dt", null, v), el("dd", null, String(s.requests.byStatus[k2] || 0))]))),
+        el("div", { class: "panel" }, el("h3", null, "일본 브랜드 영업 단계"), el("dl", { class: "kv" }, Object.entries(s.brands.byStatus).flatMap(([k2, v]) => [el("dt", null, k2 || "-"), el("dd", null, String(v))])))),
+      el("div", { class: "panel" }, el("h3", null, "최근 활동"),
+        s.recent.length ? el("div", { class: "thread" }, s.recent.map(x => el("div", { class: "bub", style: "cursor:pointer", onclick: () => go(x.kind === "request" ? "requests" : "inquiries") }, `${x.kind === "request" ? "견적 요청" : "문의"} · ${x.title}`, el("small", null, fmt(x.at))))) : el("p", { class: "muted" }, "아직 활동이 없습니다.")));
+  },
+
+  async requests(box){
+    const [list, makers] = await Promise.all([load("requests", true), load("makers")]);
+    const mName = Object.fromEntries(makers.map(m => [m.id, m["회사명"]]));
+    let f = "";
+    const sel = el("select", { "aria-label": "단계" }, el("option", { value: "" }, "모든 단계"), Object.entries(ST).map(([k, v]) => el("option", { value: k }, v)));
+    const wrap = el("div");
+    const draw = () => wrap.replaceChildren(table([
+      ["요청일", r => fmt(r.createdAt), "small"], ["단계", r => el("span", { class: "pill " + r.status }, ST[r.status] || r.status)],
+      ["회사", r => r.company], ["담당자", r => `${r.name} <${r.email}>`, "small"], ["고른 제조사", r => r.picks.map(p => `${p} ${mName[p] || ""}`).join("\n") || "-", "small"],
+      ["수량", r => r.qty || "-"], ["회원", r => r.userId ? "회원" : "비회원", "small"]],
+      list.filter(r => !f || r.status === f).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)), r => openRequest(r.id), r => r.unread ? "unread" : ""));
+    sel.onchange = () => { f = sel.value; draw(); };
+    box.replaceChildren(head("견적 요청", sel), wrap); draw();
+  },
+
+  async inquiries(box){
+    const list = await load("inquiries", true);
+    box.replaceChildren(head("문의"), table([
+      ["받은 날", r => fmt(r.createdAt), "small"], ["상태", r => el("span", { class: "pill " + (r.status === "done" ? "won" : "new") }, r.status === "done" ? "처리 완료" : "새 문의")],
+      ["구분", r => r.type === "maker" ? "한국 제조사" : "일본 브랜드"], ["회사", r => r.company], ["담당자", r => `${r.name} <${r.email}>`, "small"],
+      ["품목·수량", r => `${r.item || "-"} / ${r.qty || "-"}`, "small"], ["내용", r => r.message || "-", "small ellip"]],
+      [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt)), openInquiry));
+  },
+
+  makers(box){ return dataView(box, "makers", "제조사 DB", MAKER_F, [["ID", r => r.id], ["회사명", r => r["회사명"] + (r.hidden ? " (비공개)" : "")], ["소재지", r => r["소재지"]], ["주력품목", r => r["주력품목"], "small ellip"], ["MOQ", r => r.MOQ, "small"], ["공장등록", r => r["공장등록"], "small"], ["문의창구", r => link(r["문의창구"]), "small"]]); },
+  brands(box){ return dataView(box, "brands", "일본 브랜드 영업", BRAND_F, [["ID", r => r.id], ["브랜드", r => r["브랜드명"]], ["운영법인", r => r["운영법인"], "small"], ["주력품목", r => r["주력품목"], "small ellip"], ["상태", r => el("span", { class: "pill" }, r["상태"] || "-")], ["확인일", r => r["확인일"], "small"], ["사이트", r => link(r["사이트"]), "small"]]); },
+
+  async users(box){
+    const list = await load("users", true);
+    const add = el("button", { class: "btn", type: "button", onclick: () => openUser(null) }, "회원 추가");
+    box.replaceChildren(head("회원", add), table([
+      ["가입일", r => fmt(r.createdAt), "small"], ["구분", r => ({ brand: "일본 브랜드", maker: "한국 제조사", admin: "관리자" })[r.role]], ["회사", r => r.company], ["이름", r => r.name],
+      ["이메일", r => r.email, "small"], ["연결 제조사", r => r.makerId || "-"], ["상태", r => r.disabled ? el("span", { class: "pill lost" }, "정지") : el("span", { class: "pill won" }, "사용 중")], ["최근 로그인", r => fmt(r.lastLogin), "small"]],
+      [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt)), openUser));
+  },
+
+  async settings(box){
+    const f = el("form", { class: "panel", style: "max-width:420px;display:grid;gap:10px" }, el("h3", null, "내 비밀번호 변경"),
+      el("label", null, "현재 비밀번호", el("input", { name: "current", type: "password", autocomplete: "current-password" })),
+      el("label", null, "새 비밀번호 (8자 이상)", el("input", { name: "next", type: "password", autocomplete: "new-password" })),
+      el("p", { class: "msg", id: "mPw" }), el("button", { class: "btn", type: "submit" }, "변경"));
+    f.onsubmit = async e => { e.preventDefault(); const fd = new FormData(f), m = f.querySelector(".msg");
+      try { await api("auth/password", { body: { current: fd.get("current"), next: fd.get("next") } }); f.reset(); m.className = "msg ok"; m.textContent = "변경했습니다."; } catch (er) { m.className = "msg"; m.textContent = errText(er); } };
+    box.replaceChildren(head("설정"), f,
+      el("div", { class: "panel", style: "max-width:720px" }, el("h3", null, "운영 메모"),
+        el("p", { class: "small muted" }, "· 제조사 실명과 연락처는 이 화면에서만 보입니다. 공개 사이트에는 M-번호와 품목·인증만 나갑니다."),
+        el("p", { class: "small muted" }, "· '제조사 DB'에서 고친 내용은 공개 검색 화면(/find)에 바로 반영됩니다. 숨기려면 상세에서 '공개 검색에서 숨김'을 켜세요."),
+        el("p", { class: "small muted" }, "· 견적 요청을 제조사에 보내려면 요청 상세에서 받는 사람을 제조사로 고르고 메시지를 보내세요. 그 제조사의 회원 계정(회원 메뉴에서 제조사 연결)에 의뢰가 나타납니다.")));
+  },
+};
+
+async function dataView(box, col, title, fields, cols){
+  const list = await load(col, true);
+  let q = "";
+  const search = el("input", { type: "search", placeholder: "검색 (이름, 품목, 지역…)", "aria-label": "검색" });
+  const file = el("input", { type: "file", accept: ".csv,text/csv", hidden: true });
+  const wrap = el("div");
+  const draw = () => wrap.replaceChildren(el("p", { class: "small muted", style: "margin-bottom:8px" }, `${list.length}건`), table(cols, list.filter(r => !q || JSON.stringify(r).toLowerCase().includes(q)), r => openRecord(col, fields, r)));
+  search.oninput = () => { q = search.value.trim().toLowerCase(); draw(); };
+  file.onchange = async () => {
+    const f = file.files[0]; if (!f) return;
+    const mode = confirm("확인 = 기존 데이터를 이 CSV로 모두 바꾸기\n취소 = 기존 데이터 뒤에 덧붙이기") ? "replace" : "append";
+    const csv = await f.text();
+    try { const d = await api("admin/import", { body: { kind: col, csv, mode } }); alert(`가져왔습니다. 전체 ${d.total}건`); invalidate(col); render(); } catch (e) { alert(errText(e)); }
+    file.value = "";
+  };
+  box.replaceChildren(head(title, search,
+    el("button", { class: "btn sec", type: "button", onclick: () => file.click() }, "CSV 가져오기"), file,
+    el("a", { class: "btn sec", href: "/api/admin/export?kind=" + col, style: "text-decoration:none" }, "CSV 내보내기"),
+    el("button", { class: "btn", type: "button", onclick: () => openRecord(col, fields, null) }, "추가")), wrap);
+  draw();
+}
+
+function openRecord(col, fields, r){
+  const f = el("form", { class: "g2" }, fields.map(k => el("label", { style: LONG.has(k) ? "grid-column:1/-1" : "" }, k,
+    col === "brands" && k === "상태" ? el("select", { name: k }, BRAND_ST.map(s => el("option", { value: s, selected: (r?.[k] || "신규") === s }, s)))
+    : LONG.has(k) ? el("textarea", { name: k }, r?.[k] || "") : el("input", { name: k, value: r?.[k] || "" }))));
+  if (col === "makers") f.append(el("label", { style: "grid-column:1/-1;display:flex;gap:8px;align-items:center;color:var(--ink)" }, el("input", { type: "checkbox", name: "hidden", style: "width:auto", checked: !!r?.hidden }), "공개 검색에서 숨김"));
+  const save = el("button", { class: "btn", type: "button" }, "저장");
+  save.onclick = () => act(save, async () => {
+    const data = Object.fromEntries(new FormData(f)); if (col === "makers") data.hidden = f.hidden.checked;
+    if (r) await api(`admin/${col}/${r.id}`, { method: "PATCH", body: data }); else await api(`admin/${col}`, { body: data });
+    invalidate(col); closeDrawer(); render();
+  });
+  const del = r ? el("button", { class: "btn danger", type: "button" }, "삭제") : null;
+  if (del) del.onclick = () => { if (confirm(`${r.id}를 삭제할까요? 되돌릴 수 없습니다.`)) act(del, async () => { await api(`admin/${col}/${r.id}`, { method: "DELETE" }); invalidate(col); closeDrawer(); render(); }); };
+  drawer(r ? `${r.id} 편집` : "새로 추가", [f], [del, save]);
+}
+
+async function openRequest(id){
+  const [{ item: r }, makers] = await Promise.all([api("admin/requests/" + id), load("makers")]);
+  if (r.unread) api("admin/requests/" + id, { method: "PATCH", body: { read: true } }).then(() => badges()).catch(() => {});
+  const mName = Object.fromEntries(makers.map(m => [m.id, m["회사명"]]));
+  const status = el("select", { "aria-label": "단계" }, Object.entries(ST).map(([k, v]) => el("option", { value: k, selected: r.status === k }, v)));
+  const assigned = new Set(r.assigned || []);
+  const chips = el("div", { class: "chips" });
+  const drawChips = () => chips.replaceChildren(...[...new Set([...r.picks, ...assigned])].map(mid => el("button", { type: "button", class: "chip", "aria-pressed": String(assigned.has(mid)), onclick: () => { assigned.has(mid) ? assigned.delete(mid) : assigned.add(mid); drawChips(); } }, `${mid} ${mName[mid] || "(없음)"}`)));
+  const addSel = el("select", { "aria-label": "제조사 추가" }, el("option", { value: "" }, "+ 제조사 추가"), makers.map(m => el("option", { value: m.id }, `${m.id} ${m["회사명"]}`)));
+  addSel.onchange = () => { if (addSel.value) { assigned.add(addSel.value); drawChips(); addSel.value = ""; } };
+  drawChips();
+  const notes = el("textarea", { "aria-label": "내부 메모" }, r.notes || "");
+
+  // 메시지
+  const who = m => m.from === "admin" ? `운영자 → ${m.to === "brand" ? "브랜드" : m.to === "maker" ? "제조사 " + m.makerId : "내부 메모"}` : m.from === "brand" ? "브랜드" : `제조사 ${m.makerId}`;
+  const thread = el("div", { class: "thread" }, (r.messages || []).length ? r.messages.map(m => el("div", { class: "bub " + (m.from === "admin" ? (m.to === "internal" ? "internal" : "admin") : "") }, m.text, el("small", null, `${who(m)} · ${fmt(m.at)}`))) : el("p", { class: "muted small" }, "메시지가 없습니다."));
+  const to = el("select", { "aria-label": "받는 사람" }, el("option", { value: "brand" }, "브랜드에게"), el("option", { value: "internal" }, "내부 메모"), [...new Set([...r.picks, ...assigned])].map(mid => el("option", { value: "maker:" + mid }, `제조사 ${mid} ${mName[mid] || ""}에게`)));
+  const text = el("textarea", { placeholder: "메시지 내용", "aria-label": "메시지 내용" });
+  const send = el("button", { class: "btn", type: "button" }, "보내기");
+  send.onclick = () => act(send, async () => { const v = text.value.trim(); if (!v) return; const [t2, mid] = to.value.split(":");
+    await api(`admin/requests/${id}/message`, { body: { to: t2, makerId: mid, text: v } }); openRequest(id); });
+
+  // 견적
+  const quotes = el("div", { class: "thread" }, (r.quotes || []).length ? r.quotes.map(q => {
+    const sh = el("button", { class: "btn sec", type: "button" }, q.shared ? "브랜드에 공개 중 (숨기기)" : "브랜드에 공개");
+    sh.onclick = () => act(sh, async () => { await api("admin/requests/" + id, { method: "PATCH", body: { shareQuote: q.makerId, shared: !q.shared } }); openRequest(id); });
+    return el("div", { class: "bub" }, `${q.makerId} ${mName[q.makerId] || ""} · 단가 ${q.price || "-"} · 최소 ${q.moq || "-"} · 납기 ${q.lead || "-"}${q.note ? "\n" + q.note : ""}`, el("small", null, `${q.byAdmin ? "운영자 입력" : "제조사 제출"} · ${fmt(q.at)}`), el("div", { style: "margin-top:6px" }, sh));
+  }) : el("p", { class: "muted small" }, "아직 견적이 없습니다."));
+  const qf = el("form", { class: "g2" },
+    el("label", null, "제조사", el("select", { name: "makerId" }, [...new Set([...r.picks, ...assigned])].map(mid => el("option", { value: mid }, `${mid} ${mName[mid] || ""}`)))),
+    el("label", null, "단가", el("input", { name: "price" })), el("label", null, "최소 수량", el("input", { name: "moq" })), el("label", null, "납기", el("input", { name: "lead" })),
+    el("label", { style: "grid-column:1/-1" }, "비고", el("input", { name: "note" })));
+  const qadd = el("button", { class: "btn sec", type: "button" }, "견적 직접 입력 (브랜드에 바로 공개)");
+  qadd.onclick = () => act(qadd, async () => { const d = Object.fromEntries(new FormData(qf)); if (!d.makerId) return; await api("admin/requests/" + id, { method: "PATCH", body: { quote: { ...d, shared: true } } }); openRequest(id); });
+
+  const save = el("button", { class: "btn", type: "button" }, "단계·담당 제조사·메모 저장");
+  save.onclick = () => act(save, async () => { await api("admin/requests/" + id, { method: "PATCH", body: { status: status.value, assigned: [...assigned], notes: notes.value } }); invalidate("requests"); closeDrawer(); render(); });
+  const del = el("button", { class: "btn danger", type: "button" }, "삭제");
+  del.onclick = () => { if (confirm("이 견적 요청을 삭제할까요?")) act(del, async () => { await api("admin/requests/" + id, { method: "DELETE" }); invalidate("requests"); closeDrawer(); render(); }); };
+
+  drawer(`견적 요청 · ${r.company}`, [
+    el("dl", { class: "kv" }, [["요청일", fmt(r.createdAt)], ["회사", r.company], ["담당자", r.name], ["이메일", r.email], ["회원", r.userId ? "회원 (마이페이지에서 진행 상황을 봅니다)" : "비회원 (이메일로 연락)"], ["수량", r.qty || "-"], ["품목", r.item || "-"], ["내용", r.message || "-"], ["고른 제조사", r.picks.map(p => `${p} ${mName[p] || ""}`).join("\n") || "-"]].flatMap(([k, v]) => [el("dt", null, k), el("dd", null, v)])),
+    el("div", { class: "panel" }, el("h3", null, "진행 관리"), el("div", { class: "g2" }, el("label", null, "단계", status), el("label", null, "담당 제조사 추가", addSel)), el("p", { class: "small muted", style: "margin:8px 0 4px" }, "담당 제조사 (눌러서 켜고 끄기)"), chips, el("label", { style: "margin-top:10px" }, "내부 메모 (브랜드·제조사에게 안 보임)", notes)),
+    el("div", { class: "panel" }, el("h3", null, "견적"), quotes, el("p", { class: "small muted", style: "margin:10px 0 6px" }, "메일·전화로 받은 견적을 직접 넣을 수 있습니다."), qf, el("div", { style: "margin-top:8px" }, qadd)),
+    el("div", { class: "panel" }, el("h3", null, "메시지"), thread, el("div", { class: "g2", style: "margin-top:10px" }, to), text, el("div", { style: "margin-top:8px" }, send),
+      el("p", { class: "small muted", style: "margin-top:6px" }, "브랜드에게 보낸 메시지는 브랜드 마이페이지에, 제조사에게 보낸 메시지는 그 제조사 계정에 표시됩니다. 비회원 요청은 이메일로 따로 연락하세요.")),
+  ], [del, save]);
+}
+
+function openInquiry(r){
+  const done = el("button", { class: "btn sec", type: "button" }, r.status === "done" ? "새 문의로 되돌리기" : "처리 완료로 표시");
+  done.onclick = () => act(done, async () => { await api("admin/inquiries/" + r.id, { method: "PATCH", body: { status: r.status === "done" ? "new" : "done" } }); invalidate("inquiries"); closeDrawer(); render(); });
+  const toMaker = r.type === "maker" ? el("button", { class: "btn sec", type: "button" }, "제조사 DB에 등록") : null;
+  if (toMaker) toMaker.onclick = () => act(toMaker, async () => {
+    const d = await api("admin/makers", { body: { "회사명": r.company, "주력품목": r.item || "", "MOQ": r.qty ? r.qty + "개부터 (신청서 기재)" : "미확인", "문의창구": r.email, "확인일": new Date().toISOString().slice(0, 10), "비고": "등록 신청 문의에서 추가. 담당 " + r.name + (r.message ? " / " + r.message : ""), "수출경험": "미확인", "인증": "미확인", "소재지": "미확인", hidden: true } });
+    await api("admin/inquiries/" + r.id, { method: "PATCH", body: { status: "done", makerId: d.item.id } });
+    invalidate("makers", "inquiries"); alert(`${d.item.id}로 등록했습니다. 확인 전이라 공개 검색에서는 숨겨 두었습니다.`); closeDrawer(); go("makers");
+  });
+  const toBrand = r.type === "brand" ? el("button", { class: "btn sec", type: "button" }, "견적 요청으로 전환") : null;
+  if (toBrand) toBrand.onclick = () => act(toBrand, async () => {
+    await api("admin/requests", { body: { company: r.company, name: r.name, email: r.email, item: r.item, qty: r.qty, message: r.message, picks: [], userId: r.userId || null } });
+    await api("admin/inquiries/" + r.id, { method: "PATCH", body: { status: "done" } });
+    invalidate("requests", "inquiries"); closeDrawer(); go("requests");
+  });
+  const mail = el("a", { class: "btn sec", href: `mailto:${r.email}?subject=${encodeURIComponent("[SCENT BRIDGE] " + r.company)}`, style: "text-decoration:none" }, "메일 쓰기");
+  const del = el("button", { class: "btn danger", type: "button" }, "삭제");
+  del.onclick = () => { if (confirm("이 문의를 삭제할까요?")) act(del, async () => { await api("admin/inquiries/" + r.id, { method: "DELETE" }); invalidate("inquiries"); closeDrawer(); render(); }); };
+  drawer(`문의 · ${r.company}`, [el("dl", { class: "kv" }, [["받은 날", fmt(r.createdAt)], ["구분", r.type === "maker" ? "한국 제조사 (등록 신청)" : "일본 브랜드"], ["회사", r.company], ["담당자", r.name], ["이메일", r.email], ["품목", r.item || "-"], ["수량", r.qty || "-"], ["언어", r.lang || "-"], ["내용", r.message || "-"]].flatMap(([k, v]) => [el("dt", null, k), el("dd", null, v)]))], [del, mail, toMaker, toBrand, done]);
+}
+
+async function openUser(u){
+  const makers = await load("makers");
+  const f = el("form", { class: "g2" },
+    el("label", null, "이메일", el("input", { name: "email", type: "email", value: u?.email || "", disabled: !!u })),
+    el("label", null, u ? "새 비밀번호 (바꿀 때만)" : "비밀번호 (8자 이상)", el("input", { name: "password", type: "text", autocomplete: "new-password" })),
+    el("label", null, "이름", el("input", { name: "name", value: u?.name || "" })),
+    el("label", null, "회사", el("input", { name: "company", value: u?.company || "" })),
+    el("label", null, "구분", el("select", { name: "role" }, [["brand", "일본 브랜드"], ["maker", "한국 제조사"], ["admin", "관리자"]].map(([v, l]) => el("option", { value: v, selected: (u?.role || "brand") === v }, l)))),
+    el("label", null, "연결 제조사 (제조사 회원만)", el("select", { name: "makerId" }, el("option", { value: "" }, "연결 안 함"), makers.map(m => el("option", { value: m.id, selected: u?.makerId === m.id }, `${m.id} ${m["회사명"]}`)))));
+  const save = el("button", { class: "btn", type: "button" }, "저장");
+  save.onclick = () => act(save, async () => {
+    const d = Object.fromEntries(new FormData(f)); if (!d.password) delete d.password;
+    if (u) await api("admin/users/" + u.id, { method: "PATCH", body: d }); else await api("admin/users", { body: d });
+    invalidate("users"); closeDrawer(); render();
+  });
+  const dis = u && u.id !== me.id ? el("button", { class: "btn danger", type: "button" }, u.disabled ? "정지 풀기" : "계정 정지") : null;
+  if (dis) dis.onclick = () => act(dis, async () => { await api("admin/users/" + u.id, { method: "PATCH", body: { disabled: !u.disabled } }); invalidate("users"); closeDrawer(); render(); });
+  const del = u && u.id !== me.id ? el("button", { class: "btn danger", type: "button" }, "삭제") : null;
+  if (del) del.onclick = () => { if (confirm(`${u.email} 계정을 삭제할까요?`)) act(del, async () => { await api("admin/users/" + u.id, { method: "DELETE" }); invalidate("users"); closeDrawer(); render(); }); };
+  drawer(u ? `회원 · ${u.email}` : "회원 추가", [f, u ? el("p", { class: "small muted" }, `가입 ${fmt(u.createdAt)} · 최근 로그인 ${fmt(u.lastLogin)}`) : null], [del, dis, save]);
+}
+
+SB.api("auth/me").then(d => { if (d.user && d.user.role === "admin") { me = d.user; boot(); } else $("loginBox").hidden = false; }).catch(() => { $("loginBox").hidden = false; });
+</script>
+</body>
+</html>
