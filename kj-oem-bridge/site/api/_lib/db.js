@@ -12,10 +12,10 @@ async function readRaw(c) {
     try { return { data: JSON.parse(await fs.readFile(path.join(LOCAL, c + ".json"), "utf8")), etag: null }; }
     catch { return { data: [], etag: null }; }
   }
-  const { get, head } = await import("@vercel/blob");
+  const { get, head, BlobNotFoundError } = await import("@vercel/blob");
   // 쓰기 조건(ifMatch)에는 저장소 메타데이터의 ETag를 써야 한다. 먼저 head로 받고 내용을 읽는다.
   let etag = null;
-  try { etag = (await head(key(c))).etag; } catch (e) { if (/not.?found/i.test(String(e?.name) + String(e?.message))) return { data: [], etag: null, missing: true }; throw e; }
+  try { etag = (await head(key(c))).etag; } catch (e) { if (e instanceof BlobNotFoundError || /not.?found|does not exist/i.test(String(e?.name) + String(e?.message))) return { data: [], etag: null, missing: true }; throw e; }
   const r = await get(key(c), { access: "private", useCache: false });
   if (!r || r.statusCode !== 200) return { data: [], etag: null, missing: true };
   const text = await new Response(r.stream).text();
@@ -44,7 +44,7 @@ export async function mutate(c, fn) {
     const { data, etag } = await readRaw(c);
     const out = await fn(data);
     try { await writeRaw(c, data, etag); return out; }
-    catch (e) { if (!/Precondition|412|already exists/i.test(String(e?.name) + String(e?.message))) throw e; await new Promise(r => setTimeout(r, 120 * (i + 1))); }
+    catch (e) { if (!/Precondition|412|already exists|does not exist/i.test(String(e?.name) + String(e?.message))) throw e; await new Promise(r => setTimeout(r, 120 * (i + 1))); }
   }
   throw new Error("busy");
 }
