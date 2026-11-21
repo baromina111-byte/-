@@ -4,184 +4,347 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SCENT BRIDGE | 韓国フレグランスOEMマッチング</title>
-<meta name="description" content="日本のブランドと韓国のフレグランスOEMメーカーをつなぐマッチングサービス。条件に合う3社を比較表でご提案します。">
+<meta name="description" content="日本のブランドと韓国のフレグランスOEMメーカー、そしてインフルエンサーをつなぐマッチングサービス。小ロットから、日本語で。">
+<meta property="og:title" content="SCENT BRIDGE">
+<meta property="og:description" content="韓国の香りづくりを、小ロットから。">
+<meta property="og:image" content="/img/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Gowun+Batang:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="/img/hero.jpg">
 <style>
 :root{
-  --bg:#f6f2ea; --surface:#fffdf8; --ink:#1d1b18; --muted:#6b655c;
-  --line:#ddd5c6; --accent:#7a5a2e; --accent-ink:#fffdf8; --deep:#23201b;
+  --paper:#ECE6DA; --paper-2:#E3DCCD; --card:#F4F0E8; --ink:#191714; --ink-2:#4A453D; --muted:#7A7266;
+  --rule:#C9BFAE; --rust:#9B4A2B; --sage:#56614F; --night:#16140F; --night-ink:#E9E2D4;
+  --serif:"Shippori Mincho","Gowun Batang",serif; --sans:"Zen Kaku Gothic New","IBM Plex Sans KR",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --gut:clamp(18px,4vw,56px);
 }
+html[data-lang="ko"]{--serif:"Gowun Batang","Shippori Mincho",serif; --sans:"IBM Plex Sans KR","Zen Kaku Gothic New",system-ui,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);line-height:1.8;
-  font-family:"Noto Sans JP","Noto Sans KR",system-ui,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:"Noto Serif JP","Noto Serif KR",serif;font-weight:600;line-height:1.35;margin:0;text-wrap:balance}
-p{margin:0}
-a{color:inherit}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
-
-header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
-.brand{font-family:"Noto Serif JP",serif;letter-spacing:.2em;font-size:15px;text-decoration:none;white-space:nowrap}
-.brand small{letter-spacing:.05em;color:var(--muted);font-size:11px;margin-left:6px}
-.nav-right{display:flex;align-items:center;gap:10px}
-.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-.lang button{white-space:nowrap;border:0;background:transparent;padding:6px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
-.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);text-decoration:none;
-  padding:13px 26px;border-radius:2px;font-size:15px;letter-spacing:.04em;border:1px solid var(--accent);cursor:pointer;font-family:inherit}
-.btn:hover{background:var(--deep);border-color:var(--deep)}
-.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
-.btn.ghost:hover{background:var(--ink);color:var(--bg)}
-.btn.small{padding:8px 16px;font-size:13px;white-space:nowrap}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 html[data-lang="ko"] body{word-break:keep-all}
+/* 종이 결 */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.22;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .09  0 0 0 0 .07  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.25;letter-spacing:.01em}
+p{margin:0} a{color:inherit} img{display:block;max-width:100%;height:auto}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 var(--gut)}
+.rule{border:0;border-top:1px solid var(--rule);margin:0}
 
-.hero{padding:88px 0 72px}
-.hero h1{font-size:clamp(30px,5.4vw,54px);margin:18px 0 22px;max-width:16em}
-.hero p.lead{font-size:clamp(16px,2vw,18px);color:var(--muted);max-width:36em}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
-.note{font-size:13px;color:var(--muted);margin-top:14px}
+/* 상단 띠 */
+.topline{border-bottom:1px solid var(--rule)}
+.topline .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:8px;padding-bottom:8px}
+.topline span:nth-child(2){display:none}
+@media (max-width:520px){.topline span:last-child{display:none}}
+@media (min-width:760px){.topline span:nth-child(2){display:inline}}
 
-section{padding:72px 0;border-top:1px solid var(--line)}
-section h2{font-size:clamp(24px,3.4vw,34px);margin:12px 0 36px;max-width:20em}
-.grid{display:grid;gap:20px}
-.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.card{background:var(--surface);border:1px solid var(--line);padding:28px}
-.card h3{font-size:19px;margin-bottom:10px}
-.card p{color:var(--muted);font-size:15px}
-.num{font-family:"Noto Serif JP",serif;font-size:34px;color:var(--accent);line-height:1;margin-bottom:16px}
+/* 머리 */
+header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:20px}
+.mark{font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:.32em;text-decoration:none;white-space:nowrap}
+.mark i{font-style:normal;color:var(--rust)}
+.links{display:none;gap:26px;font-size:14px}
+.links a{text-decoration:none;color:var(--ink-2);position:relative}
+.links a::after{content:"";position:absolute;left:0;right:100%;bottom:-3px;height:1px;background:var(--ink);transition:right .35s ease}
+.links a:hover::after{right:0}
+@media (min-width:980px){.links{display:flex}}
+.tools{display:flex;align-items:center;gap:14px}
+.lang{display:flex;gap:2px;font-family:var(--mono);font-size:12px}
+.lang button{border:0;background:none;color:var(--muted);cursor:pointer;padding:4px 6px;font:inherit;letter-spacing:.08em}
+.lang button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.acct{font-size:13px;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:1px;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);text-decoration:none;font:inherit;font-size:14px;letter-spacing:.06em;padding:14px 22px;border:1px solid var(--ink);cursor:pointer;transition:background .25s,color .25s}
+.btn:hover{background:var(--rust);border-color:var(--rust)}
+.btn .arr{display:inline-block;transition:transform .3s}
+.btn:hover .arr{transform:translateX(4px)}
+.btn.small{padding:9px 14px;font-size:13px}
+.textlink{font-size:14px;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+@media (max-width:560px){.tools .btn.small{display:none}}
 
-.dark{background:var(--deep);color:#efe9dc;border-top:0}
-.dark .eyebrow{color:#c9a871}
-.dark .card{background:transparent;border-color:#4a443a}
-.dark .card p{color:#b9b1a2}
-.tag{display:inline-block;font-size:12px;border:1px solid currentColor;padding:2px 10px;border-radius:999px;margin-bottom:14px;opacity:.85}
+/* 히어로 */
+.hero{display:grid;grid-template-columns:1fr;gap:28px;padding-top:clamp(28px,6vw,72px);padding-bottom:clamp(40px,7vw,96px)}
+@media (min-width:900px){.hero{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:center}}
+.hero-copy{position:relative}
+.vert{display:none}
+@media (min-width:1100px){.vert{display:block;position:absolute;left:calc(-1 * var(--gut) + 6px);top:6px;writing-mode:vertical-rl;font-family:var(--serif);font-size:13px;letter-spacing:.5em;color:var(--muted)}}
+.kicker{display:flex;gap:14px;align-items:center;margin-bottom:26px}
+.kicker::before{content:"";width:36px;height:1px;background:var(--ink)}
+.display{font-size:clamp(40px,6.6vw,100px);font-weight:800;line-height:1.04;letter-spacing:-.01em}
+html[data-lang="ko"] .display{font-weight:700;letter-spacing:-.02em}
+.display .l{display:block;white-space:nowrap}
+.display .l:nth-child(2){padding-left:.6em}
+.display em{font-style:normal;color:var(--rust)}
+.sub{font-family:var(--serif);font-size:clamp(18px,2vw,23px);line-height:1.6;margin-top:30px;max-width:24em;color:var(--ink-2)}
+.lead{margin-top:16px;max-width:36em;color:var(--ink-2);font-size:15px}
+.cta{display:flex;flex-wrap:wrap;gap:22px;align-items:center;margin-top:34px}
+.note{margin-top:18px;font-size:13px;color:var(--rust)}
+figure{margin:0}
+.plate{position:relative}
+.plate img{width:100%;aspect-ratio:4/5;max-height:80vh;object-fit:cover;filter:saturate(.92) contrast(1.02)}
+.plate figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:10px}
+.plate .tab{z-index:2;position:absolute;top:14px;left:-14px;background:var(--paper);padding:6px 10px;border:1px solid var(--rule)}
 
-.price{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-bottom:1px solid var(--line);padding:18px 0}
-.price:first-child{border-top:1px solid var(--line)}
-.price b{font-weight:500}
-.price span{color:var(--muted);font-size:14px;display:block}
-.price em{font-style:normal;font-family:"Noto Serif JP",serif;font-size:20px;white-space:nowrap}
+/* 숫자 띠 */
+.ledger{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+@media (min-width:820px){.ledger{grid-template-columns:repeat(4,1fr)}}
+.ledger div{padding:22px 18px 20px;border-right:1px solid var(--rule)}
+.ledger div:nth-child(2n){border-right:0}
+@media (min-width:820px){.ledger div:nth-child(2n){border-right:1px solid var(--rule)} .ledger div:last-child{border-right:0}}
+.ledger b{display:block;font-family:var(--serif);font-weight:600;font-size:clamp(30px,4vw,48px);line-height:1.1;font-variant-numeric:tabular-nums}
+.ledger b small{font-size:.42em;margin-left:4px;color:var(--muted)}
+.ledger span{font-size:13px;color:var(--ink-2)}
 
-form{display:grid;gap:14px}
-label{font-size:13px;color:var(--muted);display:grid;gap:6px}
-input,select,textarea{font:inherit;padding:12px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:2px;width:100%}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
-textarea{min-height:120px;resize:vertical}
-.row{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-#formMsg{font-size:14px;color:var(--accent);min-height:1.5em}
+/* 흐르는 품목 */
+.marquee{overflow:hidden;border-bottom:1px solid var(--rule);padding:16px 0;white-space:nowrap}
+.track{display:inline-flex;gap:48px;animation:slide 48s linear infinite;font-family:var(--serif);font-size:clamp(20px,2.6vw,30px);color:var(--ink-2)}
+.track span::after{content:"／";margin-left:48px;color:var(--rule)}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.track{animation:none}}
 
-footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-@media (max-width:560px){.nav .btn.small{display:none} .hero{padding:56px 0 48px} section{padding:52px 0} .brand small{display:none}}
+/* 공통 섹션 */
+section{padding:clamp(64px,9vw,128px) 0}
+.sec-head{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:clamp(28px,4vw,56px)}
+@media (min-width:900px){.sec-head{grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:56px;align-items:baseline}}
+.sec-head h2{font-size:clamp(28px,4vw,52px);max-width:16em}
+
+/* 이유: 목차형 */
+.why{display:grid;grid-template-columns:1fr;gap:40px}
+@media (min-width:900px){.why{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px}}
+.index{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.index li{display:grid;grid-template-columns:56px 1fr;gap:14px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.index .no{font-family:var(--mono);font-size:12px;color:var(--rust);padding-top:6px}
+.index h3{font-size:clamp(20px,2.2vw,26px);margin-bottom:8px}
+.index p{color:var(--ink-2);font-size:15px}
+.why figure{position:sticky;top:96px;align-self:start}
+.why figure img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:60% 50%}
+.why figcaption{margin-top:10px}
+
+/* 진행: 바다 사진 위 */
+.voyage{position:relative;color:var(--night-ink);background:var(--night);padding:0}
+.voyage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62}
+.voyage .wrap{position:relative;padding-top:clamp(80px,12vw,170px);padding-bottom:clamp(56px,8vw,110px)}
+.voyage .mono{color:#cfc6b4}
+.voyage h2{font-size:clamp(30px,4.6vw,60px);max-width:13em;margin:14px 0 clamp(40px,6vw,80px)}
+.steps{display:grid;grid-template-columns:1fr;border-top:1px solid rgba(233,226,212,.45)}
+@media (min-width:820px){.steps{grid-template-columns:repeat(3,1fr)}}
+.steps div{padding:24px 24px 6px 0}
+@media (min-width:820px){.steps div{padding-right:36px;border-right:1px solid rgba(233,226,212,.25)} .steps div+div{padding-left:28px} .steps div:last-child{border-right:0}}
+.steps b{font-family:var(--serif);font-size:44px;font-weight:400;line-height:1;display:block;margin-bottom:14px;color:#efe7d8}
+.steps h3{font-size:20px;margin-bottom:8px;color:#fff}
+.steps p{font-size:15px;color:#d6cdbc}
+.route{display:block;width:100%;height:40px;margin-top:40px}
+
+/* 규제: 문서 표 */
+.regs{display:grid;grid-template-columns:1fr;border:1px solid var(--ink)}
+@media (min-width:820px){.regs{grid-template-columns:1fr 1fr}}
+.reg{padding:clamp(22px,3vw,40px);background:var(--card)}
+.reg+.reg{border-top:1px solid var(--ink)}
+@media (min-width:820px){.reg+.reg{border-top:0;border-left:1px solid var(--ink)}}
+.stamp{display:inline-block;font-family:var(--serif);font-weight:600;font-size:15px;border:1.5px solid currentColor;padding:4px 12px;transform:rotate(-2deg);margin-bottom:18px}
+.reg:first-child .stamp{color:var(--rust)} .reg:last-child .stamp{color:var(--sage)}
+.reg h3{font-size:clamp(20px,2.2vw,26px);margin-bottom:12px}
+.reg p{color:var(--ink-2);font-size:15px}
+.regnote{font-size:13px;color:var(--muted);margin-top:16px}
+
+/* 크리에이터 */
+.creators{background:var(--paper-2)}
+.split{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+@media (min-width:900px){.split{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px}}
+.split img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.pair{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--ink);margin-top:28px}
+@media (min-width:640px){.pair{grid-template-columns:1fr 1fr}}
+.pair div{padding:22px 0;border-bottom:1px solid var(--rule)}
+@media (min-width:640px){.pair div:first-child{padding-right:24px;border-right:1px solid var(--rule)} .pair div:last-child{padding-left:24px}}
+.pair h3{font-size:19px;margin-bottom:8px}
+.pair p{font-size:15px;color:var(--ink-2)}
+
+/* 요금: 장부 */
+.prices{border-top:1px solid var(--ink)}
+.price{display:grid;grid-template-columns:1fr auto;gap:6px 24px;align-items:baseline;padding:24px 0;border-bottom:1px solid var(--rule)}
+.price b{font-family:var(--serif);font-weight:600;font-size:clamp(19px,2vw,24px)}
+.price span{grid-column:1/2;color:var(--ink-2);font-size:14px}
+.price em{grid-row:1/3;grid-column:2;font-style:normal;font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);white-space:nowrap}
+.price:first-child em{color:var(--sage)}
+
+/* 제조사 */
+.makers{display:grid;grid-template-columns:1fr;gap:40px;align-items:end}
+@media (min-width:900px){.makers{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px}}
+.makers img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.makers h2{font-size:clamp(26px,3.4vw,44px);margin:14px 0 18px}
+.makers p{color:var(--ink-2)}
+
+/* 문의 */
+.contact{display:grid;grid-template-columns:1fr;gap:48px;align-items:start}
+@media (min-width:980px){.contact{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:72px}}
+.contact aside img{width:100%;aspect-ratio:1;object-fit:cover}
+.contact aside p{margin-top:18px;color:var(--ink-2);font-size:14px}
+form{display:grid;gap:20px;align-content:start}
+label{display:grid;gap:6px;font-size:12px;letter-spacing:.06em;color:var(--muted)}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--ink-2);border-radius:0;padding:10px 2px;width:100%}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 12px) 55%,calc(100% - 7px) 55%;background-size:5px 5px;background-repeat:no-repeat}
+textarea{min-height:120px;resize:vertical;border:1px solid var(--ink-2);padding:12px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--rust);box-shadow:0 1px 0 var(--rust)}
+.row{display:grid;gap:20px;grid-template-columns:1fr}
+@media (min-width:640px){.row{grid-template-columns:1fr 1fr}}
+#formMsg{font-size:14px;color:var(--rust);min-height:1.5em}
+
+/* 꼬리 */
+footer{background:var(--night);color:var(--night-ink);padding:clamp(48px,7vw,96px) 0 28px}
+.big{font-family:var(--serif);font-weight:800;font-size:min(8.6vw,140px);letter-spacing:.03em;line-height:1;white-space:nowrap;overflow:hidden}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;margin-top:40px;padding-top:18px;border-top:1px solid #3a352c;font-size:13px;color:#b7ad9b}
+.foot a{color:#e9e2d4}
+footer .mono{color:#8f8676}
+
+/* 나타나기 */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
 </style>
 </head>
 <body>
-
+<div class="topline"><div class="wrap mono"><span>Seoul — Busan — Fukuoka — Tokyo</span><span data-i18n="topMid"></span><span>Vol. 01 / 2026</span></div></div>
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#top">SCENT BRIDGE<small data-i18n="brandSub"></small></a>
-    <div class="nav-right">
-      <div class="lang" role="group" aria-label="Language">
-        <button type="button" data-set="ja" aria-pressed="true">日本語</button>
-        <button type="button" data-set="ko" aria-pressed="false">한국어</button>
-      </div>
-      <a class="btn small ghost" href="/account" id="acct" data-i18n="navLogin"></a>
-      <a class="btn small" href="#contact" data-i18n="navCta"></a>
+    <a class="mark" href="#top">SCENT<i>·</i>BRIDGE</a>
+    <nav class="links" aria-label="main">
+      <a href="/find" data-i18n="navFind"></a>
+      <a href="/creators" data-i18n="navCreators"></a>
+      <a href="#price" data-i18n="navPrice"></a>
+      <a href="#contact" data-i18n="navContact"></a>
+    </nav>
+    <div class="tools">
+      <div class="lang" role="group" aria-label="Language"><button type="button" data-set="ja" aria-pressed="true">JA</button><button type="button" data-set="ko" aria-pressed="false">KO</button></div>
+      <a class="acct" href="/account" id="acct" data-i18n="navLogin"></a>
+      <a class="btn small" href="#contact"><span data-i18n="navCta"></span></a>
     </div>
   </div>
 </header>
 
 <main id="top">
   <div class="wrap hero">
-    <p class="eyebrow">Korea × Japan Fragrance OEM</p>
-    <h1 data-i18n="heroTitle"></h1>
-    <p class="lead" data-i18n="heroLead"></p>
-    <div class="cta">
-      <a class="btn" href="#contact" data-i18n="heroCta1"></a>
-      <a class="btn ghost" href="find.html" data-i18n="heroCta2"></a>
+    <div class="hero-copy">
+      <span class="vert" data-i18n="vert"></span>
+      <p class="mono kicker" data-i18n="kicker"></p>
+      <h1 class="display" id="display"></h1>
+      <p class="sub" data-i18n="heroTitle"></p>
+      <p class="lead" data-i18n="heroLead"></p>
+      <div class="cta">
+        <a class="btn" href="#contact"><span data-i18n="heroCta1"></span><span class="arr" aria-hidden="true">→</span></a>
+        <a class="textlink" href="/find" data-i18n="heroCta2"></a>
+      </div>
+      <p class="note" data-i18n="heroNote"></p>
     </div>
-    <p class="note" data-i18n="heroNote"></p>
+    <figure class="plate rv">
+      <span class="tab mono">Plate 01</span>
+      <img src="/img/hero.jpg" alt="" width="1200" height="1500" fetchpriority="high">
+      <figcaption class="mono"><span data-i18n="cap1"></span><span>KR → JP</span></figcaption>
+    </figure>
   </div>
 
-  <section>
-    <div class="wrap">
-      <p class="eyebrow">Why</p>
-      <h2 data-i18n="whyTitle"></h2>
-      <div class="grid g3">
-        <div class="card"><h3 data-i18n="why1t"></h3><p data-i18n="why1d"></p></div>
-        <div class="card"><h3 data-i18n="why2t"></h3><p data-i18n="why2d"></p></div>
-        <div class="card"><h3 data-i18n="why3t"></h3><p data-i18n="why3d"></p></div>
-      </div>
+  <div class="wrap">
+    <div class="ledger rv">
+      <div><b id="nMakers">42</b><span data-i18n="st1"></span></div>
+      <div><b id="nReg">25</b><span data-i18n="st2"></span></div>
+      <div><b>50<small data-i18n="pcs"></small></b><span data-i18n="st3"></span></div>
+      <div><b>2<small data-i18n="days"></small></b><span data-i18n="st4"></span></div>
     </div>
-  </section>
-
-  <section id="how">
-    <div class="wrap">
-      <p class="eyebrow">How it works</p>
-      <h2 data-i18n="howTitle"></h2>
-      <div class="grid g3">
-        <div class="card"><div class="num">01</div><h3 data-i18n="how1t"></h3><p data-i18n="how1d"></p></div>
-        <div class="card"><div class="num">02</div><h3 data-i18n="how2t"></h3><p data-i18n="how2d"></p></div>
-        <div class="card"><div class="num">03</div><h3 data-i18n="how3t"></h3><p data-i18n="how3d"></p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark">
-    <div class="wrap">
-      <p class="eyebrow">Regulation</p>
-      <h2 data-i18n="regTitle"></h2>
-      <div class="grid g2">
-        <div class="card"><span class="tag" data-i18n="reg1tag"></span><h3 data-i18n="reg1t"></h3><p data-i18n="reg1d"></p></div>
-        <div class="card"><span class="tag" data-i18n="reg2tag"></span><h3 data-i18n="reg2t"></h3><p data-i18n="reg2d"></p></div>
-      </div>
-      <p class="note" style="color:#b9b1a2" data-i18n="regNote"></p>
-    </div>
-  </section>
+  </div>
+  <div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
 
   <section>
     <div class="wrap">
-      <p class="eyebrow">Pricing</p>
-      <h2 data-i18n="priceTitle"></h2>
-      <div>
-        <div class="price"><div><b data-i18n="p1t"></b><span data-i18n="p1d"></span></div><em data-i18n="p1v"></em></div>
-        <div class="price"><div><b data-i18n="p2t"></b><span data-i18n="p2d"></span></div><em data-i18n="p2v"></em></div>
-        <div class="price"><div><b data-i18n="p3t"></b><span data-i18n="p3d"></span></div><em data-i18n="p3v"></em></div>
+      <div class="sec-head rv"><p class="mono">01 — Why</p><h2 data-i18n="whyTitle"></h2></div>
+      <div class="why">
+        <ol class="index rv">
+          <li><span class="no">01</span><div><h3 data-i18n="why1t"></h3><p data-i18n="why1d"></p></div></li>
+          <li><span class="no">02</span><div><h3 data-i18n="why2t"></h3><p data-i18n="why2d"></p></div></li>
+          <li><span class="no">03</span><div><h3 data-i18n="why3t"></h3><p data-i18n="why3d"></p></div></li>
+        </ol>
+        <figure class="rv"><img src="/img/lab.jpg" alt="" loading="lazy" width="1600" height="1075"><figcaption class="mono" data-i18n="cap2"></figcaption></figure>
       </div>
+    </div>
+  </section>
+
+  <section class="voyage" id="how">
+    <img src="/img/sea.jpg" alt="" loading="lazy">
+    <div class="wrap">
+      <p class="mono">02 — How it works</p>
+      <h2 class="rv" data-i18n="howTitle"></h2>
+      <div class="steps rv">
+        <div><b>i.</b><h3 data-i18n="how1t"></h3><p data-i18n="how1d"></p></div>
+        <div><b>ii.</b><h3 data-i18n="how2t"></h3><p data-i18n="how2d"></p></div>
+        <div><b>iii.</b><h3 data-i18n="how3t"></h3><p data-i18n="how3d"></p></div>
+      </div>
+      <svg class="route" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M6 30 C 220 4, 420 36, 620 18 S 880 8, 994 22" fill="none" stroke="#e9e2d4" stroke-width="1" stroke-dasharray="3 6"/>
+        <circle cx="6" cy="30" r="4" fill="#e9e2d4"/><circle cx="994" cy="22" r="4" fill="none" stroke="#e9e2d4"/>
+        <text x="16" y="38" fill="#cfc6b4" font-family="IBM Plex Mono" font-size="10" letter-spacing="2">SEOUL</text>
+        <text x="930" y="38" fill="#cfc6b4" font-family="IBM Plex Mono" font-size="10" letter-spacing="2">TOKYO</text>
+      </svg>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <p class="eyebrow">For manufacturers</p>
-      <h2 data-i18n="mfTitle"></h2>
-      <p class="lead" style="color:var(--muted);max-width:40em" data-i18n="mfLead"></p>
-      <div class="cta"><a class="btn ghost" href="#contact" data-i18n="mfCta"></a></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap">
-      <p class="eyebrow">For creators</p>
-      <h2 data-i18n="crTitle"></h2>
-      <div class="grid g2">
-        <div class="card"><h3 data-i18n="cr1t"></h3><p data-i18n="cr1d"></p></div>
-        <div class="card"><h3 data-i18n="cr2t"></h3><p data-i18n="cr2d"></p></div>
+      <div class="sec-head rv"><p class="mono">03 — Regulation</p><h2 data-i18n="regTitle"></h2></div>
+      <div class="regs rv">
+        <div class="reg"><span class="stamp" data-i18n="reg1tag"></span><h3 data-i18n="reg1t"></h3><p data-i18n="reg1d"></p></div>
+        <div class="reg"><span class="stamp" data-i18n="reg2tag"></span><h3 data-i18n="reg2t"></h3><p data-i18n="reg2d"></p></div>
       </div>
-      <div class="cta"><a class="btn" href="/creators" data-i18n="crCta"></a><a class="btn ghost" href="/account?role=influencer#signup" data-i18n="crCta2"></a></div>
+      <p class="regnote" data-i18n="regNote"></p>
     </div>
   </section>
 
-  <section id="contact">
+  <section class="creators">
+    <div class="wrap split">
+      <figure class="rv"><img src="/img/creator.jpg" alt="" loading="lazy" width="1200" height="1500"><figcaption class="mono" style="margin-top:10px" data-i18n="cap3"></figcaption></figure>
+      <div class="rv">
+        <p class="mono">04 — For creators</p>
+        <h2 style="font-size:clamp(28px,4vw,52px);margin-top:14px" data-i18n="crTitle"></h2>
+        <div class="pair">
+          <div><h3 data-i18n="cr1t"></h3><p data-i18n="cr1d"></p></div>
+          <div><h3 data-i18n="cr2t"></h3><p data-i18n="cr2d"></p></div>
+        </div>
+        <div class="cta"><a class="btn" href="/creators"><span data-i18n="crCta"></span><span class="arr" aria-hidden="true">→</span></a><a class="textlink" href="/account?role=influencer#signup" data-i18n="crCta2"></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="price">
     <div class="wrap">
-      <p class="eyebrow">Contact</p>
-      <h2 data-i18n="ctTitle"></h2>
-      <form id="inq" novalidate>
+      <div class="sec-head rv"><p class="mono">05 — Pricing</p><h2 data-i18n="priceTitle"></h2></div>
+      <div class="prices rv">
+        <div class="price"><b data-i18n="p1t"></b><span data-i18n="p1d"></span><em data-i18n="p1v"></em></div>
+        <div class="price"><b data-i18n="p2t"></b><span data-i18n="p2d"></span><em data-i18n="p2v"></em></div>
+        <div class="price"><b data-i18n="p3t"></b><span data-i18n="p3d"></span><em data-i18n="p3v"></em></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap makers">
+      <figure class="rv"><img src="/img/warehouse.jpg" alt="" loading="lazy" width="1600" height="1075"><figcaption class="mono" style="margin-top:10px" data-i18n="cap4"></figcaption></figure>
+      <div class="rv">
+        <p class="mono">06 — For manufacturers</p>
+        <h2 data-i18n="mfTitle"></h2>
+        <p data-i18n="mfLead"></p>
+        <div class="cta"><a class="btn" href="#contact"><span data-i18n="mfCta"></span><span class="arr" aria-hidden="true">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="border-top:1px solid var(--rule)">
+    <div class="wrap contact">
+      <aside class="rv">
+        <p class="mono">07 — Contact</p>
+        <h2 style="font-size:clamp(28px,4vw,52px);margin:14px 0 24px" data-i18n="ctTitle"></h2>
+        <img src="/img/materials.jpg" alt="" loading="lazy" width="1200" height="1200">
+        <p>Email: <a href="mailto:baromina111@gmail.com">baromina111@gmail.com</a></p>
+      </aside>
+      <form id="inq" novalidate class="rv">
         <div class="row">
           <label><span data-i18n="fType"></span>
             <select name="type" required>
@@ -204,9 +367,8 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--muted);f
         </div>
         <label><span data-i18n="fMsg"></span><textarea name="msg"></textarea></label>
         <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
-        <div><button class="btn" type="submit" data-i18n="fSend"></button></div>
+        <div><button class="btn" type="submit"><span data-i18n="fSend"></span><span class="arr" aria-hidden="true">→</span></button></div>
         <p id="formMsg" role="status"></p>
-        <p style="font-size:14px;color:var(--muted);margin:0">Email: <a href="mailto:baromina111@gmail.com">baromina111@gmail.com</a></p>
       </form>
     </div>
   </section>
@@ -214,14 +376,19 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--muted);f
 
 <footer>
   <div class="wrap">
-    <p>SCENT BRIDGE — <span data-i18n="footer"></span></p>
+    <p class="mono" data-i18n="footer"></p>
+    <div class="big" aria-hidden="true">SCENT BRIDGE</div>
+    <div class="foot">
+      <span>© 2026 SCENT BRIDGE</span>
+      <span><a href="/find" data-i18n="navFind"></a> · <a href="/creators" data-i18n="navCreators"></a> · <a href="/account" data-i18n="navLogin"></a></span>
+      <span>baromina111@gmail.com</span>
+    </div>
   </div>
 </footer>
 
 <script>
-// 문의를 받을 법인 메일 주소. 비어 있으면 폼은 "준비 중" 안내만 표시한다.
+// 문의를 받을 법인 메일 주소 (서버에 닿지 않을 때만 메일로 대신 보냄)
 const CONTACT_EMAIL = "baromina111@gmail.com";
-
 const T = {
 ja:{
   title:"SCENT BRIDGE | 韓国フレグランスOEMマッチング",
@@ -311,23 +478,57 @@ ko:{
   subj:"[SCENT BRIDGE] 문의",
   footer:"한일 프래그런스 OEM 매칭"
 }};
+Object.assign(T.ja, {
+  topMid:"Fragrance OEM Matching — Japan × Korea", navFind:"メーカーを探す", navCreators:"インフルエンサー", navPrice:"料金", navContact:"お問い合わせ",
+  vert:"香りの橋をかける", kicker:"Korean fragrance, made in small batches",
+  display:["香りは、","海を<em>渡れる</em>。"],
+  st1:"掲載メーカー", st2:"韓国の工場登録を確認", st3:"最小ロットの目安", st4:"営業日以内にご返信", pcs:"個〜", days:"日",
+  cap1:"Plate 01 — Glass, cedar, yuzu", cap2:"Fig. 02 — 調香室の作業台", cap3:"Fig. 03 — クリエイターのオリジナル", cap4:"Fig. 04 — 出荷前の検品と梱包",
+  marquee:["香水","ディフューザー","ルームスプレー","キャンドル","ファブリックミスト","サシェ","ヘアミスト","石膏芳香剤"]
+});
+Object.assign(T.ko, {
+  topMid:"Fragrance OEM Matching — Japan × Korea", navFind:"제조사 찾기", navCreators:"인플루언서", navPrice:"요금", navContact:"문의",
+  vert:"향의 다리를 놓다", kicker:"Korean fragrance, made in small batches",
+  display:["향은,","바다를 <em>건넌다</em>."],
+  st1:"등록 제조사", st2:"한국 공장등록 확인", st3:"최소 수량 기준", st4:"영업일 안에 회신", pcs:"개~", days:"일",
+  cap1:"Plate 01 — Glass, cedar, yuzu", cap2:"Fig. 02 — 조향실 작업대", cap3:"Fig. 03 — 크리에이터의 오리지널", cap4:"Fig. 04 — 출고 전 검수와 포장",
+  marquee:["향수","디퓨저","룸스프레이","캔들","섬유향수","사쉐","헤어미스트","석고방향제"]
+});
 
 let lang = "ja";
 function setLang(l){
   lang = T[l] ? l : "ja";
+  const t = T[lang];
   document.documentElement.lang = lang;
   document.documentElement.dataset.lang = lang;
-  document.title = T[lang].title;
-  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T[lang][el.dataset.i18n] ?? ""; });
+  document.title = t.title;
+  document.querySelectorAll("[data-i18n]").forEach(el => { const v = t[el.dataset.i18n]; if (typeof v === "string") el.textContent = v; });
+  // 큰 제목: 줄 단위, <em>만 허용 (고정 문자열)
+  const d = document.getElementById("display"); d.replaceChildren();
+  t.display.forEach(line => { const s = document.createElement("span"); s.className = "l";
+    line.split(/(<em>.*?<\/em>)/).forEach(part => { if (!part) return; const m = /^<em>(.*)<\/em>$/.exec(part); if (m) { const e = document.createElement("em"); e.textContent = m[1]; s.append(e); } else s.append(part); });
+    d.append(s); });
+  const tr = document.getElementById("track"); tr.replaceChildren();
+  [...t.marquee, ...t.marquee].forEach(w => { const s = document.createElement("span"); s.textContent = w; tr.append(s); });
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === lang)));
   document.getElementById("formMsg").textContent = "";
+  if (window.__me) document.getElementById("acct").textContent = t.navMy;
   try { localStorage.setItem("sb-lang", lang); } catch (e) {}
 }
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.set)));
-
 let saved = null;
 try { saved = localStorage.getItem("sb-lang"); } catch (e) {}
 setLang(saved || ((navigator.language || "").toLowerCase().startsWith("ko") ? "ko" : "ja"));
+
+// 스크롤하면 천천히 나타나기
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" }) : null;
+document.querySelectorAll(".rv").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+
+// 실제 숫자 (관리자 DB 기준)
+fetch("/api/public/makers").then(r => r.ok ? r.json() : null).then(d => { if (d && d.makers && d.makers.length) {
+  document.getElementById("nMakers").textContent = d.makers.length;
+  document.getElementById("nReg").textContent = d.makers.filter(m => m.registered).length;
+} }).catch(() => {});
 
 document.getElementById("inq").addEventListener("submit", async e => {
   e.preventDefault();
@@ -341,13 +542,12 @@ document.getElementById("inq").addEventListener("submit", async e => {
     if (!r.ok) throw new Error(r.status);
     form.reset(); msg.textContent = t.mDone;
   } catch (er) {
-    // 서버에 닿지 않으면 메일로 대신 보낸다
     const body = [t.fType + ": " + sel.namedItem("type").selectedOptions[0].textContent, t.fCompany + ": " + f.get("company"), t.fName + ": " + f.get("name"), t.fEmail + ": " + f.get("email"), t.fItem + ": " + itemText, t.fQty + ": " + (f.get("qty") || "-"), "", f.get("msg") || ""].join("\n");
     location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(t.subj) + "&body=" + encodeURIComponent(body);
     msg.textContent = t.mOpen;
   } finally { btn.disabled = false; }
 });
-fetch("/api/auth/me").then(r => r.json()).then(d => { if (d.user) { const a = document.getElementById("acct"); a.dataset.i18n = "navMy"; a.textContent = T[lang].navMy; if (d.user.role === "admin") a.href = "/admin"; } }).catch(() => {});
+fetch("/api/auth/me").then(r => r.json()).then(d => { if (d.user) { window.__me = d.user; const a = document.getElementById("acct"); a.textContent = T[lang].navMy; if (d.user.role === "admin") a.href = "/admin"; } }).catch(() => {});
 </script>
 </body>
 </html>
