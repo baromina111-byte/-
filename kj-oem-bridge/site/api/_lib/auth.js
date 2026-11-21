@@ -43,7 +43,7 @@ export async function currentUser(req) {
   return u && !u.disabled ? u : null;
 }
 
-export const publicUser = u => u && ({ id: u.id, email: u.email, name: u.name, company: u.company, role: u.role, makerId: u.makerId || null, country: u.country || "", lang: u.lang || "ja", createdAt: u.createdAt });
+export const publicUser = u => u && ({ id: u.id, email: u.email, name: u.name, company: u.company, role: u.role, makerId: u.makerId || null, influencerId: u.influencerId || null, country: u.country || "", lang: u.lang || "ja", createdAt: u.createdAt });
 
 // 처음 관리자: 환경변수 BOOTSTRAP_ADMIN = "이메일|scrypt해시" 가 있으면 사용자 목록에 없을 때 만든다.
 export async function ensureBootstrapAdmin() {

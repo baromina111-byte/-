@@ -94,6 +94,8 @@ tr.unread td:first-child{border-left:3px solid var(--accent)}
     <button data-v="inquiries">문의 <span class="badge" id="bInq" hidden></span></button>
     <button data-v="makers">제조사 DB</button>
     <button data-v="brands">일본 브랜드 영업</button>
+    <button data-v="collabs">협업 요청 <span class="badge" id="bCol" hidden></span></button>
+    <button data-v="influencers">인플루언서 <span class="badge" id="bInf" hidden></span></button>
     <button data-v="users">회원</button>
     <button data-v="settings">설정</button>
     <div class="foot"><span id="meLine"></span><a href="/" style="color:inherit">사이트 보기</a><button id="logout" type="button">로그아웃</button></div>
@@ -152,7 +154,9 @@ async function render(){
 }
 async function badges(){
   try { const s = await api("admin/summary"); const r = s.requests.unread + (s.requests.byStatus.new || 0), q = s.inquiries.open;
-    $("bReq").hidden = !r; $("bReq").textContent = r; $("bInq").hidden = !q; $("bInq").textContent = q; } catch (e) {}
+    $("bReq").hidden = !r; $("bReq").textContent = r; $("bInq").hidden = !q; $("bInq").textContent = q;
+    const c = s.collabs.unread + (s.collabs.byStatus.new || 0), i = s.influencers.byStatus.pending || 0;
+    $("bCol").hidden = !c; $("bCol").textContent = c; $("bInf").hidden = !i; $("bInf").textContent = i; } catch (e) {}
 }
 const head = (title, ...tools) => el("div", { class: "top" }, el("h2", null, title), el("div", { class: "tools" }, tools));
 function table(cols, rows, onClick, rowClass){
@@ -174,12 +178,14 @@ const VIEWS = {
         k(s.inquiries.open, `처리 안 한 문의 (전체 ${s.inquiries.total})`),
         k(s.makers.total, `제조사 (공장등록 ${s.makers.registered} · 최소수량 확인 ${s.makers.withMoq})`),
         k(s.brands.total, "일본 브랜드 리스트"),
-        k(s.users.total, `회원 (브랜드 ${s.users.byRole.brand || 0} · 제조사 ${s.users.byRole.maker || 0})`)),
+        k(s.users.total, `회원 (브랜드 ${s.users.byRole.brand || 0} · 제조사 ${s.users.byRole.maker || 0} · 인플루언서 ${s.users.byRole.influencer || 0})`),
+        k(s.collabs.total, `홍보 협업 요청 (새 요청 ${s.collabs.byStatus.new || 0} · 합의 ${s.collabs.byStatus.accepted || 0})`),
+        k(s.influencers.total, `인플루언서 (공개 ${s.influencers.byStatus.approved || 0} · 검토 대기 ${s.influencers.byStatus.pending || 0})`)),
       el("div", { class: "g2" },
         el("div", { class: "panel" }, el("h3", null, "견적 요청 단계"), el("dl", { class: "kv" }, Object.entries(ST).flatMap(([k2, v]) => [el("dt", null, v), el("dd", null, String(s.requests.byStatus[k2] || 0))]))),
         el("div", { class: "panel" }, el("h3", null, "일본 브랜드 영업 단계"), el("dl", { class: "kv" }, Object.entries(s.brands.byStatus).flatMap(([k2, v]) => [el("dt", null, k2 || "-"), el("dd", null, String(v))])))),
       el("div", { class: "panel" }, el("h3", null, "최근 활동"),
-        s.recent.length ? el("div", { class: "thread" }, s.recent.map(x => el("div", { class: "bub", style: "cursor:pointer", onclick: () => go(x.kind === "request" ? "requests" : "inquiries") }, `${x.kind === "request" ? "견적 요청" : "문의"} · ${x.title}`, el("small", null, fmt(x.at))))) : el("p", { class: "muted" }, "아직 활동이 없습니다.")));
+        s.recent.length ? el("div", { class: "thread" }, s.recent.map(x => el("div", { class: "bub", style: "cursor:pointer", onclick: () => go({ request: "requests", inquiry: "inquiries", collab: "collabs", influencer: "influencers" }[x.kind]) }, `${{ request: "견적 요청", inquiry: "문의", collab: "협업 요청", influencer: "인플루언서 가입" }[x.kind]} · ${x.title}`, el("small", null, fmt(x.at))))) : el("p", { class: "muted" }, "아직 활동이 없습니다.")));
   },
 
   async requests(box){
@@ -209,12 +215,42 @@ const VIEWS = {
   makers(box){ return dataView(box, "makers", "제조사 DB", MAKER_F, [["ID", r => r.id], ["회사명", r => r["회사명"] + (r.hidden ? " (비공개)" : "")], ["소재지", r => r["소재지"]], ["주력품목", r => r["주력품목"], "small ellip"], ["MOQ", r => r.MOQ, "small"], ["공장등록", r => r["공장등록"], "small"], ["문의창구", r => link(r["문의창구"]), "small"]]); },
   brands(box){ return dataView(box, "brands", "일본 브랜드 영업", BRAND_F, [["ID", r => r.id], ["브랜드", r => r["브랜드명"]], ["운영법인", r => r["운영법인"], "small"], ["주력품목", r => r["주력품목"], "small ellip"], ["상태", r => el("span", { class: "pill" }, r["상태"] || "-")], ["확인일", r => r["확인일"], "small"], ["사이트", r => link(r["사이트"]), "small"]]); },
 
+  async influencers(box){
+    const list = await load("influencers", true);
+    let f = "";
+    const sel = el("select", { "aria-label": "상태" }, el("option", { value: "" }, "모든 상태"), Object.entries(INF_ST).map(([k, v]) => el("option", { value: k }, v)));
+    const add = el("button", { class: "btn", type: "button", onclick: () => openInfluencer(null) }, "직접 추가");
+    const wrap = el("div");
+    const draw = () => wrap.replaceChildren(table([
+      ["ID", r => r.id], ["상태", r => el("span", { class: "pill " + (r.status === "approved" ? "won" : r.status === "pending" ? "new" : "lost") }, INF_ST[r.status] || r.status)],
+      ["플랫폼", r => r.platform], ["계정", r => r.url ? link(r.url) : (r.handle || "-"), "small"], ["팔로워", r => (r.followers || 0).toLocaleString() + (r.verified ? " ✓" : "")],
+      ["분야", r => (r.categories || []).join(", "), "small"], ["관심", r => (r.interests || []).map(i => i === "own_brand" ? "자체 브랜드" : "홍보 협업").join(", "), "small"], ["가입", r => fmt(r.createdAt), "small"]],
+      list.filter(r => !f || r.status === f).sort((a, b) => b.createdAt.localeCompare(a.createdAt)), openInfluencer));
+    sel.onchange = () => { f = sel.value; draw(); };
+    box.replaceChildren(head("인플루언서", sel, add), el("p", { class: "small muted", style: "margin-bottom:8px" }, "승인하면 공개 화면(/creators)에 ID·플랫폼·팔로워 규모·분야만 나갑니다. 팔로워 수는 공개 페이지에서 확인한 뒤 '확인됨'을 켜세요."), wrap); draw();
+  },
+
+  async collabs(box){
+    const [list, infs] = await Promise.all([load("collabs", true), load("influencers")]);
+    const iName = Object.fromEntries(infs.map(p => [p.id, `${p.platform} ${p.handle || ""}`]));
+    let f = "";
+    const sel = el("select", { "aria-label": "단계" }, el("option", { value: "" }, "모든 단계"), Object.entries(COL_ST).map(([k, v]) => el("option", { value: k }, v)));
+    const wrap = el("div");
+    const draw = () => wrap.replaceChildren(table([
+      ["요청일", r => fmt(r.createdAt), "small"], ["단계", r => el("span", { class: "pill " + (r.status === "done" ? "won" : r.status) }, COL_ST[r.status] || r.status)],
+      ["회사", r => r.company], ["상품", r => r.product, "small ellip"], ["고른 인플루언서", r => r.picks.map(p => `${p} ${iName[p] || ""}`).join("\n") || "(운영팀에 맡김)", "small"],
+      ["예산", r => r.budget || "-", "small"], ["회원", r => r.userId ? "회원" : "비회원", "small"]],
+      list.filter(r => !f || r.status === f).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)), r => openCollab(r.id), r => r.unread ? "unread" : ""));
+    sel.onchange = () => { f = sel.value; draw(); };
+    box.replaceChildren(head("홍보 협업 요청", sel), wrap); draw();
+  },
+
   async users(box){
     const list = await load("users", true);
     const add = el("button", { class: "btn", type: "button", onclick: () => openUser(null) }, "회원 추가");
     box.replaceChildren(head("회원", add), table([
-      ["가입일", r => fmt(r.createdAt), "small"], ["구분", r => ({ brand: "일본 브랜드", maker: "한국 제조사", admin: "관리자" })[r.role]], ["회사", r => r.company], ["이름", r => r.name],
-      ["이메일", r => r.email, "small"], ["연결 제조사", r => r.makerId || "-"], ["상태", r => r.disabled ? el("span", { class: "pill lost" }, "정지") : el("span", { class: "pill won" }, "사용 중")], ["최근 로그인", r => fmt(r.lastLogin), "small"]],
+      ["가입일", r => fmt(r.createdAt), "small"], ["구분", r => ({ brand: "일본 브랜드", maker: "한국 제조사", influencer: "인플루언서", admin: "관리자" })[r.role]], ["회사", r => r.company], ["이름", r => r.name],
+      ["이메일", r => r.email, "small"], ["연결", r => r.makerId || r.influencerId || "-"], ["상태", r => r.disabled ? el("span", { class: "pill lost" }, "정지") : el("span", { class: "pill won" }, "사용 중")], ["최근 로그인", r => fmt(r.lastLogin), "small"]],
       [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt)), openUser));
   },
 
@@ -269,6 +305,74 @@ function openRecord(col, fields, r){
   const del = r ? el("button", { class: "btn danger", type: "button" }, "삭제") : null;
   if (del) del.onclick = () => { if (confirm(`${r.id}를 삭제할까요? 되돌릴 수 없습니다.`)) act(del, async () => { await api(`admin/${col}/${r.id}`, { method: "DELETE" }); invalidate(col); closeDrawer(); render(); }); };
   drawer(r ? `${r.id} 편집` : "새로 추가", [f], [del, save]);
+}
+
+const INF_ST = { pending: "검토 대기", approved: "공개", hidden: "비공개" };
+const COL_ST = { new: "접수", reviewing: "검토 중", proposed: "인플루언서 타진", accepted: "합의", done: "완료", lost: "종료" };
+const DEC = { accept: "수락", decline: "거절", question: "질문" };
+
+function openInfluencer(p){
+  const CATS = { fragrance: "향", beauty: "뷰티", lifestyle: "라이프스타일", fashion: "패션", interior: "인테리어", other: "기타" };
+  const f = el("form", { class: "g2" },
+    el("label", null, "상태", el("select", { name: "status" }, Object.entries(INF_ST).map(([k, v]) => el("option", { value: k, selected: (p?.status || "pending") === k }, v)))),
+    el("label", null, "플랫폼", el("select", { name: "platform" }, ["instagram", "tiktok", "youtube", "x", "blog", "other"].map(v => el("option", { value: v, selected: p?.platform === v }, v)))),
+    el("label", null, "계정명", el("input", { name: "handle", value: p?.handle || "" })),
+    el("label", null, "프로필 주소", el("input", { name: "url", value: p?.url || "" })),
+    el("label", null, "팔로워 수", el("input", { name: "followers", value: String(p?.followers ?? "") })),
+    el("label", null, "활동 국가", el("select", { name: "country" }, [["JP", "일본"], ["KR", "한국"], ["ETC", "기타"]].map(([v, l]) => el("option", { value: v, selected: (p?.country || "JP") === v }, l)))),
+    el("label", null, "희망 보수", el("input", { name: "rate", value: p?.rate || "" })),
+    el("label", { style: "display:flex;gap:8px;align-items:center;color:var(--ink)" }, el("input", { type: "checkbox", name: "verified", style: "width:auto", checked: !!p?.verified }), "팔로워 수 확인됨"),
+    el("div", { style: "grid-column:1/-1" }, el("p", { class: "small muted" }, "분야"), el("div", { class: "chips" }, Object.entries(CATS).map(([v, l]) => el("label", { class: "chip" }, el("input", { type: "checkbox", name: "cat", value: v, style: "width:auto;margin-right:4px", checked: (p?.categories || []).includes(v) }), l)))),
+    el("div", { style: "grid-column:1/-1" }, el("p", { class: "small muted" }, "관심"), el("div", { class: "chips" }, [["own_brand", "자체 브랜드 제작"], ["collab", "홍보 협업"]].map(([v, l]) => el("label", { class: "chip" }, el("input", { type: "checkbox", name: "int", value: v, style: "width:auto;margin-right:4px", checked: (p?.interests || []).includes(v) }), l)))),
+    el("label", { style: "grid-column:1/-1" }, "소개", el("textarea", { name: "bio" }, p?.bio || "")),
+    el("label", { style: "grid-column:1/-1" }, "운영 메모 (본인에게 안 보임)", el("textarea", { name: "adminNote" }, p?.adminNote || "")));
+  const save = el("button", { class: "btn", type: "button" }, "저장");
+  save.onclick = () => act(save, async () => {
+    const fd = new FormData(f);
+    const data = { status: fd.get("status"), platform: fd.get("platform"), handle: fd.get("handle"), url: fd.get("url"), followers: fd.get("followers"), country: fd.get("country"), rate: fd.get("rate"), verified: f.verified.checked, categories: fd.getAll("cat"), interests: fd.getAll("int"), bio: fd.get("bio"), adminNote: fd.get("adminNote") };
+    if (p) await api("admin/influencers/" + p.id, { method: "PATCH", body: data }); else await api("admin/influencers", { body: data });
+    invalidate("influencers"); closeDrawer(); render();
+  });
+  const del = p ? el("button", { class: "btn danger", type: "button" }, "삭제") : null;
+  if (del) del.onclick = () => { if (confirm(`${p.id}를 삭제할까요?`)) act(del, async () => { await api("admin/influencers/" + p.id, { method: "DELETE" }); invalidate("influencers"); closeDrawer(); render(); }); };
+  const visit = p?.url ? el("a", { class: "btn sec", href: p.url, target: "_blank", rel: "noopener", style: "text-decoration:none" }, "프로필 열기") : null;
+  drawer(p ? `인플루언서 ${p.id}` : "인플루언서 직접 추가", [f, p ? el("p", { class: "small muted" }, `가입 ${fmt(p.createdAt)} · 연결 회원 ${p.userId || "없음"}`) : null], [del, visit, save]);
+}
+
+async function openCollab(id){
+  const [{ item: c }, infs] = await Promise.all([api("admin/collabs/" + id), load("influencers")]);
+  if (c.unread) api("admin/collabs/" + id, { method: "PATCH", body: { read: true } }).then(() => badges()).catch(() => {});
+  const iName = Object.fromEntries(infs.map(p => [p.id, `${p.platform} ${p.handle || ""} (${(p.followers || 0).toLocaleString()})`]));
+  const status = el("select", { "aria-label": "단계" }, Object.entries(COL_ST).map(([k, v]) => el("option", { value: k, selected: c.status === k }, v)));
+  const assigned = new Set(c.assigned || []);
+  const chips = el("div", { class: "chips" });
+  const drawChips = () => chips.replaceChildren(...[...new Set([...c.picks, ...assigned])].map(iid => el("button", { type: "button", class: "chip", "aria-pressed": String(assigned.has(iid)), onclick: () => { assigned.has(iid) ? assigned.delete(iid) : assigned.add(iid); drawChips(); } }, `${iid} ${iName[iid] || "(없음)"}`)));
+  const addSel = el("select", { "aria-label": "인플루언서 추가" }, el("option", { value: "" }, "+ 인플루언서 추가"), infs.filter(p => p.status !== "hidden").map(p => el("option", { value: p.id }, `${p.id} ${iName[p.id]}`)));
+  addSel.onchange = () => { if (addSel.value) { assigned.add(addSel.value); drawChips(); addSel.value = ""; } };
+  drawChips();
+  const notes = el("textarea", { "aria-label": "내부 메모" }, c.notes || "");
+  const who = m => m.from === "admin" ? `운영자 → ${m.to === "brand" ? "브랜드" : m.to === "influencer" ? "인플루언서 " + m.influencerId : "내부 메모"}` : m.from === "brand" ? "브랜드" : `인플루언서 ${m.influencerId}`;
+  const thread = el("div", { class: "thread" }, (c.messages || []).length ? c.messages.map(m => el("div", { class: "bub " + (m.from === "admin" ? (m.to === "internal" ? "internal" : "admin") : "") }, m.text, el("small", null, `${who(m)} · ${fmt(m.at)}`))) : el("p", { class: "muted small" }, "메시지가 없습니다."));
+  const to = el("select", { "aria-label": "받는 사람" }, el("option", { value: "brand" }, "브랜드에게"), el("option", { value: "internal" }, "내부 메모"), [...new Set([...c.picks, ...assigned])].map(iid => el("option", { value: "influencer:" + iid }, `인플루언서 ${iid} ${iName[iid] || ""}에게`)));
+  const text = el("textarea", { placeholder: "메시지 내용", "aria-label": "메시지 내용" });
+  const send = el("button", { class: "btn", type: "button" }, "보내기");
+  send.onclick = () => act(send, async () => { const v = text.value.trim(); if (!v) return; const [t2, iid] = to.value.split(":"); await api(`admin/collabs/${id}/message`, { body: { to: t2, influencerId: iid, text: v } }); openCollab(id); });
+  const responses = el("div", { class: "thread" }, (c.responses || []).length ? c.responses.map(x => {
+    const sh = el("button", { class: "btn sec", type: "button" }, x.shared ? "브랜드에 공개 중 (숨기기)" : "브랜드에 공개");
+    sh.onclick = () => act(sh, async () => { await api("admin/collabs/" + id, { method: "PATCH", body: { shareResponse: x.influencerId, shared: !x.shared } }); openCollab(id); });
+    return el("div", { class: "bub" }, `${x.influencerId} ${iName[x.influencerId] || ""} · ${DEC[x.decision] || x.decision} · 보수 ${x.fee || "-"}${x.note ? "\n" + x.note : ""}`, el("small", null, `${x.byAdmin ? "운영자 입력" : "인플루언서 답변"} · ${fmt(x.at)}`), el("div", { style: "margin-top:6px" }, sh));
+  }) : el("p", { class: "muted small" }, "아직 답변이 없습니다."));
+  const save = el("button", { class: "btn", type: "button" }, "단계·담당·메모 저장");
+  save.onclick = () => act(save, async () => { await api("admin/collabs/" + id, { method: "PATCH", body: { status: status.value, assigned: [...assigned], notes: notes.value } }); invalidate("collabs"); closeDrawer(); render(); });
+  const del = el("button", { class: "btn danger", type: "button" }, "삭제");
+  del.onclick = () => { if (confirm("이 협업 요청을 삭제할까요?")) act(del, async () => { await api("admin/collabs/" + id, { method: "DELETE" }); invalidate("collabs"); closeDrawer(); render(); }); };
+  drawer(`협업 요청 · ${c.company}`, [
+    el("dl", { class: "kv" }, [["요청일", fmt(c.createdAt)], ["회사", c.company], ["담당자", `${c.name} <${c.email}>`], ["상품", c.product], ["예산", c.budget || "-"], ["시기", c.period || "-"], ["내용", c.message || "-"], ["고른 인플루언서", c.picks.map(p => `${p} ${iName[p] || ""}`).join("\n") || "(운영팀에 맡김)"]].flatMap(([k, v]) => [el("dt", null, k), el("dd", null, v)])),
+    el("div", { class: "panel" }, el("h3", null, "진행 관리"), el("div", { class: "g2" }, el("label", null, "단계", status), el("label", null, "인플루언서 추가", addSel)), el("p", { class: "small muted", style: "margin:8px 0 4px" }, "담당 인플루언서 (눌러서 켜고 끄기)"), chips, el("label", { style: "margin-top:10px" }, "내부 메모", notes)),
+    el("div", { class: "panel" }, el("h3", null, "인플루언서 답변"), responses),
+    el("div", { class: "panel" }, el("h3", null, "메시지"), thread, el("div", { class: "g2", style: "margin-top:10px" }, to), text, el("div", { style: "margin-top:8px" }, send),
+      el("p", { class: "small muted", style: "margin-top:6px" }, "인플루언서에게 메시지를 보내면 그 인플루언서 마이페이지에 협업 제안이 뜹니다. 브랜드 이름은 메시지에 직접 쓰기 전까지 인플루언서에게 보이지 않습니다.")),
+  ], [del, save]);
 }
 
 async function openRequest(id){
@@ -342,14 +446,15 @@ function openInquiry(r){
 }
 
 async function openUser(u){
-  const makers = await load("makers");
+  const [makers, infs] = await Promise.all([load("makers"), load("influencers")]);
   const f = el("form", { class: "g2" },
     el("label", null, "이메일", el("input", { name: "email", type: "email", value: u?.email || "", disabled: !!u })),
     el("label", null, u ? "새 비밀번호 (바꿀 때만)" : "비밀번호 (8자 이상)", el("input", { name: "password", type: "text", autocomplete: "new-password" })),
     el("label", null, "이름", el("input", { name: "name", value: u?.name || "" })),
     el("label", null, "회사", el("input", { name: "company", value: u?.company || "" })),
-    el("label", null, "구분", el("select", { name: "role" }, [["brand", "일본 브랜드"], ["maker", "한국 제조사"], ["admin", "관리자"]].map(([v, l]) => el("option", { value: v, selected: (u?.role || "brand") === v }, l)))),
-    el("label", null, "연결 제조사 (제조사 회원만)", el("select", { name: "makerId" }, el("option", { value: "" }, "연결 안 함"), makers.map(m => el("option", { value: m.id, selected: u?.makerId === m.id }, `${m.id} ${m["회사명"]}`)))));
+    el("label", null, "구분", el("select", { name: "role" }, [["brand", "일본 브랜드"], ["maker", "한국 제조사"], ["influencer", "인플루언서"], ["admin", "관리자"]].map(([v, l]) => el("option", { value: v, selected: (u?.role || "brand") === v }, l)))),
+    el("label", null, "연결 제조사 (제조사 회원만)", el("select", { name: "makerId" }, el("option", { value: "" }, "연결 안 함"), makers.map(m => el("option", { value: m.id, selected: u?.makerId === m.id }, `${m.id} ${m["회사명"]}`)))),
+    el("label", null, "연결 인플루언서 (인플루언서 회원만)", el("select", { name: "influencerId" }, el("option", { value: "" }, "연결 안 함"), infs.map(p => el("option", { value: p.id, selected: u?.influencerId === p.id }, `${p.id} ${p.platform} ${p.handle || ""}`)))));
   const save = el("button", { class: "btn", type: "button" }, "저장");
   save.onclick = () => act(save, async () => {
     const d = Object.fromEntries(new FormData(f)); if (!d.password) delete d.password;

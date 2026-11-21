@@ -2,8 +2,9 @@
 import { all, mutate, newId } from "./_lib/db.js";
 import { hashPassword, checkPassword, makeToken, cookie, currentUser, publicUser, ensureBootstrapAdmin } from "./_lib/auth.js";
 import { anon, tagList, parseCsv, toCsv } from "./_lib/anon.js";
+import { creatorRoutes, createInfluencer } from "./_lib/creators.js";
 
-const COLS = ["users", "requests", "inquiries", "makers", "brands"];
+const COLS = ["users", "requests", "inquiries", "makers", "brands", "influencers", "collabs"];
 const REQ_STATUS = ["new", "reviewing", "matched", "quoted", "sample", "won", "lost"];
 const MAKER_CSV = ["회사명", "영문명", "홈페이지", "소재지", "주력품목", "MOQ", "수출경험", "인증", "문의창구", "근거URL", "확인일", "비고", "공장등록", "등록생산품", "등록주소"];
 const BRAND_CSV = ["브랜드명", "운영법인", "사이트", "주력품목", "대표제품", "가격대(엔)", "유형", "문의창구", "근거URL", "상태", "확인일", "비고"];
@@ -15,6 +16,11 @@ class HttpError extends Error { constructor(code, msg) { super(msg); this.code =
 const fail = (code, msg) => { throw new HttpError(code, msg); };
 
 async function body(req) {
+  if (req._sbBody) return req._sbBody;
+  req._sbBody = await readBody(req);
+  return req._sbBody;
+}
+async function readBody(req) {
   if (req.body && typeof req.body === "object") return req.body;
   if (typeof req.body === "string") { try { return JSON.parse(req.body); } catch { return {}; } }
   const chunks = []; for await (const c of req) chunks.push(c);
@@ -53,13 +59,17 @@ async function route(req, res, r, method) {
   const ip = String(req.headers["x-forwarded-for"] || "").split(",")[0] || "local";
   const seg = r.split("/").filter(Boolean);
 
+  // ---------- 인플루언서 연결 (별도 모듈) ----------
+  const cr = await creatorRoutes({ r, seg, method, user, body: () => body(req), need, fail, str, isEmail });
+  if (cr !== undefined) return cr;
+
   // ---------- 인증 ----------
   if (r === "auth/me" && method === "GET") return { user: publicUser(user) };
 
   if (r === "auth/signup" && method === "POST") {
     const b = await body(req);
     const email = str(b.email, 200).toLowerCase(), pw = String(b.password || "");
-    const role = b.role === "maker" ? "maker" : "brand";
+    const role = ["maker", "influencer"].includes(b.role) ? b.role : "brand";
     if (!isEmail(email)) fail(400, "invalid_email");
     if (pw.length < 8) fail(400, "weak_password");
     if (!str(b.name) || !str(b.company)) fail(400, "missing_fields");
@@ -68,6 +78,11 @@ async function route(req, res, r, method) {
       const u = { id: newId("u_"), email, pass: hashPassword(pw), name: str(b.name, 100), company: str(b.company, 200), role, country: str(b.country, 40), lang: b.lang === "ko" ? "ko" : "ja", createdAt: now() };
       list.push(u); return u;
     });
+    if (role === "influencer") {
+      const p = await createInfluencer(u.id, b.profile || {}, str);
+      await mutate("users", list => { const x = list.find(y => y.id === u.id); x.influencerId = p.id; });
+      u.influencerId = p.id;
+    }
     cookie(res, makeToken(u.id), 14 * 86400);
     return { user: publicUser(u) };
   }
@@ -134,7 +149,7 @@ async function route(req, res, r, method) {
     if (str(b.website)) return { ok: true };
     const picks = (Array.isArray(b.picks) ? b.picks : []).map(x => str(x, 10)).filter(x => /^M-\d+$/.test(x)).slice(0, 3);
     const it = await mutate("requests", list => {
-      const it = { id: newId("r_"), userId: user?.id || null, company: str(b.company || user.company, 200), name: str(b.name || user.name, 100), email, picks, item: str(b.item, 200), qty: str(b.qty, 40), message: str(b.message, 5000), lang: str(b.lang, 4), country: user?.country || "", status: "new", assigned: [...picks], messages: [], quotes: [], notes: "", createdAt: now(), updatedAt: now() };
+      const it = { id: newId("r_"), userId: user?.id || null, fromRole: user?.role || "guest", company: str(b.company || user.company, 200), name: str(b.name || user.name, 100), email, picks, item: str(b.item, 200), qty: str(b.qty, 40), message: str(b.message, 5000), lang: str(b.lang, 4), country: user?.country || "", status: "new", assigned: [...picks], messages: [], quotes: [], notes: "", createdAt: now(), updatedAt: now() };
       list.push(it); return it;
     });
     return { ok: true, id: it.id };
@@ -186,7 +201,7 @@ async function route(req, res, r, method) {
     const col = seg[1];
 
     if (col === "summary" && method === "GET") {
-      const [users, requests, inquiries, makers, brands] = await Promise.all(COLS.map(all));
+      const [users, requests, inquiries, makers, brands, influencers, collabs] = await Promise.all(COLS.map(all));
       const count = (l, k) => l.reduce((a, x) => (a[x[k]] = (a[x[k]] || 0) + 1, a), {});
       return {
         users: { total: users.length, byRole: count(users, "role") },
@@ -194,7 +209,9 @@ async function route(req, res, r, method) {
         inquiries: { total: inquiries.length, open: inquiries.filter(x => x.status !== "done").length },
         makers: { total: makers.length, registered: makers.filter(m => m["공장등록"] === "확인").length, withMoq: makers.filter(m => /\d/.test(m.MOQ || "")).length },
         brands: { total: brands.length, byStatus: count(brands, "상태") },
-        recent: [...requests.map(x => ({ kind: "request", id: x.id, title: x.company, at: x.updatedAt })), ...inquiries.map(x => ({ kind: "inquiry", id: x.id, title: x.company, at: x.createdAt }))].sort((a, b) => b.at.localeCompare(a.at)).slice(0, 10),
+        influencers: { total: influencers.length, byStatus: count(influencers, "status"), verified: influencers.filter(x => x.verified).length },
+        collabs: { total: collabs.length, byStatus: count(collabs, "status"), unread: collabs.filter(x => x.unread).length },
+        recent: [...requests.map(x => ({ kind: "request", id: x.id, title: x.company, at: x.updatedAt })), ...inquiries.map(x => ({ kind: "inquiry", id: x.id, title: x.company, at: x.createdAt })), ...collabs.map(x => ({ kind: "collab", id: x.id, title: x.company, at: x.updatedAt })), ...influencers.map(x => ({ kind: "influencer", id: x.id, title: `${x.id} ${x.platform} ${x.handle || ""}`, at: x.createdAt }))].sort((a, b) => b.at.localeCompare(a.at)).slice(0, 10),
       };
     }
 
@@ -250,7 +267,7 @@ async function route(req, res, r, method) {
         if (!isEmail(email) || String(b.password || "").length < 8) fail(400, "invalid");
         const u = await mutate("users", list => {
           if (list.some(x => x.email === email)) fail(409, "email_taken");
-          const u = { id: newId("u_"), email, pass: hashPassword(String(b.password)), name: str(b.name, 100), company: str(b.company, 200), role: ["brand", "maker", "admin"].includes(b.role) ? b.role : "brand", makerId: str(b.makerId, 10) || null, createdAt: now() };
+          const u = { id: newId("u_"), email, pass: hashPassword(String(b.password)), name: str(b.name, 100), company: str(b.company, 200), role: ["brand", "maker", "influencer", "admin"].includes(b.role) ? b.role : "brand", makerId: str(b.makerId, 10) || null, influencerId: str(b.influencerId, 10) || null, createdAt: now() };
           list.push(u); return u;
         });
         return { item: publicUser(u) };
@@ -259,7 +276,7 @@ async function route(req, res, r, method) {
         let it = { ...b, createdAt: now(), updatedAt: now() };
         if (col === "makers") { const n = list.reduce((m, x) => Math.max(m, Number(String(x.id).replace(/\D/g, "")) || 0), 0) + 1; it.id = `M-${String(n).padStart(2, "0")}`; }
         else if (col === "brands") { const n = list.reduce((m, x) => Math.max(m, Number(String(x.id).replace(/\D/g, "")) || 0), 0) + 1; it.id = `B-${String(n).padStart(2, "0")}`; }
-        else it = { messages: [], quotes: [], assigned: [], status: "new", ...it, id: newId(col[0] + "_") };
+        else it = { messages: [], quotes: [], responses: [], sentTo: [], assigned: [], status: "new", ...it, id: newId(col[0] + "_") };
         list.push(it); return it;
       });
       return { item };
@@ -271,7 +288,8 @@ async function route(req, res, r, method) {
         const x = list.find(y => y.id === id); if (!x) fail(404, "not_found");
         if (col === "users") {
           for (const k of ["name", "company", "country"]) if (b[k] != null) x[k] = str(b[k], 200);
-          if (b.role && ["brand", "maker", "admin"].includes(b.role)) { if (x.id === user.id && b.role !== "admin") fail(400, "cannot_demote_self"); x.role = b.role; }
+          if (b.influencerId !== undefined) x.influencerId = str(b.influencerId, 10) || null;
+          if (b.role && ["brand", "maker", "influencer", "admin"].includes(b.role)) { if (x.id === user.id && b.role !== "admin") fail(400, "cannot_demote_self"); x.role = b.role; }
           if (b.makerId !== undefined) x.makerId = str(b.makerId, 10) || null;
           if (b.disabled !== undefined) { if (x.id === user.id) fail(400, "cannot_disable_self"); x.disabled = !!b.disabled; }
           if (b.password) { if (String(b.password).length < 8) fail(400, "weak_password"); x.pass = hashPassword(String(b.password)); }
