@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ja" data-lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCENT BRIDGE | 韓国フレグランスOEMメーカーを探す</title>
+<meta name="description" content="韓国の香り製品OEMメーカーを、品目・最小ロット・認証で絞り込み。気になる3社をまとめて見積依頼できます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Gowun+Batang:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ECE6DA;--surface:#F4F0E8;--ink:#191714;--muted:#7A7266;--line:#C9BFAE;--accent:#9B4A2B;--accent-ink:#F4F0E8;--deep:#16140F;--cos:#8a3b2e;--goods:#2f5d50}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.7;font-family:"Zen Kaku Gothic New","IBM Plex Sans KR",system-ui,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
+html[data-lang="ko"] body{word-break:keep-all;font-family:"IBM Plex Sans KR","Zen Kaku Gothic New",system-ui,sans-serif}
+html[data-lang="ko"] h1,html[data-lang="ko"] h2,html[data-lang="ko"] h3{font-family:"Gowun Batang","Shippori Mincho",serif}
+h1,h2,h3{font-family:"Shippori Mincho","Gowun Batang",serif;font-weight:600;line-height:1.35;margin:0}
+p{margin:0} a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{font-family:"Shippori Mincho","Gowun Batang",serif;letter-spacing:.2em;font-size:15px;text-decoration:none;white-space:nowrap}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{white-space:nowrap;border:0;background:transparent;padding:5px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.top{padding:36px 0 24px}
+.top h1{font-size:clamp(24px,3.6vw,34px)}
+.top p{color:var(--muted);margin-top:8px;max-width:44em}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;align-items:start;padding-bottom:140px}
+.filters{position:sticky;top:76px;display:flex;flex-direction:column;gap:20px;background:var(--surface);border:1px solid var(--line);padding:18px}
+.filters h2{font-size:13px;font-family:inherit;font-weight:500;color:var(--muted);margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:13px;padding:5px 10px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+label.ck{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+select{font:inherit;padding:8px 10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.reset{border:0;background:none;color:var(--accent);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;padding:0;text-align:left}
+.count{font-size:14px;color:var(--muted);margin-bottom:12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.cid{font-family:"Shippori Mincho","Gowun Batang",serif;font-size:20px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cid small{font-family:inherit;font-size:12px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:12px;padding:2px 8px;border-radius:3px;border:1px solid currentColor}
+.tag.cos{color:var(--cos)} .tag.goods{color:var(--goods)}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
+dt{color:var(--muted)} dd{margin:0;font-variant-numeric:tabular-nums}
+.pick{margin-top:auto;border:1px solid var(--ink);background:transparent;color:var(--ink);font:inherit;font-size:14px;padding:9px;cursor:pointer}
+.card.on .pick{background:var(--ink);color:var(--bg)}
+.pick:disabled{opacity:.4;cursor:not-allowed}
+.empty{padding:40px 20px;text-align:center;color:var(--muted);border:1px dashed var(--line)}
+.legend{font-size:12px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.legend b{font-weight:500}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--deep);color:#efe9dc;border-top:1px solid #4a443a}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.bar .ids{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:14px}
+.bar .ids span.x{border:1px solid #8a8171;padding:2px 9px;border-radius:999px}
+.btn{background:var(--accent);color:var(--accent-ink);border:1px solid var(--accent);font:inherit;font-size:15px;padding:10px 22px;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+dialog{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0;max-width:560px;width:calc(100% - 32px)}
+dialog::backdrop{background:rgba(20,18,15,.55)}
+.dlg{padding:26px;display:flex;flex-direction:column;gap:14px}
+.dlg h2{font-size:22px}
+form{display:grid;gap:12px}
+form label{font-size:13px;color:var(--muted);display:grid;gap:5px}
+input,textarea{font:inherit;padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+textarea{min-height:90px;resize:vertical}
+input[type=checkbox]{width:auto;padding:0;flex:none}
+.row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.acts{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink);font:inherit;padding:10px 18px;cursor:pointer}
+#fmsg{font-size:14px;color:var(--accent);min-height:1.4em}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:820px){.layout{grid-template-columns:minmax(0,1fr)} .filters{position:static}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="index.html">SCENT BRIDGE</a>
+  <div style="display:flex;gap:10px;align-items:center"><a href="/account" id="acct" class="ghost" style="text-decoration:none;font-size:13px;padding:6px 14px" data-i18n="login"></a>
+  <div class="lang" role="group" aria-label="Language"><button type="button" data-set="ja" aria-pressed="true">日本語</button><button type="button" data-set="ko" aria-pressed="false">한국어</button></div></div>
+</div></header>
+
+<main class="wrap">
+  <div class="top"><h1 data-i18n="h1"></h1><p data-i18n="lead"></p></div>
+  <div class="layout">
+    <aside class="filters" aria-label="filters">
+      <div><h2 data-i18n="fItem"></h2><div class="chips" id="fTags"></div></div>
+      <div><h2 data-i18n="fMoq"></h2><select id="fMoq"><option value="" data-i18n="moqAny"></option><option value="100" data-i18n="moq100"></option><option value="500" data-i18n="moq500"></option><option value="2000" data-i18n="moq2000"></option></select></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label class="ck"><input type="checkbox" id="fGmp"><span data-i18n="fGmp"></span></label>
+        <label class="ck"><input type="checkbox" id="fReg"><span data-i18n="fReg"></span></label>
+        <label class="ck"><input type="checkbox" id="fJp"><span data-i18n="fJp"></span></label>
+        <label class="ck"><input type="checkbox" id="fSmall"><span data-i18n="fSmall"></span></label>
+      </div>
+      <button type="button" class="reset" id="reset" data-i18n="reset"></button>
+    </aside>
+    <section>
+      <p class="count" id="count" role="status"></p>
+      <div class="cards" id="cards"></div>
+      <div class="legend"><span><b class="tag goods" data-i18n="kGoods"></b> <span data-i18n="kGoodsD"></span></span><span><b class="tag cos" data-i18n="kCos"></b> <span data-i18n="kCosD"></span></span></div>
+      <p class="legend" data-i18n="disc"></p>
+    </section>
+  </div>
+</main>
+
+<div class="bar"><div class="wrap">
+  <div class="ids" id="picked"></div>
+  <button type="button" class="btn" id="open" disabled data-i18n="ask"></button>
+</div></div>
+
+<dialog id="dlg"><div class="dlg">
+  <h2 data-i18n="dTitle"></h2>
+  <p id="dSel" style="font-size:14px;color:var(--muted)"></p>
+  <form id="rq" novalidate>
+    <div class="row"><label><span data-i18n="qCo"></span><input id="q-co" name="co" autocomplete="organization" required></label><label><span data-i18n="qNm"></span><input id="q-nm" name="nm" autocomplete="name" required></label></div>
+    <div class="row"><label><span data-i18n="qEm"></span><input id="q-em" name="em" type="email" autocomplete="email" required></label><label><span data-i18n="qQty"></span><input id="q-qty" name="qty" inputmode="numeric" placeholder="500"></label></div>
+    <label><span data-i18n="qItem"></span><input id="q-item" name="item" placeholder="ディフューザー 100ml"></label>
+    <label><span data-i18n="qMsg"></span><textarea id="q-msg" name="msg"></textarea></label>
+    <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+    <p id="q-member" style="font-size:13px;color:var(--muted)"></p>
+    <p id="fmsg" role="status"></p>
+    <p style="font-size:14px;color:var(--muted);margin:0">Email: <a href="mailto:baromina111@gmail.com">baromina111@gmail.com</a></p>
+    <div class="acts"><button type="button" class="ghost" id="close" data-i18n="cancel"></button><button class="btn" type="submit" data-i18n="send"></button></div>
+  </form>
+</div></dialog>
+
+<script src="data.js"></script>
+<script>
+// 견적 요청을 받을 법인 메일. 비어 있으면 "준비 중" 안내만 표시한다. (index.html과 같은 값으로 맞춘다)
+const CONTACT_EMAIL = "baromina111@gmail.com";
+const MAX = 3;
+const T = {
+ja:{title:"SCENT BRIDGE | 韓国フレグランスOEMメーカーを探す",h1:"韓国の香り製品メーカーを探す",lead:"品目・最小ロット・認証で絞り込み、気になるメーカーを3社まで選んでまとめて見積依頼できます。やり取りは日本語で、当方が韓国側と調整します。",
+fItem:"品目",fMoq:"最小ロット",moqAny:"指定なし",moq100:"100個以下から",moq500:"500個以下から",moq2000:"2,000個以下から",fGmp:"ISO 22716 / CGMP あり",fReg:"韓国の工場登録を確認済み",regV:"確認済み（韓国産業団地公団の登録工場リスト 2025年末時点）",regNo:"リストで未確認",regK:"工場登録",fJp:"日本取引の記載あり",fSmall:"大手を除く",reset:"条件をリセット",
+count:n=>`${n}社が該当`,none:"条件に合うメーカーがありません。条件をゆるめてお試しください。",
+moq:"最小ロット",moqV:n=>`${n.toLocaleString()}個〜`,moqNo:"非公開（要問合せ）",reg:"所在地",cert:"認証",certNo:"公開情報なし",exp:"海外取引",expJp:"日本取引の記載あり",expYes:"海外取引の記載あり",expNo:"公開情報なし",chk:"確認日",large:"大手",
+add:"比較に追加",added:"選択中（外す）",full:"3社まで選択できます",pick0:"メーカーを選ぶと、ここに表示されます",ask:"選んだメーカーに見積依頼",
+kGoods:"雑貨",kGoodsD:"日本では化粧品の許可なしで輸入できる品目",kCos:"化粧品",kCosD:"製造販売業許可を持つ事業者（輸入代行）が必要な品目",
+disc:"※ 掲載内容は各社が公開している情報をもとにした調査結果で、当社との提携を示すものではありません。社名は見積依頼の際にご案内します。区分は一般的な目安で、個別製品の扱いは成分や表示により異なります。",
+dTitle:"見積依頼",dSel:s=>`選択中：${s}`,qCo:"会社名・ブランド名",qNm:"ご担当者名",qEm:"メールアドレス",qQty:"希望数量（個）",qMsg:"品目・ご希望（香り、容器、納期など）",cancel:"閉じる",send:"送信する",
+need:"会社名・ご担当者名・メールアドレスをご入力ください。",soon:"受付窓口は現在準備中です。まもなく開始します。",opened:"メールソフトが開きます。そのまま送信してください。開かない場合は baromina111@gmail.com 宛に直接お送りください。",subj:"【SCENT BRIDGE】見積依頼",qItem:"品目・容量",login:"ログイン",my:"マイページ",sending:"送信中…",done:"見積依頼を受け付けました。2営業日以内に、条件に合うメーカーの状況をご連絡します。",doneMember:"見積依頼を受け付けました。進み具合はマイページでご確認いただけます。",memberHint:"会員登録すると、見積とメッセージをマイページで確認できます。",memberOn:u=>`${u} としてログイン中。マイページに履歴が残ります。`},
+ko:{title:"SCENT BRIDGE | 한국 향 제품 OEM 제조사 찾기",h1:"한국 향 제품 제조사 찾기",lead:"품목·최소 수량·인증으로 좁히고, 마음에 드는 제조사를 3곳까지 골라 한 번에 견적을 요청할 수 있습니다. 소통은 일본어로 하고, 한국 측 조율은 저희가 합니다.",
+fItem:"품목",fMoq:"최소 수량",moqAny:"상관없음",moq100:"100개 이하부터",moq500:"500개 이하부터",moq2000:"2,000개 이하부터",fGmp:"ISO 22716 / CGMP 보유",fReg:"한국 공장등록 확인",regV:"확인 (한국산업단지공단 등록공장 명단, 2025년 말 기준)",regNo:"명단에서 미확인",regK:"공장등록",fJp:"일본 거래 기재 있음",fSmall:"대형사 제외",reset:"조건 초기화",
+count:n=>`${n}곳이 해당`,none:"조건에 맞는 제조사가 없습니다. 조건을 넓혀 보세요.",
+moq:"최소 수량",moqV:n=>`${n.toLocaleString()}개~`,moqNo:"비공개(문의 필요)",reg:"소재지",cert:"인증",certNo:"공개 정보 없음",exp:"해외 거래",expJp:"일본 거래 기재 있음",expYes:"해외 거래 기재 있음",expNo:"공개 정보 없음",chk:"확인일",large:"대형",
+add:"비교에 추가",added:"선택됨(빼기)",full:"3곳까지 고를 수 있습니다",pick0:"제조사를 고르면 여기에 표시됩니다",ask:"고른 제조사에 견적 요청",
+kGoods:"잡화",kGoodsD:"일본에서 화장품 허가 없이 수입할 수 있는 품목",kCos:"화장품",kCosD:"제조판매업 허가를 가진 사업자(수입대행)가 필요한 품목",
+disc:"※ 게재 내용은 각 회사가 공개한 정보를 바탕으로 한 조사 결과이며, 당사와의 제휴를 뜻하지 않습니다. 회사명은 견적 요청 시 안내합니다. 구분은 일반적인 기준이며 개별 제품은 성분과 표시에 따라 달라집니다.",
+dTitle:"견적 요청",dSel:s=>`선택: ${s}`,qCo:"회사명·브랜드명",qNm:"담당자명",qEm:"이메일",qQty:"희망 수량(개)",qMsg:"품목·희망 사항(향, 용기, 납기 등)",cancel:"닫기",send:"보내기",
+need:"회사명·담당자명·이메일을 입력해 주세요.",soon:"접수 창구를 준비하고 있습니다. 곧 시작합니다.",opened:"메일 프로그램이 열립니다. 그대로 보내 주세요. 열리지 않으면 baromina111@gmail.com 로 직접 보내 주세요.",subj:"[SCENT BRIDGE] 견적 요청",qItem:"품목·용량",login:"로그인",my:"마이페이지",sending:"보내는 중…",done:"견적 요청을 접수했습니다. 영업일 2일 안에 조건에 맞는 제조사 상황을 연락드립니다.",doneMember:"견적 요청을 접수했습니다. 진행 상황은 마이페이지에서 볼 수 있습니다.",memberHint:"회원가입하면 견적과 메시지를 마이페이지에서 볼 수 있습니다.",memberOn:u=>`${u}(으)로 로그인 중. 마이페이지에 기록이 남습니다.`}};
+
+let TAGS = window.SB_TAGS || [], MAKERS = window.SB_MAKERS || [];
+let tagById = Object.fromEntries(TAGS.map(t => [t.id, t]));
+let ME = null;
+let lang = "ja";
+const st = { tags:new Set(), moq:"", gmp:false, jp:false, small:false, reg:false, picked:[] };
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+function match(m){
+  if (st.tags.size && ![...st.tags].every(t => m.tags.includes(t))) return false;
+  if (st.moq && !(m.moq != null && m.moq <= Number(st.moq))) return false;
+  if (st.gmp && !m.certs.some(c => c === "ISO 22716" || c === "CGMP")) return false;
+  if (st.jp && !m.japan) return false;
+  if (st.reg && !m.registered) return false;
+  if (st.small && m.large) return false;
+  return true;
+}
+function render(){
+  const t = T[lang];
+  document.documentElement.lang = lang; document.documentElement.dataset.lang = lang; document.title = t.title;
+  document.querySelectorAll("[data-i18n]").forEach(e => { const v = t[e.dataset.i18n]; if (typeof v === "string") e.textContent = v; });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === lang)));
+  const ft = $("fTags"); ft.replaceChildren();
+  TAGS.forEach(tg => { const b = el("button","chip",tg[lang]); b.type = "button"; b.setAttribute("aria-pressed", String(st.tags.has(tg.id)));
+    b.addEventListener("click", () => { st.tags.has(tg.id) ? st.tags.delete(tg.id) : st.tags.add(tg.id); render(); }); ft.appendChild(b); });
+  const list = MAKERS.filter(match).sort((a,b) => (a.moq ?? 1e9) - (b.moq ?? 1e9));
+  $("count").textContent = t.count(list.length);
+  const box = $("cards"); box.replaceChildren();
+  if (!list.length) box.appendChild(el("p","empty",t.none));
+  list.forEach(m => {
+    const on = st.picked.includes(m.id), c = el("article","card" + (on ? " on" : ""));
+    const h = el("div","cid"); h.appendChild(el("span",null,m.id)); if (m.large) h.appendChild(el("small",null,t.large)); c.appendChild(h);
+    const tg = el("div","tags"); m.tags.forEach(id => tg.appendChild(el("span","tag " + tagById[id].kind, tagById[id][lang]))); c.appendChild(tg);
+    const dl = el("dl");
+    [[t.moq, m.moq != null ? t.moqV(m.moq) : t.moqNo],[t.reg, m.region[lang]],[t.cert, m.certs.length ? m.certs.join(", ") : t.certNo],
+     [t.regK, m.registered ? t.regV : t.regNo],[t.exp, m.japan ? t.expJp : m.export ? t.expYes : t.expNo],[t.chk, m.checked]].forEach(([k,v]) => { dl.appendChild(el("dt",null,k)); dl.appendChild(el("dd",null,v)); });
+    c.appendChild(dl);
+    const b = el("button","pick", on ? t.added : t.add); b.type = "button";
+    if (!on && st.picked.length >= MAX) { b.disabled = true; b.title = t.full; }
+    b.addEventListener("click", () => { on ? st.picked.splice(st.picked.indexOf(m.id),1) : st.picked.push(m.id); render(); });
+    c.appendChild(b); box.appendChild(c);
+  });
+  const p = $("picked"); p.replaceChildren();
+  if (!st.picked.length) p.appendChild(el("span",null,t.pick0)); else st.picked.forEach(id => p.appendChild(el("span","x",id)));
+  $("open").disabled = !st.picked.length;
+  $("dSel").textContent = t.dSel(st.picked.join(" / "));
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.set; try { localStorage.setItem("sb-lang", lang); } catch(e){} render(); }));
+$("fMoq").addEventListener("change", e => { st.moq = e.target.value; render(); });
+[["fGmp","gmp"],["fJp","jp"],["fSmall","small"],["fReg","reg"]].forEach(([id,k]) => $(id).addEventListener("change", e => { st[k] = e.target.checked; render(); }));
+$("reset").addEventListener("click", () => { st.tags.clear(); st.moq = ""; st.gmp = st.jp = st.small = st.reg = false; $("fMoq").value = ""; ["fGmp","fJp","fSmall","fReg"].forEach(i => $(i).checked = false); render(); });
+$("open").addEventListener("click", () => { $("fmsg").textContent = ""; memberLine(); $("dlg").showModal(); });
+$("close").addEventListener("click", () => $("dlg").close());
+function memberLine(){ $("q-member").textContent = ME ? T[lang].memberOn(ME.email) : T[lang].memberHint; }
+$("rq").addEventListener("submit", async e => {
+  e.preventDefault(); const t = T[lang], form = e.target, f = new FormData(form), msg = $("fmsg");
+  if (!f.get("co") || !f.get("nm") || !/^\S+@\S+\.\S+$/.test(f.get("em") || "")) { msg.textContent = t.need; return; }
+  const btn = form.querySelector("button[type=submit]"); btn.disabled = true; msg.textContent = t.sending;
+  try {
+    const r = await fetch("/api/public/request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ picks: st.picked, company: f.get("co"), name: f.get("nm"), email: f.get("em"), qty: f.get("qty"), item: f.get("item"), message: f.get("msg"), website: f.get("website"), lang }) });
+    if (!r.ok) throw new Error(r.status);
+    msg.textContent = ME ? t.doneMember : t.done;
+    st.picked = []; render(); $("q-msg").value = ""; $("q-qty").value = ""; $("q-item").value = "";
+  } catch (er) {
+    const body = ["Makers: " + st.picked.join(", "), t.qCo + ": " + f.get("co"), t.qNm + ": " + f.get("nm"), t.qEm + ": " + f.get("em"), t.qQty + ": " + (f.get("qty") || "-"), t.qItem + ": " + (f.get("item") || "-"), "", f.get("msg") || ""].join("\n");
+    location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(t.subj) + "&body=" + encodeURIComponent(body);
+    msg.textContent = t.opened;
+  } finally { btn.disabled = false; }
+});
+let saved = null; try { saved = localStorage.getItem("sb-lang"); } catch(e){}
+lang = saved || ((navigator.language || "").toLowerCase().startsWith("ko") ? "ko" : "ja");
+if (!T[lang]) lang = "ja";
+render();
+// 최신 제조사 목록(관리자 DB)과 로그인 상태를 불러온다. 실패하면 data.js 그대로 쓴다.
+fetch("/api/public/makers").then(r => r.ok ? r.json() : null).then(d => { if (d && d.makers && d.makers.length) { TAGS = d.tags; MAKERS = d.makers; tagById = Object.fromEntries(TAGS.map(t => [t.id, t])); render(); } }).catch(() => {});
+fetch("/api/auth/me").then(r => r.json()).then(d => { ME = d.user; if (ME) { const a = $("acct"); a.dataset.i18n = "my"; a.textContent = T[lang].my; if (ME.role === "admin") a.href = "/admin"; $("q-co").value = ME.company || ""; $("q-nm").value = ME.name || ""; $("q-em").value = ME.email || ""; } }).catch(() => {});
+</script>
+</body>
+</html>
