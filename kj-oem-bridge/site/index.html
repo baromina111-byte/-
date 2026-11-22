@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SCENT BRIDGE | 韓国フレグランスOEMマッチング</title>
-<meta name="description" content="日本のブランドと韓国のフレグランスOEMメーカー、そしてインフルエンサーをつなぐマッチングサービス。小ロットから、日本語で。">
+<title>SCENT BRIDGE | 韓国のファッション・ライフスタイルOEMマッチング</title>
+<meta name="description" content="日本のブランドと韓国のOEMメーカー、そしてインフルエンサーをつなぐマッチングサービス。香り・アパレル・ソックス・生活雑貨を小ロットから、日本語で。">
 <meta property="og:title" content="SCENT BRIDGE">
-<meta property="og:description" content="韓国の香りづくりを、小ロットから。">
-<meta property="og:image" content="/img/hero.jpg">
+<meta property="og:description" content="韓国でつくる。日本で売れる。">
+<meta property="og:image" content="/img/commov-shutter.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Gowun+Batang:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="/img/hero.jpg">
+<link rel="preload" as="image" href="/img/commov-shutter.jpg">
 <style>
 :root{
   --paper:#ECE6DA; --paper-2:#E3DCCD; --card:#F4F0E8; --ink:#191714; --ink-2:#4A453D; --muted:#7A7266;
@@ -29,7 +29,9 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;o
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .09  0 0 0 0 .07  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.25;letter-spacing:.01em}
 p{margin:0} a{color:inherit} img{display:block;max-width:100%;height:auto}
-.mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.label{font-size:13px;letter-spacing:.08em;color:var(--rust);font-weight:500}
+.cap{font-size:13px;color:var(--muted);margin-top:10px}
+.sec-lead{margin-top:14px;color:var(--ink-2);max-width:40em}
 .wrap{max-width:1320px;margin:0 auto;padding:0 var(--gut)}
 .rule{border:0;border-top:1px solid var(--rule);margin:0}
 
@@ -69,8 +71,7 @@ header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper
 .hero-copy{position:relative}
 .vert{display:none}
 @media (min-width:1100px){.vert{display:block;position:absolute;left:calc(-1 * var(--gut) + 6px);top:6px;writing-mode:vertical-rl;font-family:var(--serif);font-size:13px;letter-spacing:.5em;color:var(--muted)}}
-.kicker{display:flex;gap:14px;align-items:center;margin-bottom:26px}
-.kicker::before{content:"";width:36px;height:1px;background:var(--ink)}
+.kicker{margin-bottom:22px}
 .display{font-size:clamp(40px,6.6vw,100px);font-weight:800;line-height:1.04;letter-spacing:-.01em}
 html[data-lang="ko"] .display{font-weight:700;letter-spacing:-.02em}
 .display .l{display:block;white-space:nowrap}
@@ -82,7 +83,7 @@ html[data-lang="ko"] .display{font-weight:700;letter-spacing:-.02em}
 .note{margin-top:18px;font-size:13px;color:var(--rust)}
 figure{margin:0}
 .plate{position:relative}
-.plate img{width:100%;aspect-ratio:4/5;max-height:80vh;object-fit:cover;filter:saturate(.92) contrast(1.02)}
+.plate img{width:100%;aspect-ratio:4/5;max-height:80vh;object-fit:cover}
 .plate figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:10px}
 .plate .tab{z-index:2;position:absolute;top:14px;left:-14px;background:var(--paper);padding:6px 10px;border:1px solid var(--rule)}
 
@@ -109,6 +110,17 @@ section{padding:clamp(64px,9vw,128px) 0}
 @media (min-width:900px){.sec-head{grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:56px;align-items:baseline}}
 .sec-head h2{font-size:clamp(28px,4vw,52px);max-width:16em}
 
+/* 자사 브랜드 */
+.brands{padding-top:clamp(56px,7vw,96px)}
+.brand-grid{display:grid;grid-template-columns:1fr;gap:28px}
+@media (min-width:760px){.brand-grid{grid-template-columns:1.25fr 1fr .8fr;align-items:end}}
+.brand-grid img{width:100%;object-fit:cover}
+.brand-grid figure:nth-child(1) img{aspect-ratio:4/3}
+.brand-grid figure:nth-child(2) img{aspect-ratio:1/1}
+.brand-grid figure:nth-child(3) img{aspect-ratio:4/5;object-position:50% 20%}
+.brand-grid figcaption{display:grid;gap:4px;margin-top:12px;padding-top:12px;border-top:1px solid var(--ink)}
+.brand-grid b{font-family:var(--serif);font-size:18px;letter-spacing:.06em}
+.brand-grid span{font-size:14px;color:var(--ink-2)}
 /* 이유: 목차형 */
 .why{display:grid;grid-template-columns:1fr;gap:40px}
 @media (min-width:900px){.why{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px}}
@@ -118,14 +130,14 @@ section{padding:clamp(64px,9vw,128px) 0}
 .index h3{font-size:clamp(20px,2.2vw,26px);margin-bottom:8px}
 .index p{color:var(--ink-2);font-size:15px}
 .why figure{position:sticky;top:96px;align-self:start}
-.why figure img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:60% 50%}
+.why figure img{width:100%;aspect-ratio:4/5;object-fit:cover}
 .why figcaption{margin-top:10px}
 
 /* 진행: 바다 사진 위 */
 .voyage{position:relative;color:var(--night-ink);background:var(--night);padding:0}
-.voyage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62}
+.voyage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
 .voyage .wrap{position:relative;padding-top:clamp(80px,12vw,170px);padding-bottom:clamp(56px,8vw,110px)}
-.voyage .mono{color:#cfc6b4}
+.voyage .label{color:#e7b08f}
 .voyage h2{font-size:clamp(30px,4.6vw,60px);max-width:13em;margin:14px 0 clamp(40px,6vw,80px)}
 .steps{display:grid;grid-template-columns:1fr;border-top:1px solid rgba(233,226,212,.45)}
 @media (min-width:820px){.steps{grid-template-columns:repeat(3,1fr)}}
@@ -138,12 +150,12 @@ section{padding:clamp(64px,9vw,128px) 0}
 
 /* 규제: 문서 표 */
 .regs{display:grid;grid-template-columns:1fr;border:1px solid var(--ink)}
-@media (min-width:820px){.regs{grid-template-columns:1fr 1fr}}
+@media (min-width:980px){.regs{grid-template-columns:1fr 1fr 1fr}}
 .reg{padding:clamp(22px,3vw,40px);background:var(--card)}
 .reg+.reg{border-top:1px solid var(--ink)}
-@media (min-width:820px){.reg+.reg{border-top:0;border-left:1px solid var(--ink)}}
+@media (min-width:980px){.reg+.reg{border-top:0;border-left:1px solid var(--ink)}}
 .stamp{display:inline-block;font-family:var(--serif);font-weight:600;font-size:15px;border:1.5px solid currentColor;padding:4px 12px;transform:rotate(-2deg);margin-bottom:18px}
-.reg:first-child .stamp{color:var(--rust)} .reg:last-child .stamp{color:var(--sage)}
+.reg:nth-child(1) .stamp{color:var(--rust)} .reg:nth-child(2) .stamp{color:var(--sage)} .reg:nth-child(3) .stamp{color:#3F4A63}
 .reg h3{font-size:clamp(20px,2.2vw,26px);margin-bottom:12px}
 .reg p{color:var(--ink-2);font-size:15px}
 .regnote{font-size:13px;color:var(--muted);margin-top:16px}
@@ -195,7 +207,7 @@ footer{background:var(--night);color:var(--night-ink);padding:clamp(48px,7vw,96p
 .big{font-family:var(--serif);font-weight:800;font-size:min(8.6vw,140px);letter-spacing:.03em;line-height:1;white-space:nowrap;overflow:hidden}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;margin-top:40px;padding-top:18px;border-top:1px solid #3a352c;font-size:13px;color:#b7ad9b}
 .foot a{color:#e9e2d4}
-footer .mono{color:#8f8676}
+footer .label{color:#b7ad9b}
 
 /* 나타나기 */
 .rv{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
@@ -205,7 +217,6 @@ footer .mono{color:#8f8676}
 </style>
 </head>
 <body>
-<div class="topline"><div class="wrap mono"><span>Seoul — Busan — Fukuoka — Tokyo</span><span data-i18n="topMid"></span><span>Vol. 01 / 2026</span></div></div>
 <header>
   <div class="wrap nav">
     <a class="mark" href="#top">SCENT<i>·</i>BRIDGE</a>
@@ -226,8 +237,7 @@ footer .mono{color:#8f8676}
 <main id="top">
   <div class="wrap hero">
     <div class="hero-copy">
-      <span class="vert" data-i18n="vert"></span>
-      <p class="mono kicker" data-i18n="kicker"></p>
+      <p class="label kicker" data-i18n="kicker"></p>
       <h1 class="display" id="display"></h1>
       <p class="sub" data-i18n="heroTitle"></p>
       <p class="lead" data-i18n="heroLead"></p>
@@ -238,9 +248,8 @@ footer .mono{color:#8f8676}
       <p class="note" data-i18n="heroNote"></p>
     </div>
     <figure class="plate rv">
-      <span class="tab mono">Plate 01</span>
-      <img src="/img/hero.jpg" alt="" width="1200" height="1500" fetchpriority="high">
-      <figcaption class="mono"><span data-i18n="cap1"></span><span>KR → JP</span></figcaption>
+      <img src="/img/commov-shutter.jpg" alt="COMMOV SHUTTER" width="768" height="960" fetchpriority="high">
+      <figcaption class="cap" data-i18n="cap1"></figcaption>
     </figure>
   </div>
 
@@ -252,47 +261,51 @@ footer .mono{color:#8f8676}
       <div><b>2<small data-i18n="days"></small></b><span data-i18n="st4"></span></div>
     </div>
   </div>
-  <div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
+  <section class="brands" id="brands">
+    <div class="wrap">
+      <div class="sec-head rv"><p class="label" data-i18n="brLabel"></p><div><h2 data-i18n="brTitle"></h2><p class="sec-lead" data-i18n="brLead"></p></div></div>
+      <div class="brand-grid">
+        <figure class="rv"><img src="/img/commov-ledge.jpg" alt="COMMOV SHUTTER" loading="lazy" width="669" height="502"><figcaption><b>COMMOV</b><span data-i18n="br1"></span></figcaption></figure>
+        <figure class="rv"><img src="/img/daymov-garden.jpg" alt="DAYMOV" loading="lazy" width="1100" height="825"><figcaption><b>DAYMOV</b><span data-i18n="br2"></span></figcaption></figure>
+        <figure class="rv"><img src="/img/dj-nero-white.jpg" alt="DAVID &amp; JONATHAN" loading="lazy" width="1086" height="1358"><figcaption><b>DAVID &amp; JONATHAN</b><span data-i18n="br3"></span></figcaption></figure>
+      </div>
+    </div>
+  </section>
 
   <section>
     <div class="wrap">
-      <div class="sec-head rv"><p class="mono">01 — Why</p><h2 data-i18n="whyTitle"></h2></div>
+      <div class="sec-head rv"><p class="label">Why</p><h2 data-i18n="whyTitle"></h2></div>
       <div class="why">
         <ol class="index rv">
           <li><span class="no">01</span><div><h3 data-i18n="why1t"></h3><p data-i18n="why1d"></p></div></li>
           <li><span class="no">02</span><div><h3 data-i18n="why2t"></h3><p data-i18n="why2d"></p></div></li>
           <li><span class="no">03</span><div><h3 data-i18n="why3t"></h3><p data-i18n="why3d"></p></div></li>
         </ol>
-        <figure class="rv"><img src="/img/lab.jpg" alt="" loading="lazy" width="1600" height="1075"><figcaption class="mono" data-i18n="cap2"></figcaption></figure>
+        <figure class="rv"><img src="/img/daymov-grip.jpg" alt="DAYMOV" loading="lazy" width="1100" height="1375"><figcaption class="cap" data-i18n="cap2"></figcaption></figure>
       </div>
     </div>
   </section>
 
   <section class="voyage" id="how">
-    <img src="/img/sea.jpg" alt="" loading="lazy">
+    <img src="/img/commov-night.jpg" alt="" loading="lazy">
     <div class="wrap">
-      <p class="mono">02 — How it works</p>
+      <p class="label">How it works</p>
       <h2 class="rv" data-i18n="howTitle"></h2>
       <div class="steps rv">
         <div><b>i.</b><h3 data-i18n="how1t"></h3><p data-i18n="how1d"></p></div>
         <div><b>ii.</b><h3 data-i18n="how2t"></h3><p data-i18n="how2d"></p></div>
         <div><b>iii.</b><h3 data-i18n="how3t"></h3><p data-i18n="how3d"></p></div>
       </div>
-      <svg class="route" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M6 30 C 220 4, 420 36, 620 18 S 880 8, 994 22" fill="none" stroke="#e9e2d4" stroke-width="1" stroke-dasharray="3 6"/>
-        <circle cx="6" cy="30" r="4" fill="#e9e2d4"/><circle cx="994" cy="22" r="4" fill="none" stroke="#e9e2d4"/>
-        <text x="16" y="38" fill="#cfc6b4" font-family="IBM Plex Mono" font-size="10" letter-spacing="2">SEOUL</text>
-        <text x="930" y="38" fill="#cfc6b4" font-family="IBM Plex Mono" font-size="10" letter-spacing="2">TOKYO</text>
-      </svg>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <div class="sec-head rv"><p class="mono">03 — Regulation</p><h2 data-i18n="regTitle"></h2></div>
+      <div class="sec-head rv"><p class="label">Regulation</p><h2 data-i18n="regTitle"></h2></div>
       <div class="regs rv">
         <div class="reg"><span class="stamp" data-i18n="reg1tag"></span><h3 data-i18n="reg1t"></h3><p data-i18n="reg1d"></p></div>
         <div class="reg"><span class="stamp" data-i18n="reg2tag"></span><h3 data-i18n="reg2t"></h3><p data-i18n="reg2d"></p></div>
+        <div class="reg"><span class="stamp" data-i18n="reg3tag"></span><h3 data-i18n="reg3t"></h3><p data-i18n="reg3d"></p></div>
       </div>
       <p class="regnote" data-i18n="regNote"></p>
     </div>
@@ -300,9 +313,9 @@ footer .mono{color:#8f8676}
 
   <section class="creators">
     <div class="wrap split">
-      <figure class="rv"><img src="/img/creator.jpg" alt="" loading="lazy" width="1200" height="1500"><figcaption class="mono" style="margin-top:10px" data-i18n="cap3"></figcaption></figure>
+      <figure class="rv"><img src="/img/dj-nero-black.jpg" alt="DAVID &amp; JONATHAN" loading="lazy" width="900" height="1125"><figcaption class="cap" data-i18n="cap3"></figcaption></figure>
       <div class="rv">
-        <p class="mono">04 — For creators</p>
+        <p class="label">For creators</p>
         <h2 style="font-size:clamp(28px,4vw,52px);margin-top:14px" data-i18n="crTitle"></h2>
         <div class="pair">
           <div><h3 data-i18n="cr1t"></h3><p data-i18n="cr1d"></p></div>
@@ -315,7 +328,7 @@ footer .mono{color:#8f8676}
 
   <section id="price">
     <div class="wrap">
-      <div class="sec-head rv"><p class="mono">05 — Pricing</p><h2 data-i18n="priceTitle"></h2></div>
+      <div class="sec-head rv"><p class="label">Pricing</p><h2 data-i18n="priceTitle"></h2></div>
       <div class="prices rv">
         <div class="price"><b data-i18n="p1t"></b><span data-i18n="p1d"></span><em data-i18n="p1v"></em></div>
         <div class="price"><b data-i18n="p2t"></b><span data-i18n="p2d"></span><em data-i18n="p2v"></em></div>
@@ -326,9 +339,9 @@ footer .mono{color:#8f8676}
 
   <section style="padding-top:0">
     <div class="wrap makers">
-      <figure class="rv"><img src="/img/warehouse.jpg" alt="" loading="lazy" width="1600" height="1075"><figcaption class="mono" style="margin-top:10px" data-i18n="cap4"></figcaption></figure>
+      <figure class="rv"><img src="/img/daymov-black.jpg" alt="DAYMOV" loading="lazy" width="1100" height="733"><figcaption class="cap" data-i18n="cap4"></figcaption></figure>
       <div class="rv">
-        <p class="mono">06 — For manufacturers</p>
+        <p class="label">For manufacturers</p>
         <h2 data-i18n="mfTitle"></h2>
         <p data-i18n="mfLead"></p>
         <div class="cta"><a class="btn" href="#contact"><span data-i18n="mfCta"></span><span class="arr" aria-hidden="true">→</span></a></div>
@@ -339,9 +352,9 @@ footer .mono{color:#8f8676}
   <section id="contact" style="border-top:1px solid var(--rule)">
     <div class="wrap contact">
       <aside class="rv">
-        <p class="mono">07 — Contact</p>
+        <p class="label">Contact</p>
         <h2 style="font-size:clamp(28px,4vw,52px);margin:14px 0 24px" data-i18n="ctTitle"></h2>
-        <img src="/img/materials.jpg" alt="" loading="lazy" width="1200" height="1200">
+        <img src="/img/daymov-flat.jpg" alt="DAYMOV" loading="lazy" width="1100" height="1100">
         <p>Email: <a href="mailto:baromina111@gmail.com">baromina111@gmail.com</a></p>
       </aside>
       <form id="inq" novalidate class="rv">
@@ -376,7 +389,7 @@ footer .mono{color:#8f8676}
 
 <footer>
   <div class="wrap">
-    <p class="mono" data-i18n="footer"></p>
+    <p class="label" data-i18n="footer"></p>
     <div class="big" aria-hidden="true">SCENT BRIDGE</div>
     <div class="foot">
       <span>© 2026 SCENT BRIDGE</span>
@@ -483,7 +496,9 @@ Object.assign(T.ja, {
   vert:"香りの橋をかける", kicker:"Korean fragrance, made in small batches",
   display:["香りは、","海を<em>渡れる</em>。"],
   st1:"掲載メーカー", st2:"韓国の工場登録を確認", st3:"最小ロットの目安", st4:"営業日以内にご返信", pcs:"個〜", days:"日",
-  cap1:"Plate 01 — Glass, cedar, yuzu", cap2:"Fig. 02 — 調香室の作業台", cap3:"Fig. 03 — クリエイターのオリジナル", cap4:"Fig. 04 — 出荷前の検品と梱包",
+  cap1:"自社ブランド COMMOV「SHUTTER」", cap2:"DAYMOV 滑り止めソックスの底面", cap3:"DAVID & JONATHAN「NERO」", cap4:"DAYMOV 出荷前の製品",
+  brLabel:"Our brands", brTitle:"私たちも、韓国で作っています。", brLead:"運営チームは自社ブランドを持ち、韓国の工場と仕様・見積・サンプルのやり取りを重ねてきました。その手順を、ブランドの皆様の依頼にもそのまま使います。",
+  br1:"時刻で名付けるフレグランス。SHUTTER 14:10、MIDNIGHT OF SEOUL 22:40。", br2:"ヨガとシニア向けの滑り止めソックス。", br3:"ソウル発のアパレル。Seoul Drop 01。",
   marquee:["香水","ディフューザー","ルームスプレー","キャンドル","ファブリックミスト","サシェ","ヘアミスト","石膏芳香剤"]
 });
 Object.assign(T.ko, {
@@ -491,8 +506,52 @@ Object.assign(T.ko, {
   vert:"향의 다리를 놓다", kicker:"Korean fragrance, made in small batches",
   display:["향은,","바다를 <em>건넌다</em>."],
   st1:"등록 제조사", st2:"한국 공장등록 확인", st3:"최소 수량 기준", st4:"영업일 안에 회신", pcs:"개~", days:"일",
-  cap1:"Plate 01 — Glass, cedar, yuzu", cap2:"Fig. 02 — 조향실 작업대", cap3:"Fig. 03 — 크리에이터의 오리지널", cap4:"Fig. 04 — 출고 전 검수와 포장",
+  cap1:"자사 브랜드 COMMOV 'SHUTTER'", cap2:"DAYMOV 미끄럼방지 양말 바닥", cap3:"DAVID & JONATHAN 'NERO'", cap4:"DAYMOV 출고 전 제품",
+  brLabel:"Our brands", brTitle:"저희도 한국에서 직접 만듭니다.", brLead:"운영팀은 자사 브랜드를 운영하며 한국 공장과 사양·견적·샘플을 주고받아 왔습니다. 그 과정을 브랜드의 의뢰에도 그대로 씁니다.",
+  br1:"시각으로 이름 붙인 향. SHUTTER 14:10, MIDNIGHT OF SEOUL 22:40.", br2:"요가·시니어용 미끄럼방지 양말.", br3:"서울에서 시작한 의류. Seoul Drop 01.",
   marquee:["향수","디퓨저","룸스프레이","캔들","섬유향수","사쉐","헤어미스트","석고방향제"]
+});
+
+// 2026-11-22: 향 제품 → 패션·라이프스타일 전체로 확장
+Object.assign(T.ja, {
+  title:"SCENT BRIDGE | 韓国のファッション・ライフスタイルOEMマッチング",
+  kicker:"Fashion & lifestyle, made in Korea in small batches",
+  display:["韓国でつくる。","日本で<em>売れる</em>。"],
+  heroTitle:"アパレル、ソックス、香り、生活雑貨。韓国の工場を、小ロットから。",
+  heroLead:"日本のブランド様のご希望（品目・数量・単価・納期・素材）を伺い、韓国のOEM/ODMメーカーの中から合う3社を選んで比較表でご提案します。サンプル手配から日本向け発送まで、やり取りは日本語で完結します。",
+  st1:"掲載メーカー（香り分野・順次拡大中）",
+  whyTitle:"韓国の工場探しでつまずく3つの壁を、代わりに越えます。",
+  regTitle:"品目によって、日本で必要な手続きが変わります。",
+  reg1tag:"化粧品", reg1t:"香水・ボディミスト・スキンケア", 
+  reg2tag:"雑貨", reg2t:"ディフューザー・キャンドル・生活雑貨",
+  reg2d:"空間用の香り製品や生活雑貨は、一般に化粧品の許可は不要です。一方でアルコール量による危険物の扱い、素材ごとの表示（家庭用品品質表示法）など、品目別の確認点があります。",
+  reg3tag:"衣料品", reg3t:"アパレル・ソックス・帽子・バッグ",
+  reg3d:"衣料品は輸入の許可は不要ですが、家庭用品品質表示法にもとづく組成表示・洗濯表示（JIS L 0001）と、表示者名・連絡先の記載が必要です。韓国の工場とタグ・ラベル仕様から一緒に詰めます。",
+  i1:"アパレル", i2:"ソックス・小物", i3:"バッグ・帽子", i4:"香水・コスメ", i5:"ディフューザー・キャンドル", i6:"生活雑貨・その他",
+  cr2t:"インフルエンサーの方：自分のブランドを作る",
+  cr2d:"小ロット対応の韓国OEMメーカーで、オリジナルのアパレル・ソックス・香り・雑貨を作れます。ブランドからのPR依頼も受け取れます。",
+  mfLead:"日本のブランドからの引き合いを、日本語対応込みでお届けします。アパレル、ソックス、香り、生活雑貨のメーカー様を募集しています。掲載は無料、成約時のみ手数料をいただく方式です。",
+  footer:"日韓ファッション・ライフスタイルOEMマッチング"
+});
+Object.assign(T.ko, {
+  title:"SCENT BRIDGE | 한일 패션·라이프스타일 OEM 매칭",
+  kicker:"Fashion & lifestyle, made in Korea in small batches",
+  display:["한국에서 만들고,","일본에서 <em>팝니다</em>."],
+  heroTitle:"의류, 양말, 향, 생활용품. 한국 공장을 소량부터.",
+  heroLead:"일본 브랜드의 조건(품목·수량·단가·납기·소재)을 듣고, 한국 OEM/ODM 제조사 중 맞는 3곳을 골라 비교표로 제안합니다. 샘플 수배부터 일본 발송까지 소통은 일본어로 끝납니다.",
+  st1:"등록 제조사 (향 분야·순차 확대 중)",
+  whyTitle:"한국 공장 찾기에서 막히는 3가지 벽을 대신 넘습니다.",
+  regTitle:"품목에 따라 일본에서 필요한 절차가 달라집니다.",
+  reg1tag:"화장품", reg1t:"향수·바디 미스트·스킨케어",
+  reg2tag:"잡화", reg2t:"디퓨저·캔들·생활용품",
+  reg2d:"공간용 향 제품과 생활용품은 일반적으로 화장품 허가가 필요 없습니다. 다만 알코올 함량에 따른 위험물 취급, 소재별 표시(가정용품품질표시법) 등 품목별 확인할 점이 있습니다.",
+  reg3tag:"의류", reg3t:"의류·양말·모자·가방",
+  reg3d:"의류는 수입 허가가 필요 없지만, 일본 가정용품품질표시법에 따른 혼용률 표시·세탁 표시(JIS L 0001)와 표시자 이름·연락처가 필요합니다. 한국 공장과 택·라벨 사양부터 함께 맞춥니다.",
+  i1:"의류", i2:"양말·소품", i3:"가방·모자", i4:"향수·화장품", i5:"디퓨저·캔들", i6:"생활용품·기타",
+  cr2t:"인플루언서: 내 브랜드 만들기",
+  cr2d:"소량 생산이 되는 한국 OEM 제조사와 나만의 의류·양말·향·잡화를 만들 수 있습니다. 브랜드의 홍보 제안도 받을 수 있습니다.",
+  mfLead:"일본 브랜드의 문의를 일본어 대응까지 포함해 전달합니다. 의류, 양말, 향, 생활용품 제조사를 모집합니다. 등록은 무료이고 거래가 성사될 때만 수수료를 받습니다.",
+  footer:"한일 패션·라이프스타일 OEM 매칭"
 });
 
 let lang = "ja";
@@ -508,8 +567,6 @@ function setLang(l){
   t.display.forEach(line => { const s = document.createElement("span"); s.className = "l";
     line.split(/(<em>.*?<\/em>)/).forEach(part => { if (!part) return; const m = /^<em>(.*)<\/em>$/.exec(part); if (m) { const e = document.createElement("em"); e.textContent = m[1]; s.append(e); } else s.append(part); });
     d.append(s); });
-  const tr = document.getElementById("track"); tr.replaceChildren();
-  [...t.marquee, ...t.marquee].forEach(w => { const s = document.createElement("span"); s.textContent = w; tr.append(s); });
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === lang)));
   document.getElementById("formMsg").textContent = "";
   if (window.__me) document.getElementById("acct").textContent = t.navMy;
