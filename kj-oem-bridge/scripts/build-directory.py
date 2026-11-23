@@ -24,7 +24,7 @@ out = []
 for i, r in enumerate(rows, 1):
     items = r["주력품목"]
     tags = [t[1] for t in TAGS if any(k in items for k in t[0])]
-    m = re.search(r"(\d[\d,]*)\s*개", r["MOQ"])
+    m = None if r["MOQ"].startswith("미확인") else re.search(r"(\d[\d,]*)\s*(?:개|켤레|장|족)", r["MOQ"])
     moq = int(m.group(1).replace(",", "")) if m else None
     reg_ko = next((k for k in REGION if k in r["소재지"]), None)
     certs = [c for c in CERTS if c in r["인증"]]

@@ -21,7 +21,8 @@ export const tagList = () => TAGS.map(t => ({ id: t[1], ja: t[2], ko: t[3], kind
 
 export function anon(r) {
   const items = r["주력품목"] || "";
-  const m = /(\d[\d,]*)\s*개/.exec(r["MOQ"] || "");
+  const mq = r["MOQ"] || "";
+  const m = mq.startsWith("미확인") ? null : /(\d[\d,]*)\s*(?:개|켤레|장|족)/.exec(mq);
   const regKo = Object.keys(REGION).find(k => (r["소재지"] || "").includes(k));
   const cert = r["인증"] || "", exp = r["수출경험"] || "";
   const certs = CERTS.filter(c => cert.includes(c));
