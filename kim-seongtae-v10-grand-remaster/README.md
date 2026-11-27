@@ -65,3 +65,32 @@ python3 -m http.server 8080
 
 - 타이틀 키아트: https://www.canva.com/d/QzhZCXgZvSOARYh
 - 브랜드 4종 엠블럼 보드: https://www.canva.com/d/PDn6hCTTMgF6EzH
+
+## 회귀 점검
+
+```bash
+npm run game:check                       # 요약, 회귀 발견 시 exit 1
+node scripts/game-check.mjs --keep-open  # 통과한 어서션까지 전부 출력
+node scripts/game-check.mjs --json r.json
+node scripts/game-check.mjs --dir <path> # 다른 빌드 디렉터리를 점검
+```
+
+`scripts/game-check.mjs` 가 이 폴더를 임시 정적 서버에 올리고 헤드리스 Chromium 으로
+실제 조작합니다. 13개 점검 / 64개 어서션이며, "로딩되는가"가 아니라
+**경영 시뮬레이션이 여전히 말이 되는가**를 봅니다.
+
+| 점검 | 보는 것 |
+|---|---|
+| boot · navigation | 버전, 6개 페이지 활성화, 브랜드 4종 렌더 |
+| brands | 크레스트 SVG, 채널 전환이 충돌·마진을 움직임, 채널별 표류 부호가 트레이드오프를 유지, 브랜드 투자 효과 |
+| contracts | 선금/잔금 회계가 맞음, 회수액이 잔금을 넘지 않음, 기한이 길수록 단가가 오름 |
+| events | 처리·카운터, 기한 초과 시 불리한 선택지 자동 적용, 랜덤 풀 크기 |
+| finance | 대출 한도 초과 거부, 지분 40% 하한, 채용/감원 인건비, 금리 범위, 등급 8단계 |
+| simulate × 3난이도 | 36개월(또는 엔딩까지) 전 구간 유한값, 브랜드력·충돌 0~100, 미수금 음수 없음, 월 증가가 정확히 1 |
+| persistence | 새로고침 생존, 변조 저장 거부, 본 저장 파손 시 백업 복구 |
+| migration | v9.3 저장에서 재무 수치 + 브랜드력·충돌·채널 승계 |
+| balance | 쉬움이 60개월 안에 승리 가능(경제가 죽지 않음), 어려움이 1년 만에 터지지 않음(인플레 없음) |
+| runtime-errors | JS 에러 0건 (폰트 CDN 차단은 제외) |
+
+점검의 유효성은 고의로 망가뜨린 사본으로 검증했습니다 — 복리 성장 제거는 `balance`,
+체크섬 검증 제거는 `persistence`, 잔금 초과 회수는 `contracts` 에서 각각 잡힙니다.
