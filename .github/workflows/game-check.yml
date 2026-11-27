@@ -24,7 +24,9 @@ on:
 
 jobs:
   game-check:
-    runs-on: ubuntu-latest
+    # ubuntu-latest 는 현재 Ubuntu 26.04 이고 Playwright 1.56 이 아직 지원하지 않는다
+    # ("Playwright does not support chromium on ubuntu26.04-x64"). 지원되는 LTS 에 고정한다.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     steps:
@@ -45,7 +47,10 @@ jobs:
           cd "$RUNNER_TEMP/pw"
           npm init -y > /dev/null
           npm install --silent playwright@1.56.0
-          npx playwright install --with-deps chromium
+          # --with-deps 는 Playwright 가 러너 OS 를 알아야 동작한다. 모르는 OS 로
+          # 바뀌면 시스템 패키지 단계를 건너뛰고 브라우저만 받는다 — GitHub 러너
+          # 이미지에는 Chromium 이 필요로 하는 라이브러리가 이미 들어 있다.
+          npx playwright install --with-deps chromium || npx playwright install chromium
 
       - name: Run regression check
         env:
