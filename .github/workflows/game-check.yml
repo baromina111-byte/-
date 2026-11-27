@@ -1,0 +1,61 @@
+name: Game regression check
+
+# 김성태전 v10.0 회귀 점검. scripts/game-check.mjs 가 게임을 헤드리스 Chromium 으로
+# 실제 조작한다 (13개 점검 / 64개 어서션).
+#
+# 참고: schedule 은 GitHub 규칙상 기본 브랜치에서만 돈다. 이 워크플로가 master 로
+# 머지되기 전까지 야간 실행은 뜨지 않고, pull_request / workflow_dispatch 로만 돈다.
+
+on:
+  schedule:
+    - cron: '51 23 * * *' # 08:51 KST
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'kim-seongtae-v10-grand-remaster/**'
+      - 'scripts/game-check.mjs'
+      - '.github/workflows/game-check.yml'
+  push:
+    branches:
+      - master
+    paths:
+      - 'kim-seongtae-v10-grand-remaster/**'
+      - 'scripts/game-check.mjs'
+
+jobs:
+  game-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # 게임은 빌드가 없는 단일 HTML 파일이라 프로젝트 의존성이 필요 없다.
+      # 레포 루트에서 npm install 하면 Next.js 트리까지 통째로 받으므로,
+      # Playwright 는 러너 임시 디렉터리에 따로 깔고 경로만 주입한다.
+      - name: Install Playwright
+        run: |
+          mkdir -p "$RUNNER_TEMP/pw"
+          cd "$RUNNER_TEMP/pw"
+          npm init -y > /dev/null
+          npm install --silent playwright@1.56.0
+          npx playwright install --with-deps chromium
+
+      - name: Run regression check
+        env:
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/pw/node_modules/playwright/index.mjs
+        run: node scripts/game-check.mjs --json game-check.json
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-check-report
+          path: game-check.json
+          if-no-files-found: warn

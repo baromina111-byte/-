@@ -10,6 +10,9 @@
  *   node scripts/game-check.mjs --json out.json 기계 판독용 리포트도 기록
  *   node scripts/game-check.mjs --keep-open     통과한 어서션까지 전부 출력
  *   node scripts/game-check.mjs --dir <path>    다른 빌드 디렉터리를 점검
+ *
+ * Playwright 는 'playwright' 로 해석되지 않으면 전역 설치 경로를 시도한다.
+ * 둘 다 아닌 환경(CI 등)에서는 PLAYWRIGHT_MODULE 에 모듈 경로를 넣어 주면 된다.
  */
 
 import http from 'node:http';
@@ -27,7 +30,12 @@ const VERBOSE = ARGV.includes('--keep-open');
 
 /* Playwright 는 환경에 따라 전역 설치만 되어 있을 수 있다. */
 async function loadChromium() {
-  const candidates = ['playwright', '/opt/node22/lib/node_modules/playwright/index.mjs'];
+  /* PLAYWRIGHT_MODULE 은 CI 처럼 Playwright 가 프로젝트 밖에 설치된 환경을 위한 탈출구다. */
+  const candidates = [
+    process.env.PLAYWRIGHT_MODULE,
+    'playwright',
+    '/opt/node22/lib/node_modules/playwright/index.mjs'
+  ].filter(Boolean);
   const errors = [];
   for (const spec of candidates) {
     try { return (await import(spec)).chromium; } catch (e) { errors.push(`${spec}: ${e.message}`); }
