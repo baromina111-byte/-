@@ -1,0 +1,1553 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050b12">
+<title>김성태전: 제국의 시대 v10.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   김성태전: 제국의 시대 v10.0 — GRAND REMASTER
+   디자인 토큰
+   ============================================================ */
+:root{
+  --bg-0:#050b12; --bg-1:#081523; --bg-2:#0d2033;
+  --surface:rgba(17,34,53,.74);
+  --surface-2:rgba(24,46,70,.58);
+  --surface-3:rgba(10,21,34,.85);
+  --line:rgba(126,158,196,.16);
+  --line-2:rgba(126,158,196,.28);
+  --line-gold:rgba(215,168,77,.38);
+
+  --gold:#d7a84d; --gold-lt:#ffe4a8; --gold-dk:#8a6524;
+  --grad-gold:linear-gradient(135deg,#8a6524 0%,#d7a84d 45%,#ffe4a8 100%);
+
+  --text:#f2f6fb; --muted:#93a6bd; --dim:#61798f;
+
+  --good:#4ade80; --good-dk:#14532d;
+  --bad:#fb7185;  --bad-dk:#4c1d24;
+  --warn:#fbbf24; --warn-dk:#4a340a;
+  --info:#60a5fa; --info-dk:#12345e;
+
+  --r-xs:8px; --r-sm:12px; --r:16px; --r-lg:22px; --r-xl:28px; --r-pill:999px;
+
+  --sh-1:0 1px 2px rgba(0,0,0,.4);
+  --sh-2:0 8px 24px -8px rgba(0,0,0,.7), 0 2px 6px rgba(0,0,0,.35);
+  --sh-3:0 24px 60px -20px rgba(0,0,0,.85), 0 4px 12px rgba(0,0,0,.4);
+  --sh-gold:0 0 0 1px rgba(215,168,77,.4), 0 12px 34px -14px rgba(215,168,77,.55);
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+
+  --font:"Noto Sans KR",system-ui,-apple-system,sans-serif;
+  --font-num:"Outfit","Noto Sans KR",system-ui,sans-serif;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--text);background:var(--bg-0);
+  font-family:var(--font);font-size:15px;line-height:1.5;
+  padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  overflow-x:hidden;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.02em}
+p{margin:0}
+a{color:var(--info)}
+
+/* ---------- 배경 레이어 ---------- */
+.bg-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.bg-layer .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;will-change:transform}
+.bg-layer .b1{width:60vw;height:60vw;left:-12vw;top:-22vw;background:radial-gradient(circle,#1d4a7a,transparent 70%);animation:drift1 26s var(--ease) infinite alternate}
+.bg-layer .b2{width:52vw;height:52vw;right:-14vw;top:6vh;background:radial-gradient(circle,#5c4318,transparent 70%);animation:drift2 32s var(--ease) infinite alternate}
+.bg-layer .b3{width:46vw;height:46vw;left:24vw;bottom:-20vw;background:radial-gradient(circle,#123a4d,transparent 70%);animation:drift3 38s var(--ease) infinite alternate}
+.bg-grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;mix-blend-mode:overlay}
+@keyframes drift1{to{transform:translate3d(9vw,7vh,0) scale(1.12)}}
+@keyframes drift2{to{transform:translate3d(-8vw,10vh,0) scale(1.08)}}
+@keyframes drift3{to{transform:translate3d(6vw,-8vh,0) scale(1.15)}}
+
+.wrap{max-width:1520px;margin:auto;padding:0 16px 16px}
+
+/* ---------- 상단 바 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;margin:0 -16px 14px;padding:12px 16px;
+  display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  background:linear-gradient(180deg,rgba(5,11,18,.94),rgba(5,11,18,.72));
+  border-bottom:1px solid var(--line);backdrop-filter:blur(18px) saturate(1.3);
+  -webkit-backdrop-filter:blur(18px) saturate(1.3);
+}
+.brandmark{display:flex;align-items:center;gap:11px;min-width:0}
+.brandmark .sigil{width:42px;height:42px;flex:none;filter:drop-shadow(0 3px 10px rgba(215,168,77,.4))}
+.brandmark .txt{min-width:0}
+.brandmark .t1{font-size:19px;font-weight:900;letter-spacing:-.03em;
+  background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brandmark .t2{font-family:var(--font-num);font-size:10.5px;font-weight:800;letter-spacing:.16em;color:var(--gold-dk);text-transform:uppercase}
+
+.hud{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.hud-chip{
+  display:flex;flex-direction:column;gap:1px;min-width:92px;padding:7px 12px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  box-shadow:var(--sh-1);transition:.25s var(--ease);
+}
+.hud-chip:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.hud-chip span{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--dim);text-transform:uppercase}
+.hud-chip b{font-family:var(--font-num);font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.hud-chip.is-gold b{color:var(--gold-lt)}
+.hud-chip.is-good b{color:var(--good)}
+.hud-chip.is-bad b{color:var(--bad)}
+
+/* ---------- 내비게이션 ---------- */
+.nav{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{
+  display:flex;align-items:center;gap:7px;flex:none;
+  padding:10px 16px;border-radius:var(--r-pill);cursor:pointer;
+  background:var(--surface);border:1px solid var(--line);color:var(--muted);
+  font-weight:700;font-size:13.5px;transition:.22s var(--ease);
+}
+.nav button svg{width:16px;height:16px}
+.nav button:hover{color:var(--text);border-color:var(--line-2);transform:translateY(-1px)}
+.nav button.active{background:var(--grad-gold);border-color:transparent;color:#1a1206;box-shadow:var(--sh-gold)}
+
+/* ---------- 카드 ---------- */
+.card{
+  position:relative;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:18px;margin-bottom:14px;
+  box-shadow:var(--sh-2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  animation:fadeUp .45s var(--ease-out) both;
+}
+.card::before{content:"";position:absolute;inset:0 0 auto;height:1px;border-radius:var(--r-lg) var(--r-lg) 0 0;
+  background:linear-gradient(90deg,transparent,rgba(215,168,77,.5),transparent)}
+.card-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.card-hd h2{font-size:17px}
+.card-hd h3{font-size:15px}
+.eyebrow{font-family:var(--font-num);font-size:10px;font-weight:800;letter-spacing:.18em;
+  color:var(--gold-dk);text-transform:uppercase;margin-bottom:4px}
+.sub{color:var(--muted);font-size:13px;line-height:1.6}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+/* ---------- 지표 타일 ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:11px}
+.stat{
+  position:relative;overflow:hidden;padding:13px 14px;border-radius:var(--r);
+  background:linear-gradient(160deg,var(--surface-2),rgba(8,18,30,.6));
+  border:1px solid var(--line);transition:.25s var(--ease);
+}
+.stat:hover{transform:translateY(-2px);border-color:var(--line-gold);box-shadow:var(--sh-2)}
+.stat > span{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--dim)}
+.stat > b{display:block;margin-top:5px;font-family:var(--font-num);font-size:23px;font-weight:800;
+  font-variant-numeric:tabular-nums;letter-spacing:-.025em;line-height:1.1}
+.stat .delta{font-family:var(--font-num);font-size:11.5px;font-weight:700;margin-top:3px;display:block}
+.stat .spark{position:absolute;right:0;bottom:0;width:82px;height:34px;opacity:.55}
+.up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--dim)}
+.good-t{color:var(--good)} .bad-t{color:var(--bad)} .warn-t{color:var(--warn)} .info-t{color:var(--info)} .gold-t{color:var(--gold-lt)}
+
+/* ---------- 버튼 ---------- */
+.btn{
+  position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:11px 16px;border-radius:var(--r-sm);cursor:pointer;
+  background:var(--surface-2);border:1px solid var(--line-2);color:var(--text);
+  font-weight:700;font-size:13.5px;transition:.2s var(--ease);
+}
+.btn svg{width:15px;height:15px;flex:none}
+.btn:hover:not(:disabled){transform:translateY(-1px);border-color:var(--line-gold);box-shadow:var(--sh-2)}
+.btn:active:not(:disabled){transform:translateY(0) scale(.985)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.gold{background:var(--grad-gold);border-color:transparent;color:#1a1206;box-shadow:var(--sh-gold)}
+.btn.gold:hover:not(:disabled){box-shadow:0 0 0 1px rgba(215,168,77,.6),0 16px 40px -14px rgba(215,168,77,.8)}
+.btn.good{background:linear-gradient(135deg,#14532d,#1d7a45);border-color:#2f9c60;color:#dcfce7}
+.btn.bad{background:linear-gradient(135deg,#4c1d24,#7f2a36);border-color:#b04455;color:#ffe4e6}
+.btn.ghost{background:transparent}
+.btn.sm{padding:8px 12px;font-size:12.5px;border-radius:var(--r-xs)}
+.btn.block{width:100%}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- 브랜드 카드 ---------- */
+.brands{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:13px}
+.brand{
+  position:relative;overflow:hidden;border-radius:var(--r-lg);
+  background:linear-gradient(165deg,var(--surface-2),rgba(7,16,26,.86));
+  border:1px solid var(--line);box-shadow:var(--sh-2);transition:.3s var(--ease);
+}
+.brand:hover{transform:translateY(-3px);border-color:var(--line-gold);box-shadow:var(--sh-3)}
+.brand-art{position:relative;height:112px;overflow:hidden}
+.brand-art svg{position:absolute;inset:0;width:100%;height:100%}
+.brand-art::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(7,16,26,.92) 100%)}
+.brand-art svg.crest{position:absolute;inset:auto auto 12px 14px;width:46px;height:46px;z-index:2;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.6))}
+.brand-body{padding:13px 15px 15px}
+.brand-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand-title b{font-size:16.5px;font-weight:900;letter-spacing:-.02em}
+.pill{display:inline-flex;align-items:center;padding:3.5px 9px;border-radius:var(--r-pill);
+  font-family:var(--font-num);font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  background:rgba(96,165,250,.14);color:#9ec8ff;border:1px solid rgba(96,165,250,.28)}
+.pill.gold{background:rgba(215,168,77,.15);color:var(--gold-lt);border-color:var(--line-gold)}
+.pill.good{background:rgba(74,222,128,.13);color:#86efac;border-color:rgba(74,222,128,.3)}
+.pill.bad{background:rgba(251,113,133,.13);color:#fda4af;border-color:rgba(251,113,133,.3)}
+.pill.warn{background:rgba(251,191,36,.13);color:#fcd34d;border-color:rgba(251,191,36,.3)}
+
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}
+.kv > div{background:rgba(6,14,24,.6);border:1px solid var(--line);border-radius:var(--r-xs);padding:7px 8px}
+.kv span{display:block;font-size:9.5px;font-weight:700;letter-spacing:.05em;color:var(--dim)}
+.kv b{display:block;font-family:var(--font-num);font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:2px}
+
+.meter{height:7px;border-radius:var(--r-pill);background:rgba(6,14,24,.75);overflow:hidden;margin-top:9px;
+  border:1px solid var(--line)}
+.meter i{display:block;height:100%;border-radius:var(--r-pill);background:var(--grad-gold);
+  transition:width .7s var(--ease-out);position:relative}
+.meter i::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  animation:shimmer 2.4s linear infinite}
+.meter.risk i{background:linear-gradient(90deg,#fbbf24,#fb7185)}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:11px;
+  padding:4px;background:rgba(6,14,24,.6);border:1px solid var(--line);border-radius:var(--r-sm)}
+.seg button{padding:7px 4px;border:0;border-radius:var(--r-xs);cursor:pointer;background:transparent;
+  color:var(--muted);font-size:11.5px;font-weight:700;transition:.2s var(--ease)}
+.seg button:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.seg button.on{background:var(--grad-gold);color:#1a1206;box-shadow:var(--sh-1)}
+
+/* ---------- 폼 ---------- */
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:11px}
+.field{display:grid;gap:6px}
+.field label{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--muted);
+  display:flex;justify-content:space-between;gap:8px}
+.field label em{font-style:normal;font-family:var(--font-num);font-weight:800;color:var(--gold-lt)}
+.field input,.field select{
+  width:100%;padding:10px 12px;border-radius:var(--r-sm);
+  background:rgba(5,12,20,.8);border:1px solid var(--line-2);color:var(--text);
+  font-family:var(--font-num);font-weight:600;transition:.2s var(--ease);
+}
+.field input:focus,.field select:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px rgba(215,168,77,.15)}
+.field input[type=range]{padding:0;height:30px;background:transparent;border:0;accent-color:var(--gold)}
+
+/* ---------- 계약 ---------- */
+.list{display:grid;gap:9px}
+.row{background:linear-gradient(150deg,var(--surface-2),rgba(7,16,26,.7));
+  border:1px solid var(--line);border-radius:var(--r);padding:13px 14px;transition:.25s var(--ease);
+  animation:fadeUp .4s var(--ease-out) both}
+.row:hover{border-color:var(--line-gold);transform:translateX(2px)}
+.row-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.row-hd b{font-size:14.5px;font-weight:800}
+
+/* ---------- 사건 ---------- */
+.event{
+  position:relative;overflow:hidden;border-radius:var(--r-lg);padding:16px;margin-bottom:11px;
+  background:linear-gradient(160deg,rgba(30,25,14,.8),rgba(10,18,28,.86));
+  border:1px solid var(--line-gold);box-shadow:var(--sh-2);
+  animation:popIn .45s var(--ease-out) both;
+}
+.event::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad-gold)}
+.event.urgent{border-color:rgba(251,113,133,.5);background:linear-gradient(160deg,rgba(40,16,22,.82),rgba(10,18,28,.86))}
+.event.urgent::before{background:linear-gradient(180deg,#fbbf24,#fb7185)}
+.event-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:7px}
+.event-hd h3{font-size:15.5px}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:12px}
+.choice{
+  text-align:left;padding:11px 13px;border-radius:var(--r-sm);cursor:pointer;
+  background:rgba(6,14,24,.62);border:1px solid var(--line-2);color:var(--text);transition:.2s var(--ease);
+}
+.choice:hover{border-color:var(--gold);background:rgba(215,168,77,.08);transform:translateY(-2px)}
+.choice b{display:block;font-size:13.5px;font-weight:800;margin-bottom:4px}
+.choice .fx{display:flex;gap:6px;flex-wrap:wrap}
+.fx em{font-style:normal;font-family:var(--font-num);font-size:10.5px;font-weight:800;
+  padding:2px 6px;border-radius:var(--r-xs);background:rgba(255,255,255,.06);color:var(--muted)}
+@keyframes popIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- 차트 ---------- */
+.chart-box{position:relative;width:100%;height:230px}
+.chart-box svg{width:100%;height:100%;overflow:visible}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
+.legend span{font-size:11.5px;font-weight:700;color:var(--muted)}
+.draw{stroke-dasharray:2200;stroke-dashoffset:2200;animation:draw 1.5s var(--ease-out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* ---------- 로그 ---------- */
+.log{max-height:270px;overflow:auto;display:grid;gap:1px;scrollbar-width:thin}
+.log::-webkit-scrollbar{width:5px}
+.log::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:9px}
+.log div{display:flex;gap:9px;padding:8px 2px;border-bottom:1px solid var(--line);font-size:12.5px;color:#c2d0de}
+.log div em{font-style:normal;flex:none;font-family:var(--font-num);font-size:10.5px;font-weight:800;
+  color:var(--gold-dk);padding-top:1px}
+
+/* ---------- 업적 ---------- */
+.achv{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.achv > div{display:flex;gap:11px;align-items:center;padding:12px;border-radius:var(--r);
+  background:rgba(6,14,24,.55);border:1px solid var(--line);opacity:.42;transition:.3s var(--ease)}
+.achv > div.got{opacity:1;border-color:var(--line-gold);background:linear-gradient(150deg,rgba(48,36,14,.6),rgba(7,16,26,.7))}
+.achv svg{width:28px;height:28px;flex:none}
+.achv b{display:block;font-size:13px;font-weight:800}
+.achv span{display:block;font-size:11px;color:var(--muted);line-height:1.45;margin-top:2px}
+
+/* ---------- 토스트 / 모달 / 이펙트 ---------- */
+.toast-stack{position:fixed;left:50%;bottom:calc(104px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  z-index:120;display:grid;gap:8px;justify-items:center;pointer-events:none;width:max-content;max-width:92vw}
+.toast{display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:var(--r-pill);
+  background:rgba(9,20,32,.94);border:1px solid var(--line-gold);color:var(--text);
+  font-weight:700;font-size:13.5px;box-shadow:var(--sh-3);backdrop-filter:blur(12px);
+  animation:toastIn .35s var(--ease-out) both}
+.toast.out{animation:toastOut .3s var(--ease) forwards}
+.toast.ok{border-color:rgba(74,222,128,.5)} .toast.err{border-color:rgba(251,113,133,.5)}
+.toast svg{width:16px;height:16px;flex:none}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-8px) scale(.96)}}
+
+.modal{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:18px;
+  background:rgba(3,7,12,.82);backdrop-filter:blur(8px)}
+.modal.open{display:grid;animation:fadeUp .3s var(--ease-out)}
+.modal-box{width:min(660px,100%);max-height:86vh;overflow:auto;padding:24px;
+  background:linear-gradient(165deg,#0f2135,#070f1a);border:1px solid var(--line-gold);
+  border-radius:var(--r-xl);box-shadow:var(--sh-3);animation:popIn .4s var(--ease-out)}
+
+.spark-fx{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--gold-lt);
+  pointer-events:none;z-index:150;animation:sparkOut .6s var(--ease-out) forwards}
+@keyframes sparkOut{to{transform:scale(10);opacity:0}}
+
+/* ---------- 모바일 내비 ---------- */
+.mnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;
+  grid-template-columns:repeat(6,1fr);gap:2px;padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+  background:rgba(5,11,18,.94);border-top:1px solid var(--line);backdrop-filter:blur(18px)}
+.mnav button{display:grid;justify-items:center;gap:3px;padding:6px 2px;border:0;border-radius:var(--r-xs);
+  background:transparent;color:var(--dim);font-size:10px;font-weight:700;cursor:pointer;transition:.2s var(--ease)}
+.mnav button svg{width:19px;height:19px}
+.mnav button.active{color:var(--gold-lt);background:rgba(215,168,77,.1)}
+
+.page{display:none}
+.page.active{display:block}
+.empty{padding:26px;text-align:center;color:var(--dim);font-size:13px}
+
+@media(max-width:1024px){.grid{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
+@media(max-width:760px){
+  body{font-size:14.5px}
+  .nav{display:none}
+  .mnav{display:grid}
+  .topbar{gap:10px}
+  .brandmark .t1{font-size:16.5px}
+  .hud{width:100%;justify-content:flex-start;gap:6px}
+  .hud-chip{flex:1 1 calc(33.333% - 4px);min-width:0;padding:6px 9px}
+  .hud-chip span,.hud-chip b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hud-chip b{font-size:15px}
+  .card{padding:15px;border-radius:var(--r)}
+  .chart-box{height:200px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<div class="bg-layer"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<svg class="bg-grain"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(#grain)"/></svg>
+
+<div class="wrap">
+  <header class="topbar">
+    <div class="brandmark">
+      <svg class="sigil" viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8a6524"/><stop offset=".5" stop-color="#d7a84d"/><stop offset="1" stop-color="#ffe4a8"/>
+        </linearGradient></defs>
+        <path d="M24 2 44 12v24L24 46 4 36V12Z" fill="none" stroke="url(#sg)" stroke-width="2"/>
+        <path d="M14 32V20l5 7 5-11 5 14 5-6v8Z" fill="url(#sg)"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="url(#sg)" stroke-width=".6" opacity=".45"/>
+      </svg>
+      <div class="txt">
+        <div class="t1">김성태전: 제국의 시대</div>
+        <div class="t2">Empire of Commerce · v10.0</div>
+      </div>
+    </div>
+    <div class="hud" id="hud"></div>
+  </header>
+
+  <nav class="nav" id="nav"></nav>
+
+  <!-- ============ 제국 ============ -->
+  <section class="page active" id="page-dashboard">
+    <div class="card">
+      <div class="card-hd">
+        <div><div class="eyebrow">Empire Status</div><h2>제국 현황</h2></div>
+        <div id="cycleBadge"></div>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card">
+          <div class="card-hd">
+            <div><div class="eyebrow">Monthly Operation</div><h2>다음 달 경영 결정</h2></div>
+            <div id="goalPill"></div>
+          </div>
+          <p class="sub" style="margin-bottom:13px">광고비와 운영 집중도를 정하고 한 달을 진행합니다. 시장 사이클·채널 충돌·미수금 회수가 모두 반영됩니다.</p>
+          <div class="form">
+            <div class="field"><label>시장 변동성 <em id="volLabel">18</em></label><input id="volatility" type="range" min="0" max="45" value="18"></div>
+            <div class="field"><label>광고비 <em id="adLabel">500만원</em></label><input id="adSpend" type="range" min="0" max="4000" step="100" value="500"></div>
+            <div class="field"><label>운영 집중도</label><select id="focus">
+              <option value="growth">성장 — 매출 확대</option>
+              <option value="cash">현금회수 — 미수금 압축</option>
+              <option value="brand">브랜드 — 평판 축적</option>
+              <option value="cost">원가절감 — 마진 방어</option>
+            </select></div>
+          </div>
+          <div class="btn-row" style="margin-top:14px">
+            <button class="btn gold" id="runMonth">다음 달 진행</button>
+            <button class="btn" id="runQuarter">분기(3개월) 자동</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><div><div class="eyebrow">Performance</div><h2>실적 추이</h2></div></div>
+          <div class="chart-box" id="chart"></div>
+          <div class="legend">
+            <span><i style="background:#d7a84d"></i>매출</span>
+            <span><i style="background:#4ade80"></i>순익</span>
+            <span><i style="background:#60a5fa"></i>현금</span>
+            <span><i style="background:#fb7185"></i>미수금</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-hd"><div><div class="eyebrow">Active Incidents</div><h2>진행 중 사건</h2></div><span class="pill" id="eventCount">0</span></div>
+          <div id="eventMini"></div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><div><div class="eyebrow">Ledger</div><h3>경영 일지</h3></div></div>
+          <div class="log" id="log"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 브랜드 ============ -->
+  <section class="page" id="page-brands">
+    <div class="card">
+      <div class="card-hd"><div><div class="eyebrow">Portfolio</div><h2>브랜드 채널 전략</h2></div><span class="pill gold" id="portfolioValue"></span></div>
+      <p class="sub" style="margin-bottom:14px">채널을 바꾸면 매출 배수와 충돌도가 함께 움직입니다. 충돌도가 높을수록 미수금 회수율이 떨어집니다. 브랜드 투자로 브랜드력을 직접 끌어올릴 수 있습니다.</p>
+      <div class="brands" id="brands"></div>
+    </div>
+  </section>
+
+  <!-- ============ 계약 ============ -->
+  <section class="page" id="page-contracts">
+    <div class="card">
+      <div class="card-hd"><div><div class="eyebrow">Contracts</div><h2>계약 · 미수금 통제실</h2></div><span class="pill" id="arPill"></span></div>
+      <p class="sub" style="margin-bottom:14px">선금 비율이 높을수록 현금은 빨리 들어오지만 거래처가 단가 인하를 요구해 총액이 줄어듭니다. 위험도가 높은 거래처는 부실 확률이 올라갑니다.</p>
+      <div class="form">
+        <div class="field"><label>거래 브랜드</label><select id="contractBrand"></select></div>
+        <div class="field"><label>계약금액(만원)</label><input id="contractAmount" type="number" min="100" step="100" value="3000"></div>
+        <div class="field"><label>선금 비율 <em id="depLabel">40%</em></label><input id="contractDeposit" type="range" min="0" max="100" step="5" value="40"></div>
+        <div class="field"><label>회수 기한</label><select id="contractTerm">
+          <option value="30">30일 (단가 -0%)</option><option value="60" selected>60일 (단가 +4%)</option><option value="90">90일 (단가 +9%)</option>
+        </select></div>
+      </div>
+      <div id="contractPreview" class="sub" style="margin-top:12px"></div>
+      <div class="btn-row" style="margin-top:12px"><button class="btn gold" id="addContract">계약 등록</button></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div><div class="eyebrow">Open Book</div><h3>계약 현황</h3></div></div>
+      <div class="list" id="contracts"></div>
+    </div>
+  </section>
+
+  <!-- ============ 사건 ============ -->
+  <section class="page" id="page-events">
+    <div class="card">
+      <div class="card-hd"><div><div class="eyebrow">Incidents</div><h2>경영 사건</h2></div><span class="pill warn" id="eventDeadline"></span></div>
+      <p class="sub" style="margin-bottom:14px">사건은 기한 내에 처리하지 않으면 자동으로 최악의 결과가 적용됩니다. 매달 새로운 사건이 발생합니다.</p>
+      <div id="events"></div>
+    </div>
+  </section>
+
+  <!-- ============ 재무 ============ -->
+  <section class="page" id="page-finance">
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-hd"><div><div class="eyebrow">Credit</div><h3>신용 · 부채</h3></div></div>
+        <div id="creditPanel"></div>
+        <div class="form" style="margin-top:13px">
+          <div class="field"><label>금액(만원)</label><input id="loanAmount" type="number" min="500" step="500" value="5000"></div>
+        </div>
+        <div class="btn-row" style="margin-top:11px">
+          <button class="btn gold sm" id="takeLoan">대출 실행</button>
+          <button class="btn good sm" id="repayLoan">부채 상환</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div><div class="eyebrow">Equity</div><h3>투자 유치</h3></div></div>
+        <div id="equityPanel"></div>
+        <div class="form" style="margin-top:13px">
+          <div class="field"><label>매각 지분 <em id="eqLabel">5%</em></label><input id="equityPct" type="range" min="1" max="25" value="5"></div>
+        </div>
+        <div class="btn-row" style="margin-top:11px"><button class="btn gold sm" id="raiseRound">라운드 클로징</button></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div><div class="eyebrow">Organization</div><h3>조직</h3></div></div>
+        <div id="staffPanel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 기록 ============ -->
+  <section class="page" id="page-archive">
+    <div class="card">
+      <div class="card-hd"><div><div class="eyebrow">Achievements</div><h2>업적</h2></div><span class="pill gold" id="achvCount"></span></div>
+      <div class="achv" id="achv"></div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-hd"><div><div class="eyebrow">Career</div><h3>통산 기록</h3></div></div>
+        <div class="stats" id="career"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div><div class="eyebrow">Persistence</div><h3>저장 복구 센터</h3></div></div>
+        <div class="stats" id="saveStatus"></div>
+        <div class="btn-row" style="margin-top:13px">
+          <button class="btn gold sm" id="saveNow">즉시 저장</button>
+          <button class="btn sm" id="exportBtn">JSON 내보내기</button>
+          <button class="btn sm" id="importBtn">JSON 가져오기</button>
+          <input type="file" id="importFile" accept="application/json" hidden>
+          <button class="btn bad sm" id="resetBtn">새 게임</button>
+        </div>
+        <p class="sub" style="margin-top:11px">v9.3 이하 저장 데이터는 처음 실행 시 자동으로 한 번 이전됩니다. 체크섬 검증 실패 시 백업 2개를 순차 복구합니다.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<nav class="mnav" id="mnav"></nav>
+<div class="toast-stack" id="toasts"></div>
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
+<script>
+'use strict';
+/* ============================================================
+   김성태전: 제국의 시대 v10.0 — GRAND REMASTER
+   1) 상수 · 시드 데이터 · 아이콘
+   ============================================================ */
+const VERSION = '10.0';
+const SAVE  = 'kim_seongtae_empire_v10_save';
+const BACK1 = 'kim_seongtae_empire_v10_backup_1';
+const BACK2 = 'kim_seongtae_empire_v10_backup_2';
+const OLD_KEYS = ['kim_seongtae_empire_v93_save','kim_seongtae_empire_v92_save','kim_seongtae_empire_v91_save','kim_seongtae_empire_v90_save'];
+
+const DIFFICULTY = {
+  easy:   {label:'쉬움',   cash:45000, debt:12000, rate:0.055, eventRate:0.50, volMult:0.70, goal:120000},
+  normal: {label:'보통',   cash:32000, debt:18000, rate:0.075, eventRate:0.72, volMult:1.00, goal:165000},
+  hard:   {label:'어려움', cash:22000, debt:26000, rate:0.098, eventRate:0.95, volMult:1.35, goal:195000}
+};
+
+const GRADES = [
+  {g:'AAA', min:92, loan:4.0, rateAdj:-0.028, collect:0.10},
+  {g:'AA',  min:84, loan:3.2, rateAdj:-0.020, collect:0.07},
+  {g:'A',   min:75, loan:2.6, rateAdj:-0.012, collect:0.05},
+  {g:'BBB', min:64, loan:2.0, rateAdj: 0.000, collect:0.02},
+  {g:'BB',  min:52, loan:1.5, rateAdj: 0.014, collect:0.00},
+  {g:'B',   min:40, loan:1.0, rateAdj: 0.030, collect:-0.03},
+  {g:'CCC', min:26, loan:0.5, rateAdj: 0.055, collect:-0.07},
+  {g:'D',   min:-999, loan:0.0, rateAdj:0.090, collect:-0.12}
+];
+
+const CYCLES = {
+  boom:      {label:'호황', mult:1.20, tone:'good', desc:'소비가 살아났다. 매출 배수 +20%'},
+  normal:    {label:'보통', mult:1.00, tone:'',     desc:'평시 시장. 배수 변동 없음'},
+  recession: {label:'불황', mult:0.80, tone:'bad',  desc:'지갑이 닫혔다. 매출 배수 -20%'}
+};
+
+const CHANNELS = {
+  dtc:    {label:'DTC',  fit:1.06, conflictShift:-3, marginShift: 6, drift:-0.15},
+  b2b:    {label:'B2B',  fit:1.10, conflictShift: 2, marginShift:-4, drift: 0.45},
+  hybrid: {label:'혼합', fit:1.14, conflictShift: 5, marginShift: 0, drift: 0.90},
+  local:  {label:'지역', fit:1.03, conflictShift:-4, marginShift: 3, drift:-0.25}
+};
+
+const STAFF = {
+  sales:     {name:'영업팀',   cost:180, cap:8, desc:'매출 +4% / 인'},
+  marketing: {name:'마케팅팀', cost:150, cap:8, desc:'브랜드력 +0.7 / 월 / 인'},
+  finance:   {name:'재무팀',   cost:200, cap:6, desc:'회수율 +3%p / 인'}
+};
+
+const brandSeed = [
+  {id:'commov',   name:'COMMOV',            kind:'차량용 방향제', site:'https://commov-fragrance.baromina111.chatgpt.site/',
+   accent:'#e0a458', accent2:'#5c3a17', crest:'scent',  brand:72, channel:'hybrid', conflict:20, monthly:1800, margin:38, invested:0},
+  {id:'dnj',      name:'DAVID & JONATHAN',  kind:'프리미엄 패션', site:'https://davidnjonathan.com/',
+   accent:'#c8cdd6', accent2:'#2a2b30', crest:'crest',  brand:69, channel:'dtc',    conflict:15, monthly:1200, margin:44, invested:0},
+  {id:'officek',  name:'오피스K',            kind:'사무·조달 B2B', site:'https://www.officek3.com/shop/',
+   accent:'#6ba8e8', accent2:'#16324f', crest:'doc',    brand:61, channel:'b2b',    conflict:10, monthly:2600, margin:18, invested:0},
+  {id:'makamoye', name:'마카모예 브레드바',  kind:'베이커리 · 지역', site:'#',
+   accent:'#d98b4a', accent2:'#4a2a12', crest:'wheat',  brand:66, channel:'local',  conflict:12, monthly:3000, margin:24, invested:0}
+];
+
+/* 고정 스토리 사건 — 최초 1회 */
+const storyEvents = [
+  {id:'meta-reset', title:'COMMOV 메타 광고 학습 초기화', tag:'광고',
+   desc:'소재를 바꾸자 전환 학습이 통째로 초기화됐다. 지금 지키느냐, 다시 쌓느냐.',
+   choices:[['기존 소재 유지',{cash:-120,brand:1,conflict:-2}],
+            ['신규 소재 A/B 테스트',{cash:-250,brand:4,conflict:3}],
+            ['광고 중단 · CRM 전환',{cash:40,brand:-2,conflict:-4}]]},
+  {id:'dnj-settlement', title:'D&J 백화점 위탁정산 45일 지연', tag:'정산',
+   desc:'매출은 잡혔는데 현금이 없다. 백화점 정산 담당은 전화를 받지 않는다.',
+   choices:[['정산 대기',{cash:-180,brand:2,ar:900}],
+            ['3% 할인 조기정산',{cash:690,brand:0,ar:-700}],
+            ['다음 계약 선금 요구',{cash:0,brand:-1,conflict:6}]]},
+  {id:'office-audit', title:'오피스K 공공조달 단가 검증', tag:'조달',
+   desc:'학교 구매담당자가 비교견적과 3년치 납품이력 증빙을 요구한다.',
+   choices:[['증빙 패키지 제출',{cash:-80,brand:5,conflict:-3}],
+            ['가격 5% 인하',{cash:-120,brand:2,conflict:-1}],
+            ['고마진 품목 제외',{cash:20,brand:-2,conflict:4}]]},
+  {id:'bakery-wholesale', title:'마카모예 편의점 20개점 납품 제안', tag:'유통',
+   desc:'생산량을 키울 기회다. 다만 반품 조건이 전부 우리 쪽으로 잡혀 있다.',
+   choices:[['10개점 테스트',{cash:-200,brand:3,ar:450}],
+            ['20개점 즉시 진입',{cash:-500,brand:7,ar:1100}],
+            ['직영 판매 집중',{cash:80,brand:1,conflict:-2}]]}
+];
+
+/* 반복 발생 랜덤 사건 풀 */
+const eventPool = [
+  {id:'raw-cost', title:'원자재 단가 급등', tag:'원가',
+   desc:'향료·원단·밀가루가 한꺼번에 올랐다. 마진이 깎이기 시작한다.',
+   choices:[['단가 인상 전가',{cash:0,brand:-3,conflict:5}],['자체 흡수',{cash:-420,brand:2}],['공급선 이원화',{cash:-180,brand:0,conflict:-2}]]},
+  {id:'return-wave', title:'대량 반품 발생', tag:'품질',
+   desc:'한 로트에서 불량이 나왔다. 소문이 커지기 전에 결정해야 한다.',
+   choices:[['전량 회수·환불',{cash:-560,brand:6,rep:4}],['부분 교환',{cash:-220,brand:0}],['무대응',{cash:0,brand:-8,rep:-6}]]},
+  {id:'talent-poach', title:'핵심 인력 스카웃 제의', tag:'조직',
+   desc:'경쟁사가 우리 영업 총괄에게 두 배를 제시했다.',
+   choices:[['연봉 인상 방어',{cash:-380,brand:2}],['지분 배분 제안',{cash:0,equity:-2,brand:3}],['보내준다',{cash:120,brand:-4,staffLoss:'sales'}]]},
+  {id:'platform-fee', title:'플랫폼 수수료 인상 통보', tag:'채널',
+   desc:'입점 수수료가 3%p 오른다. 이탈하면 트래픽을 잃는다.',
+   choices:[['수용',{cash:-300,conflict:-2}],['자사몰 전환 가속',{cash:-450,brand:5,conflict:8}],['일부 품목만 철수',{cash:-120,brand:-1,conflict:3}]]},
+  {id:'viral-hit', title:'숏폼 바이럴 적중', tag:'기회',
+   desc:'제품 하나가 알고리즘을 탔다. 재고가 버텨줄지가 관건이다.',
+   choices:[['긴급 증산',{cash:-620,brand:9,ar:800}],['한정 수량 유지',{cash:150,brand:5}],['가격 인상',{cash:420,brand:-3,rep:-2}]]},
+  {id:'tax-audit', title:'세무 정기조사 통지', tag:'규제',
+   desc:'3개년 매입세액이 대상이다. 장부가 깔끔해야 한다.',
+   choices:[['회계법인 선임',{cash:-480,rep:5}],['내부 대응',{cash:-90,rep:-3}],['자진 수정신고',{cash:-260,rep:2}]]},
+  {id:'bad-debt', title:'거래처 부도설', tag:'신용',
+   desc:'미수금이 가장 큰 거래처에서 어음이 돈다는 얘기가 들린다.',
+   choices:[['즉시 채권 회수',{cash:0,arCollect:0.35,conflict:6}],['담보 설정 요구',{cash:-80,conflict:3,rep:2}],['지켜본다',{cash:0,arRisk:true}]]},
+  {id:'rent-hike', title:'매장 임대료 재계약', tag:'고정비',
+   desc:'건물주가 18% 인상을 통보했다.',
+   choices:[['재계약',{cash:-340}],['이전 검토',{cash:-560,brand:-2,rep:-1}],['협상 후 9%',{cash:-190,rep:1}]]},
+  {id:'collab', title:'대형 브랜드 협업 제안', tag:'기회',
+   desc:'인지도는 확실하지만 우리 마진을 상당 부분 내줘야 한다.',
+   choices:[['전면 협업',{cash:-300,brand:11,conflict:4}],['한정판만',{cash:-120,brand:5}],['거절',{cash:0,brand:-1,rep:1}]]},
+  {id:'logistics', title:'물류 파업', tag:'운영',
+   desc:'배송이 일주일째 밀렸다. 취소 요청이 쌓인다.',
+   choices:[['긴급 특송 전환',{cash:-410,rep:4}],['고객 보상 쿠폰',{cash:-180,brand:1,rep:1}],['안내만',{cash:0,brand:-5,rep:-5}]]},
+  {id:'counterfeit', title:'모조품 유통 적발', tag:'법무',
+   desc:'오픈마켓에 우리 제품 카피가 돌고 있다.',
+   choices:[['법적 대응',{cash:-390,brand:6,rep:3}],['플랫폼 신고만',{cash:-60,brand:1}],['방치',{cash:0,brand:-6}]]},
+  {id:'grant', title:'중소기업 정책자금 공고', tag:'금융',
+   desc:'저리 정책자금 신청 기간이다. 서류가 만만치 않다.',
+   choices:[['풀 서류 준비',{cash:-140,loan:4000,rep:2}],['컨설팅 위탁',{cash:-380,loan:6000}],['포기',{cash:0}]]},
+  {id:'review-bomb', title:'리뷰 테러', tag:'평판',
+   desc:'경쟁사로 의심되는 계정이 별점 1점을 쏟아붓는다.',
+   choices:[['공식 해명문',{cash:-70,rep:3,brand:2}],['플랫폼 제소',{cash:-210,rep:5}],['대응 안 함',{cash:0,rep:-4,brand:-3}]]},
+  {id:'export', title:'해외 바이어 첫 발주', tag:'수출',
+   desc:'동남아 유통사가 컨테이너 단위 발주를 넣었다. 결제는 L/C다.',
+   choices:[['수주',{cash:-500,ar:2600,brand:6}],['소량 선적',{cash:-180,ar:900,brand:3}],['거절',{cash:0}]]},
+  {id:'oem', title:'OEM 생산 전환 제안', tag:'생산',
+   desc:'자체 생산을 접고 위탁으로 돌리면 고정비가 준다. 대신 품질 통제력을 잃는다.',
+   choices:[['전면 전환',{cash:900,brand:-5,margin:4}],['일부 품목',{cash:320,brand:-1,margin:2}],['자체 유지',{cash:-150,brand:3}]]},
+  {id:'insurance', title:'창고 침수', tag:'사고',
+   desc:'새벽 폭우로 창고가 잠겼다. 보험 처리에 시간이 걸린다.',
+   choices:[['보험 청구',{cash:-260,rep:0}],['자비 복구 후 청구',{cash:-620,rep:2}],['재고 폐기',{cash:-380,brand:-2}]]}
+];
+
+const ACHIEVEMENTS = [
+  {id:'first-month',  icon:'flag',    name:'첫 달 결산',       desc:'한 달을 무사히 넘겼다'},
+  {id:'first-year',   icon:'cal',     name:'창업 1년차',       desc:'12개월을 버텼다'},
+  {id:'cash-100k',    icon:'coins',   name:'현금 10억',        desc:'보유 현금 100,000만원 돌파'},
+  {id:'debt-free',    icon:'shield',  name:'무차입 경영',      desc:'부채를 전액 상환'},
+  {id:'aaa',          icon:'star',    name:'AAA 등급',         desc:'최고 신용등급 달성'},
+  {id:'brand-90',     icon:'gem',     name:'브랜드 90',        desc:'브랜드력 90 이상 달성'},
+  {id:'ten-contract', icon:'doc',     name:'계약왕',           desc:'계약 10건 체결'},
+  {id:'zero-ar',      icon:'check',   name:'미수금 제로',      desc:'미수금 전액 회수'},
+  {id:'profit-5k',    icon:'trend',   name:'월순익 5천',       desc:'월 순익 5,000만원 돌파'},
+  {id:'all-story',    icon:'book',    name:'서장 완결',        desc:'고정 사건 4건을 모두 처리'},
+  {id:'survivor',     icon:'flame',   name:'생존자',           desc:'불황을 3개월 연속 버텼다'},
+  {id:'empire',       icon:'crown',   name:'제국 완성',        desc:'목표 순자산 달성'}
+];
+
+const ICONS = {
+  crown:'M3 18h18M4 7l4.5 4L12 4l3.5 7L20 7v10H4Z',
+  layers:'m12 2 9 5-9 5-9-5Zm-9 10 9 5 9-5m-18 5 9 5 9-5',
+  doc:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8ZM14 2v6h6M9 13h6M9 17h4',
+  alert:'m12 3 9 16H3ZM12 9v4M12 17h.01',
+  bank:'M3 10 12 4l9 6M5 10v9M9 10v9M15 10v9M19 10v9M3 21h18',
+  archive:'M3 4h18v4H3zM5 8v12h14V8M10 12h4',
+  check:'M20 6 9 17l-5-5',
+  x:'M18 6 6 18M6 6l12 12',
+  trend:'m3 17 6-6 4 4 8-8M15 7h6v6',
+  coins:'M9 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM15 20a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z',
+  star:'m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9Z',
+  shield:'M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6Z',
+  gem:'m6 3h12l3 6-9 12L3 9Zm-3 6h18M9 3 6 9l6 12M15 3l3 6-6 12',
+  flag:'M4 21V4M4 4h13l-2 4 2 4H4',
+  cal:'M4 6h16v15H4zM4 10h16M9 3v4M15 3v4',
+  book:'M4 4h11a3 3 0 0 1 3 3v14a3 3 0 0 0-3-3H4Z M20 4v14',
+  flame:'M12 22c4 0 6-2.7 6-6 0-4-3-6-3-10-3 2-4 4-4 6-1-1-1-2-1-3-2 2-4 4-4 7 0 3.3 2 6 6 6Z',
+  clock:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3 2'
+};
+function icon(n,size){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"'+(size?' style="width:'+size+'px;height:'+size+'px"':'')+'><path d="'+(ICONS[n]||ICONS.check)+'"/></svg>'}
+
+/* ============================================================
+   2) 상태 · 저장 · 파생 지표
+   ============================================================ */
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function rnd(a,b){return a+Math.random()*(b-a)}
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
+function defaultState(diffKey){
+  const d = DIFFICULTY[diffKey] || DIFFICULTY.normal;
+  return {
+    version:VERSION, difficulty:diffKey||'normal',
+    month:1, cash:d.cash, debt:d.debt, revenue:8600, profit:1450, ar:2200,
+    reputation:58, equity:100, goal:d.goal,
+    cycle:{phase:'normal', left:3},
+    brands:clone(brandSeed),
+    staff:{sales:1, marketing:1, finance:0},
+    contracts:[], contractSeq:1,
+    events:storyEvents.map(e=>({...clone(e), deadline:6, story:true})),
+    usedPool:[],
+    history:[{m:0, rev:8600, profit:1450, cash:d.cash, ar:2200}],
+    achievements:{},
+    stats:{months:0, totalRevenue:0, bestProfit:1450, eventsResolved:0, contracts:0, defaults:0, recessionStreak:0, loans:0},
+    logs:[{m:0, t:'v10.0 새 제국 데이터 생성 · 난이도 '+d.label}],
+    migratedFrom:null, lastSaved:0, ending:null
+  };
+}
+
+function checksum(x){const s=JSON.stringify(x);let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16)}
+function pack(data){return JSON.stringify({data, checksum:checksum(data)})}
+function unpack(raw){const p=JSON.parse(raw);if(!p||!p.data||p.checksum!==checksum(p.data))throw new Error('checksum');return p.data}
+
+function migrate(){
+  for(const k of OLD_KEYS){
+    try{
+      const raw=localStorage.getItem(k); if(!raw) continue;
+      const parsed=JSON.parse(raw); const old=parsed.data||parsed;
+      const n=defaultState('normal');
+      ['cash','debt','revenue','profit','ar','reputation','month'].forEach(f=>{if(Number.isFinite(old[f])) n[f]=old[f]});
+      if(Array.isArray(old.brands)){
+        n.brands.forEach(b=>{const o=old.brands.find(x=>x.id===b.id);
+          if(o){b.brand=Number.isFinite(o.brand)?o.brand:b.brand;b.conflict=Number.isFinite(o.conflict)?o.conflict:b.conflict;b.channel=CHANNELS[o.channel]?o.channel:b.channel}});
+      }
+      n.migratedFrom=k;
+      n.history=[{m:0, rev:n.revenue, profit:n.profit, cash:n.cash, ar:n.ar}];
+      n.logs.unshift({m:n.month, t:k+' 에서 제국 데이터 이전 완료'});
+      return n;
+    }catch(e){}
+  }
+  return defaultState('normal');
+}
+
+function load(){
+  try{const raw=localStorage.getItem(SAVE); if(raw) return unpack(raw)}catch(e){}
+  for(const k of [BACK1,BACK2]){
+    try{const raw=localStorage.getItem(k);
+      if(raw){const d=unpack(raw); d.logs.unshift({m:d.month,t:'체크섬 검증 실패 → 백업 복구 ('+k+')'}); return d}
+    }catch(e){}
+  }
+  return migrate();
+}
+
+function save(){
+  state.lastSaved=Date.now();
+  try{
+    const cur=localStorage.getItem(SAVE), b1=localStorage.getItem(BACK1);
+    if(b1) localStorage.setItem(BACK2,b1);
+    if(cur) localStorage.setItem(BACK1,cur);
+    localStorage.setItem(SAVE,pack(state));
+    return true;
+  }catch(e){return false}
+}
+
+let state = load();
+/* 하위 호환 보정 */
+state.version=VERSION;
+state.difficulty = DIFFICULTY[state.difficulty] ? state.difficulty : 'normal';
+state.brands = (state.brands&&state.brands.length) ? state.brands : clone(brandSeed);
+state.brands.forEach(b=>{const s=brandSeed.find(x=>x.id===b.id)||brandSeed[0];
+  ['accent','accent2','crest','kind','site','name'].forEach(f=>{if(b[f]==null) b[f]=s[f]});
+  if(!Number.isFinite(b.invested)) b.invested=0;
+  if(!CHANNELS[b.channel]) b.channel='hybrid';});
+state.events = state.events||[]; state.contracts = state.contracts||[]; state.usedPool = state.usedPool||[];
+state.staff = Object.assign({sales:0,marketing:0,finance:0}, state.staff||{});
+state.stats = Object.assign({months:0,totalRevenue:0,bestProfit:0,eventsResolved:0,contracts:0,defaults:0,recessionStreak:0,loans:0}, state.stats||{});
+state.achievements = state.achievements||{};
+state.history = (state.history&&state.history.length) ? state.history : [{m:0,rev:state.revenue,profit:state.profit,cash:state.cash,ar:state.ar}];
+state.cycle = state.cycle&&CYCLES[state.cycle.phase] ? state.cycle : {phase:'normal',left:3};
+state.goal = state.goal || DIFFICULTY[state.difficulty].goal;
+if(!Number.isFinite(state.equity)) state.equity=100;
+if(!Number.isFinite(state.contractSeq)) state.contractSeq=state.contracts.length+1;
+state.logs = (state.logs||[]).map(l=>typeof l==='string' ? {m:state.month,t:l} : l);
+
+/* ---------- 파생 지표 ---------- */
+const diff = ()=>DIFFICULTY[state.difficulty];
+function portfolioValue(){return Math.round(state.brands.reduce((a,b)=>a + b.monthly*12*(b.margin/100)*(b.brand/70), 0))}
+function netWorth(){return Math.round(state.cash + state.ar*0.9 + portfolioValue()*0.5 - state.debt)}
+function payroll(){return Object.keys(STAFF).reduce((a,k)=>a + (state.staff[k]||0)*STAFF[k].cost, 0)}
+function avgConflict(){return Math.round(state.brands.reduce((a,b)=>a+b.conflict,0)/state.brands.length)}
+function avgBrand(){return Math.round(state.brands.reduce((a,b)=>a+b.brand,0)/state.brands.length)}
+function creditScore(){
+  const rev = Math.max(state.revenue,1);
+  const debtRatio = state.debt/(rev*12);
+  return Math.round(clamp(100 - debtRatio*55 + (state.reputation-58)*0.55 - state.stats.defaults*7 + (state.cash>0?4:-25), 0, 100));
+}
+function grade(){const s=creditScore();return GRADES.find(g=>s>=g.min)||GRADES[GRADES.length-1]}
+function interestRate(){return Math.max(0.02, diff().rate + grade().rateAdj)}
+function loanLimit(){
+  const base=Math.max(state.revenue*6, 10000);
+  return Math.max(0, Math.round(base*grade().loan) - state.debt);
+}
+function collectRate(conflict){
+  return clamp(1 - conflict/200 + (state.staff.finance||0)*0.03 + grade().collect, 0.42, 1);
+}
+
+/* ---------- 포맷 ---------- */
+function money(v){
+  v=Math.round(v); const a=Math.abs(v);
+  if(a>=10000) return (v/10000).toFixed(a>=100000?0:1).replace(/\.0$/,'')+'억';
+  return v.toLocaleString()+'만';
+}
+function moneyFull(v){return Math.round(v).toLocaleString()+'만원'}
+function signed(v){return (v>0?'+':'')+money(v)}
+function pct(v){return (v>0?'+':'')+v.toFixed(1)+'%'}
+
+/* ============================================================
+   3) 행동 (액션)
+   ============================================================ */
+function logIt(t){state.logs.unshift({m:state.month, t:t}); if(state.logs.length>140) state.logs.length=140}
+
+function setChannel(id, ch){
+  const b=state.brands.find(x=>x.id===id); if(!b||b.channel===ch) return;
+  const old=b.channel; b.channel=ch;
+  b.conflict = clamp(b.conflict + CHANNELS[ch].conflictShift, 0, 100);
+  b.margin   = clamp(b.margin + Math.round((CHANNELS[ch].marginShift - CHANNELS[old].marginShift)/2), 5, 70);
+  b.brand    = clamp(b.brand + 1, 1, 100);
+  logIt(b.name+' 채널 전환 · '+CHANNELS[old].label+' → '+CHANNELS[ch].label);
+  save(); render(); toast('채널 전략 반영', 'ok');
+}
+
+function investBrand(id){
+  const b=state.brands.find(x=>x.id===id); if(!b) return;
+  const cost = Math.round(400 + b.brand*14);
+  if(state.cash < cost) return toast('현금이 부족합니다', 'err');
+  state.cash -= cost; b.invested += cost;
+  b.brand = clamp(b.brand + rnd(2.2, 4.6), 1, 100);
+  b.monthly = Math.round(b.monthly * 1.03);
+  logIt(b.name+' 브랜드 투자 '+moneyFull(cost)+' · 브랜드력 '+b.brand.toFixed(0));
+  save(); render(); toast(b.name+' 브랜드력 상승', 'ok');
+}
+
+function contractQuote(){
+  const b = state.brands.find(x=>x.id===document.getElementById('contractBrand').value) || state.brands[0];
+  const raw = Math.max(0, Number(document.getElementById('contractAmount').value)||0);
+  const dep = clamp(Number(document.getElementById('contractDeposit').value)||0, 0, 100);
+  const term = Number(document.getElementById('contractTerm').value)||60;
+  const termMult = term===30?1.0 : term===60?1.04 : 1.09;
+  const amount = Math.round(raw * termMult * (1 - dep/100*0.06));
+  const upfront = Math.round(amount*dep/100);
+  const risk = clamp(b.conflict/100*0.5 + (term/90)*0.28 + (100-state.reputation)/100*0.2, 0.03, 0.9);
+  return {b, amount, dep, term, upfront, balance:amount-upfront, risk};
+}
+
+function addContract(){
+  const q = contractQuote();
+  if(q.amount<=0) return toast('계약금액을 확인하세요', 'err');
+  state.cash += q.upfront; state.ar += q.balance;
+  state.contracts.unshift({
+    id:'c'+(state.contractSeq++), brand:q.b.id, name:q.b.name+' 계약 #'+state.contractSeq,
+    amount:q.amount, deposit:q.dep, balance:q.balance, days:q.term, risk:q.risk, status:'진행'
+  });
+  state.stats.contracts++;
+  logIt(q.b.name+' 계약 '+moneyFull(q.amount)+' 체결 · 선금 '+moneyFull(q.upfront)+' · '+q.term+'일');
+  save(); render(); toast('계약 등록 완료', 'ok');
+}
+
+function collect(id){
+  const c=state.contracts.find(x=>x.id===id); if(!c||c.balance<=0) return;
+  const b=state.brands.find(x=>x.id===c.brand)||state.brands[0];
+  const early = c.days>0;
+  const rate = collectRate(b.conflict) * (early ? 0.93 : 1);
+  const got = Math.round(c.balance*rate);
+  state.cash += got; state.ar = Math.max(0, state.ar - c.balance);
+  const lost = c.balance-got; c.balance=0;
+  c.status = lost>0 ? '일부회수' : '완료';
+  state.reputation = clamp(state.reputation + (lost>0?0:1), 0, 100);
+  logIt(c.name+' 회수 '+moneyFull(got)+(lost>0?' (손실 '+moneyFull(lost)+')':'')+(early?' · 조기정산':''));
+  save(); render(); toast('회수 '+money(got), 'ok');
+}
+
+function extendContract(id){
+  const c=state.contracts.find(x=>x.id===id); if(!c||c.balance<=0) return;
+  c.days += 30; c.risk = clamp(c.risk+0.06, 0, 0.95);
+  state.reputation = clamp(state.reputation-1, 0, 100);
+  logIt(c.name+' 회수기한 30일 연장 · 부실위험 상승');
+  save(); render(); toast('기한 연장', '');
+}
+
+function hire(k){
+  if((state.staff[k]||0) >= STAFF[k].cap) return toast('정원이 찼습니다','err');
+  const fee = STAFF[k].cost*2;
+  if(state.cash<fee) return toast('채용 비용이 부족합니다','err');
+  state.cash -= fee; state.staff[k]=(state.staff[k]||0)+1;
+  logIt(STAFF[k].name+' 채용 · 채용비 '+moneyFull(fee));
+  save(); render(); toast(STAFF[k].name+' 충원', 'ok');
+}
+function fire(k){
+  if((state.staff[k]||0)<=0) return;
+  const sev = Math.round(STAFF[k].cost*1.5);
+  state.cash -= sev; state.staff[k]--; state.reputation=clamp(state.reputation-2,0,100);
+  logIt(STAFF[k].name+' 감원 · 위로금 '+moneyFull(sev));
+  save(); render(); toast('감원 처리', '');
+}
+
+function takeLoan(){
+  const amt = Math.max(0, Number(document.getElementById('loanAmount').value)||0);
+  const limit = loanLimit();
+  if(amt<=0) return toast('금액을 확인하세요','err');
+  if(amt>limit) return toast('한도 초과 · 최대 '+money(limit),'err');
+  state.cash+=amt; state.debt+=amt; state.stats.loans++;
+  logIt('대출 실행 '+moneyFull(amt)+' · 금리 '+(interestRate()*100).toFixed(1)+'% · 등급 '+grade().g);
+  save(); render(); toast('대출 실행', 'ok');
+}
+function repayLoan(){
+  const amt = Math.min(Math.max(0, Number(document.getElementById('loanAmount').value)||0), state.debt, state.cash);
+  if(amt<=0) return toast('상환 가능 금액이 없습니다','err');
+  state.cash-=amt; state.debt-=amt;
+  logIt('부채 상환 '+moneyFull(amt)+' · 잔여 '+moneyFull(state.debt));
+  save(); render(); toast('상환 완료', 'ok');
+}
+function raiseRound(){
+  const p = clamp(Number(document.getElementById('equityPct').value)||0, 1, 25);
+  if(state.equity - p < 40) return toast('지분 40% 미만으로는 내줄 수 없습니다','err');
+  const valuation = Math.max(20000, Math.round(netWorth()*1.6 + state.revenue*10));
+  const raised = Math.round(valuation*p/100);
+  state.cash += raised; state.equity -= p;
+  state.reputation = clamp(state.reputation+2,0,100);
+  logIt('투자 유치 '+moneyFull(raised)+' · 지분 '+p+'% 매각 (밸류 '+money(valuation)+')');
+  save(); render(); toast('라운드 클로징 '+money(raised), 'ok');
+}
+
+/* ---------- 사건 ---------- */
+function spawnEvents(){
+  const rate = diff().eventRate;
+  const active = state.events.filter(e=>!e.done).length;
+  if(active>=4) return;
+  if(Math.random() > rate) return;
+  const avail = eventPool.filter(e=>!state.usedPool.includes(e.id) && !state.events.some(x=>x.id===e.id&&!x.done));
+  if(!avail.length){state.usedPool=[]; return}
+  const e = pick(avail);
+  state.usedPool.push(e.id);
+  if(state.usedPool.length>10) state.usedPool.shift();
+  state.events.unshift({...clone(e), deadline:3, story:false});
+  logIt('신규 사건 발생 · '+e.title);
+}
+
+function applyEffect(ef, brandScope){
+  state.cash += ef.cash||0;
+  state.ar = Math.max(0, state.ar + (ef.ar||0));
+  state.reputation = clamp(state.reputation + (ef.rep||0) + (ef.brand||0)*0.4, 0, 100);
+  if(ef.equity) state.equity = clamp(state.equity + ef.equity, 0, 100);
+  if(ef.loan){state.debt += ef.loan; state.cash += ef.loan; state.stats.loans++}
+  if(ef.arCollect){const got=Math.round(state.ar*ef.arCollect); state.ar-=got; state.cash+=got; logIt('채권 압축 회수 '+moneyFull(got))}
+  if(ef.arRisk && Math.random()<0.45){const lost=Math.round(state.ar*0.3); state.ar-=lost; state.stats.defaults++; logIt('거래처 부도 · 미수금 '+moneyFull(lost)+' 손실')}
+  if(ef.staffLoss && state.staff[ef.staffLoss]>0) state.staff[ef.staffLoss]--;
+  state.brands.forEach(b=>{
+    b.brand = clamp(b.brand + (ef.brand||0)*0.5, 1, 100);
+    b.conflict = clamp(b.conflict + (ef.conflict||0), 0, 100);
+    if(ef.margin) b.margin = clamp(b.margin + ef.margin, 5, 70);
+  });
+}
+
+function resolveEvent(id, idx){
+  const e = state.events.find(x=>x.id===id && !x.done); if(!e) return;
+  const ch = e.choices[idx]; if(!ch) return;
+  applyEffect(ch[1]);
+  e.done = true; state.stats.eventsResolved++;
+  logIt(e.title+' → '+ch[0]);
+  save(); render(); toast('사건 처리 완료', 'ok');
+}
+
+function expireEvents(){
+  state.events.filter(e=>!e.done).forEach(e=>{
+    e.deadline--;
+    if(e.deadline<=0){
+      /* 기한 초과 — 가장 불리한 선택지가 자동 적용 */
+      let worst=e.choices[0], worstScore=Infinity;
+      e.choices.forEach(c=>{const s=(c[1].cash||0)+(c[1].brand||0)*120+(c[1].rep||0)*100; if(s<worstScore){worstScore=s;worst=c}});
+      applyEffect(worst[1]); e.done=true;
+      logIt('기한 초과 · '+e.title+' → 자동 처리 ('+worst[0]+')');
+    }
+  });
+}
+
+/* ============================================================
+   4) 월간 시뮬레이션 엔진
+   ============================================================ */
+function advanceCycle(){
+  state.cycle.left--;
+  if(state.cycle.left<=0){
+    const r=Math.random(), cur=state.cycle.phase;
+    const p = cur==='boom'      ? (r<.50?'normal':r<.85?'recession':'boom')
+            : cur==='recession' ? (r<.55?'normal':r<.85?'boom':'recession')
+            :                     (r<.34?'boom':r<.68?'recession':'normal');
+    state.cycle={phase:p, left:Math.floor(rnd(2,6))};
+    logIt('시장 국면 전환 · '+CYCLES[p].label+' — '+CYCLES[p].desc);
+  }
+  state.stats.recessionStreak = state.cycle.phase==='recession' ? state.stats.recessionStreak+1 : 0;
+}
+
+function simulate(silent){
+  if(state.ending){showEnding();return}
+  const vol   = Number(document.getElementById('volatility').value)||0;
+  const ad    = Number(document.getElementById('adSpend').value)||0;
+  const focus = document.getElementById('focus').value;
+
+  advanceCycle();
+  const cm = CYCLES[state.cycle.phase].mult;
+  const adBoost    = 1 + Math.min(0.42, Math.sqrt(ad/1000)*0.11);
+  const salesBoost = 1 + (state.staff.sales||0)*0.04;
+
+  let rev=0, gross=0;
+  state.brands.forEach(b=>{
+    const fit         = CHANNELS[b.channel].fit;
+    const noise       = 1 + (Math.random()-0.5)*vol/100*diff().volMult;
+    const conflictPen = 1 - b.conflict/240;
+    const focusBonus  = focus==='growth'?1.10 : focus==='brand'?1.04 : focus==='cost'?1.01 : 1.0;
+    const brandBoost  = 1 + (b.brand-60)/220;
+    const r = Math.max(0, b.monthly*fit*noise*conflictPen*focusBonus*brandBoost*adBoost*salesBoost*cm);
+    rev += r;
+    gross += r * (focus==='cost' ? b.margin+3 : b.margin)/100;
+    b.brand    = clamp(b.brand + (focus==='brand'?1.8:0.3) + (state.staff.marketing||0)*0.35 - 0.2, 1, 100);
+    /* 채널 충돌은 규모가 커질수록 자연 증가한다. 현금회수 집중으로만 눌러 놓을 수 있다. */
+    b.conflict = clamp(b.conflict - (focus==='cash'?2.4:0) + CHANNELS[b.channel].drift, 0, 100);
+    /* 브랜드력·광고·시장 국면이 만드는 복리 성장. 충돌은 성장을 갉아먹는다. */
+    const growth = clamp((b.brand-55)/1700 + Math.min(0.020, ad/260000) - b.conflict/7000 + (cm-1)*0.025, -0.030, 0.055);
+    b.monthly = Math.max(200, Math.round(b.monthly*(1+growth)));
+  });
+
+  const interest = Math.round(state.debt*interestRate()/12);
+  const pay      = payroll();
+  const profit   = gross - ad - pay - interest;
+
+  let collected=0, defaulted=0;
+  state.contracts.forEach(c=>{
+    if(c.balance<=0) return;
+    c.days -= 30;
+    if(c.days<=0){
+      const b = state.brands.find(x=>x.id===c.brand)||state.brands[0];
+      const defRisk = c.risk * (state.difficulty==='hard'?0.42 : state.difficulty==='easy'?0.20 : 0.30);
+      if(Math.random() < defRisk){
+        defaulted += c.balance; state.ar=Math.max(0,state.ar-c.balance); c.balance=0; c.status='부실';
+        state.stats.defaults++; state.reputation=clamp(state.reputation-3,0,100);
+      }else{
+        const got = Math.round(c.balance*collectRate(b.conflict));
+        collected += got; state.ar=Math.max(0,state.ar-c.balance);
+        c.status = got < c.balance ? '일부회수' : '자동회수'; c.balance=0;
+      }
+    }
+  });
+  if(focus==='cash'){const extra=Math.round(state.ar*0.20); state.ar-=extra; collected+=extra}
+
+  state.cash += profit + collected;
+  state.revenue = Math.round(rev);
+  state.profit  = Math.round(profit);
+  state.month++;
+  state.stats.months++;
+  state.stats.totalRevenue += Math.round(rev);
+  state.stats.bestProfit = Math.max(state.stats.bestProfit, Math.round(profit));
+  state.history.push({m:state.month-1, rev:Math.round(rev), profit:Math.round(profit), cash:Math.round(state.cash), ar:Math.round(state.ar)});
+  if(state.history.length>48) state.history.shift();
+
+  logIt(state.month+'개월차 결산 · 매출 '+money(rev)+' · 순익 '+money(profit)
+    +(collected>0?' · 회수 '+money(collected):'')+(defaulted>0?' · 부실 '+money(defaulted):''));
+
+  expireEvents();
+  spawnEvents();
+
+  /* 긴급 자금 */
+  let emergency=0;
+  if(state.cash<0){
+    const need = Math.ceil(-state.cash/500)*500;
+    const limit = loanLimit();
+    if(limit>=need){state.debt+=need; state.cash+=need; emergency=need; state.stats.loans++;
+      logIt('긴급 대출 자동 실행 '+moneyFull(need)+' · 등급 '+grade().g);}
+  }
+
+  checkAchievements();
+  checkEnding();
+  save(); render();
+  if(!silent) showMonthReport({rev, profit, collected, defaulted, interest, pay, ad, emergency, cm});
+}
+
+function runQuarter(){
+  for(let i=0;i<3 && !state.ending;i++) simulate(true);
+  toast('분기 3개월 자동 진행 완료','ok');
+  showMonthReport(null);
+}
+
+/* ---------- 업적 · 엔딩 ---------- */
+function unlock(id){
+  if(state.achievements[id]) return;
+  state.achievements[id]=true;
+  const a=ACHIEVEMENTS.find(x=>x.id===id);
+  logIt('업적 달성 · '+a.name);
+  toast('업적 달성 — '+a.name,'ok');
+}
+function checkAchievements(){
+  if(state.month>1) unlock('first-month');
+  if(state.month>12) unlock('first-year');
+  if(state.cash>=100000) unlock('cash-100k');
+  if(state.debt<=0) unlock('debt-free');
+  if(grade().g==='AAA') unlock('aaa');
+  if(state.brands.some(b=>b.brand>=90)) unlock('brand-90');
+  if(state.stats.contracts>=10) unlock('ten-contract');
+  if(state.ar<=0 && state.stats.contracts>0) unlock('zero-ar');
+  if(state.profit>=5000) unlock('profit-5k');
+  if(state.events.filter(e=>e.story).every(e=>e.done)) unlock('all-story');
+  if(state.stats.recessionStreak>=3) unlock('survivor');
+  if(netWorth()>=state.goal) unlock('empire');
+}
+function checkEnding(){
+  if(state.ending) return;
+  if(netWorth()>=state.goal){state.ending='win'; logIt('목표 순자산 달성 — 제국 완성'); showEnding()}
+  else if(state.cash<0 && loanLimit()<=0){state.ending='bankrupt'; logIt('현금 고갈 · 추가 차입 불가 — 파산'); showEnding()}
+}
+
+/* ============================================================
+   5) 그래픽 (인라인 SVG)
+   ============================================================ */
+function hashOf(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+
+function brandArt(b){
+  const seed=hashOf(b.id); const bars=[];
+  for(let i=0;i<14;i++){
+    const v=((seed>>(i%12))^(i*2654435761))>>>0;
+    bars.push({x:i*29+4, w:22, h:26+(v%56)});
+  }
+  const skyline=bars.map(o=>'<rect x="'+o.x+'" y="'+(112-o.h)+'" width="'+o.w+'" height="'+o.h+'" rx="2" fill="rgba(0,0,0,.26)"/>').join('');
+  const dots=Array.from({length:9},(_,i)=>{
+    const v=((seed*(i+3))>>>0)%380;
+    return '<circle cx="'+(v+10)+'" cy="'+(10+((seed>>(i+2))%54))+'" r="'+(1+ (i%3))+'" fill="'+b.accent+'" opacity=".5"/>';
+  }).join('');
+  return '<svg viewBox="0 0 400 112" preserveAspectRatio="none" aria-hidden="true">'
+    +'<defs>'
+    +'<linearGradient id="ba-'+b.id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+b.accent2+'"/><stop offset="1" stop-color="'+b.accent+'"/></linearGradient>'
+    +'<linearGradient id="bs-'+b.id+'" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+    +'</defs>'
+    +'<rect width="400" height="112" fill="url(#ba-'+b.id+')"/>'
+    +dots+skyline
+    +'<rect width="400" height="112" fill="url(#bs-'+b.id+')"><animate attributeName="x" values="-400;400" dur="6s" repeatCount="indefinite"/></rect>'
+    +'</svg>';
+}
+
+const CRESTS = {
+  scent:'<path d="M24 6c0 5-6 6-6 11a6 6 0 0 0 12 0c0-5-6-6-6-11Z"/><path d="M14 26c-2 3-2 8 0 12M34 26c2 3 2 8 0 12M24 30v12"/>',
+  crest:'<path d="M24 5 40 11v14c0 9-7 15-16 18-9-3-16-9-16-18V11Z"/><path d="M17 20h14M24 15v14"/>',
+  doc:'<path d="M13 6h14l8 8v28H13Z"/><path d="M27 6v8h8M19 24h12M19 31h12"/>',
+  wheat:'<path d="M24 42V16"/><path d="M24 22c-5-1-8-4-8-9 5 0 8 3 8 9ZM24 22c5-1 8-4 8-9-5 0-8 3-8 9ZM24 32c-5-1-8-4-8-9 5 0 8 3 8 9ZM24 32c5-1 8-4 8-9-5 0-8 3-8 9Z"/>'
+};
+function crestSvg(b){
+  return '<svg class="crest" viewBox="0 0 48 48" fill="none" stroke="'+b.accent+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    +'<circle cx="24" cy="24" r="22" fill="rgba(6,14,24,.72)" stroke="'+b.accent+'" stroke-width="1.2" opacity=".9"/>'
+    +(CRESTS[b.crest]||CRESTS.crest)+'</svg>';
+}
+
+function sparkline(key, color){
+  const h=state.history.slice(-14); if(h.length<2) return '';
+  const v=h.map(d=>d[key]); const mn=Math.min(...v), mx=Math.max(...v);
+  const pts=v.map((n,i)=>(i/(v.length-1)*82).toFixed(1)+','+(32-((n-mn)/((mx-mn)||1))*28).toFixed(1)).join(' ');
+  return '<svg class="spark" viewBox="0 0 82 34" preserveAspectRatio="none">'
+    +'<polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>';
+}
+
+function renderChart(){
+  const h=state.history.slice(-18);
+  const box=document.getElementById('chart');
+  if(h.length<2){box.innerHTML='<div class="empty">데이터를 모으는 중입니다. 한 달을 진행해 보세요.</div>';return}
+  const W=620,H=210,P={l:6,r:6,t:10,b:16};
+  const series=[{k:'rev',c:'#d7a84d',fill:1},{k:'profit',c:'#4ade80'},{k:'cash',c:'#60a5fa'},{k:'ar',c:'#fb7185'}];
+  const X=i=>P.l+(W-P.l-P.r)*(i/(h.length-1));
+  let s='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">';
+  for(let i=0;i<=4;i++){const y=P.t+(H-P.t-P.b)*i/4;
+    s+='<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="rgba(126,158,196,.13)" stroke-width="1" vector-effect="non-scaling-stroke"/>'}
+  series.forEach((se,si)=>{
+    const v=h.map(d=>Number(d[se.k])||0);
+    const mn=Math.min(...v,0), mx=Math.max(...v,1);
+    const Y=n=>P.t+(H-P.t-P.b)*(1-(n-mn)/((mx-mn)||1));
+    const pts=v.map((n,i)=>X(i).toFixed(1)+','+Y(n).toFixed(1)).join(' ');
+    if(se.fill) s+='<polygon points="'+X(0)+','+(H-P.b)+' '+pts+' '+X(v.length-1)+','+(H-P.b)+'" fill="'+se.c+'" opacity=".13"/>';
+    s+='<polyline class="draw" style="animation-delay:'+(si*110)+'ms" points="'+pts+'" fill="none" stroke="'+se.c+'" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>';
+    s+='<circle cx="'+X(v.length-1)+'" cy="'+Y(v[v.length-1])+'" r="3.2" fill="'+se.c+'"/>';
+  });
+  box.innerHTML=s+'</svg>';
+}
+
+/* ============================================================
+   6) UI 렌더링
+   ============================================================ */
+const PAGES = [
+  {id:'dashboard', name:'제국',   icon:'crown'},
+  {id:'brands',    name:'브랜드', icon:'layers'},
+  {id:'contracts', name:'계약',   icon:'doc'},
+  {id:'events',    name:'사건',   icon:'alert'},
+  {id:'finance',   name:'재무',   icon:'bank'},
+  {id:'archive',   name:'기록',   icon:'archive'}
+];
+const $ = id => document.getElementById(id);
+
+function toast(text, kind){
+  const el=document.createElement('div');
+  el.className='toast '+(kind||'');
+  el.innerHTML=icon(kind==='err'?'x':kind==='ok'?'check':'clock')+'<span>'+text+'</span>';
+  $('toasts').appendChild(el);
+  setTimeout(()=>{el.classList.add('out'); setTimeout(()=>el.remove(),320)}, 2100);
+}
+function openModal(html){$('modalBox').innerHTML=html; $('modal').classList.add('open')}
+function closeModal(){$('modal').classList.remove('open')}
+$('modal').addEventListener('click', e=>{if(e.target.id==='modal') closeModal()});
+document.addEventListener('keydown', e=>{if(e.key==='Escape') closeModal()});
+document.addEventListener('click', e=>{
+  if(!e.target.closest('button')) return;
+  const s=document.createElement('i'); s.className='spark-fx';
+  s.style.left=(e.clientX-5)+'px'; s.style.top=(e.clientY-5)+'px';
+  document.body.appendChild(s); setTimeout(()=>s.remove(),640);
+});
+
+function delta(key){
+  const h=state.history; if(h.length<2) return '';
+  const a=h[h.length-2][key], b=h[h.length-1][key];
+  if(!Number.isFinite(a)||!Number.isFinite(b)||a===0) return '';
+  const p=(b-a)/Math.abs(a)*100;
+  const cls = p>0.5?'up' : p<-0.5?'down' : 'flat';
+  return '<span class="delta '+cls+'">'+(p>0?'▲':p<0?'▼':'—')+' '+Math.abs(p).toFixed(1)+'%</span>';
+}
+
+function renderHUD(){
+  const g=grade(), nw=netWorth();
+  $('hud').innerHTML=[
+    ['현금', money(state.cash), state.cash>=0?'is-gold':'is-bad'],
+    ['순자산', money(nw), nw>=state.goal?'is-good':''],
+    ['월순익', money(state.profit), state.profit>=0?'is-good':'is-bad'],
+    ['미수금', money(state.ar), ''],
+    ['신용등급', g.g, g.min>=64?'is-good':'is-bad']
+  ].map(x=>'<div class="hud-chip '+x[2]+'"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('');
+}
+
+function renderStats(){
+  const c=CYCLES[state.cycle.phase];
+  $('cycleBadge').innerHTML='<span class="pill '+(c.tone||'gold')+'">'+c.label+' · '+state.cycle.left+'개월 남음</span>';
+  const nw=netWorth(), prog=clamp(nw/state.goal*100,0,100);
+  $('goalPill').innerHTML='<span class="pill gold">목표 '+money(state.goal)+' · '+prog.toFixed(0)+'%</span>';
+  $('stats').innerHTML=[
+    ['경과', state.month+'개월', '', ''],
+    ['월매출', money(state.revenue), delta('rev'), sparkline('rev','#d7a84d')],
+    ['월순익', money(state.profit), delta('profit'), sparkline('profit','#4ade80')],
+    ['현금', money(state.cash), delta('cash'), sparkline('cash','#60a5fa')],
+    ['미수금', money(state.ar), delta('ar'), sparkline('ar','#fb7185')],
+    ['부채', money(state.debt), '<span class="delta flat">금리 '+(interestRate()*100).toFixed(1)+'%</span>', ''],
+    ['평판', Math.round(state.reputation)+'점', '', ''],
+    ['채널충돌', avgConflict()+'점', '<span class="delta '+(avgConflict()>45?'down':'up')+'">회수율 '+(collectRate(avgConflict())*100).toFixed(0)+'%</span>', '']
+  ].map(x=>'<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b>'+x[2]+x[3]+'</div>').join('');
+}
+
+function renderBrands(){
+  $('portfolioValue').textContent='포트폴리오 가치 '+money(portfolioValue());
+  $('brands').innerHTML=state.brands.map(b=>{
+    const cost=Math.round(400+b.brand*14);
+    return '<article class="brand">'
+      +'<div class="brand-art">'+brandArt(b)+crestSvg(b)+'</div>'
+      +'<div class="brand-body">'
+        +'<div class="brand-title"><b>'+b.name+'</b><span class="pill gold">'+CHANNELS[b.channel].label+'</span></div>'
+        +'<div class="sub" style="margin-top:2px">'+b.kind+'</div>'
+        +'<div class="kv">'
+          +'<div><span>브랜드력</span><b class="gold-t">'+b.brand.toFixed(0)+'</b></div>'
+          +'<div><span>채널충돌</span><b class="'+(b.conflict>45?'bad-t':'good-t')+'">'+b.conflict.toFixed(0)+'</b></div>'
+          +'<div><span>마진</span><b>'+b.margin.toFixed(0)+'%</b></div>'
+        +'</div>'
+        +'<div class="meter"><i style="width:'+b.brand+'%"></i></div>'
+        +'<div class="meter risk"><i style="width:'+b.conflict+'%"></i></div>'
+        +'<div class="seg">'+Object.keys(CHANNELS).map(k=>{const c=CHANNELS[k];
+            return '<button class="'+(b.channel===k?'on':'')+'" data-brand="'+b.id+'" data-ch="'+k+'" title="매출 배수 '+c.fit.toFixed(2)+'배 · 충돌 표류 '+(c.drift>0?'+':'')+c.drift+'/월">'+c.label+'</button>'}).join('')+'</div>'
+        +'<div class="sub" style="margin-top:7px;font-size:11.5px">'+CHANNELS[b.channel].label+' · 매출 배수 <b class="gold-t">'+CHANNELS[b.channel].fit.toFixed(2)+'배</b> · 충돌 표류 <b class="'+(CHANNELS[b.channel].drift>0?'bad-t':'good-t')+'">'+(CHANNELS[b.channel].drift>0?'+':'')+CHANNELS[b.channel].drift+'/월</b></div>'
+        +'<div class="btn-row" style="margin-top:10px">'
+          +'<button class="btn sm gold" data-invest="'+b.id+'" style="flex:1">브랜드 투자 '+money(cost)+'</button>'
+          +'<button class="btn sm" data-site="'+b.site+'">사이트</button>'
+        +'</div>'
+      +'</div></article>';
+  }).join('');
+  document.querySelectorAll('[data-ch]').forEach(el=>el.onclick=()=>setChannel(el.dataset.brand, el.dataset.ch));
+  document.querySelectorAll('[data-invest]').forEach(el=>el.onclick=()=>investBrand(el.dataset.invest));
+  document.querySelectorAll('[data-site]').forEach(el=>el.onclick=()=>{
+    el.dataset.site==='#' ? toast('매장·단체주문 랜딩 준비 중','') : window.open(el.dataset.site,'_blank','noopener');
+  });
+}
+
+function renderContractPreview(){
+  const q=contractQuote();
+  $('depLabel').textContent=q.dep+'%';
+  $('contractPreview').innerHTML='조정 총액 <b class="gold-t">'+moneyFull(q.amount)+'</b> · 즉시 현금 <b class="good-t">'+moneyFull(q.upfront)
+    +'</b> · 미수 <b class="bad-t">'+moneyFull(q.balance)+'</b> · 부실위험 <b class="'+(q.risk>0.4?'bad-t':'warn-t')+'">'+(q.risk*100).toFixed(0)+'%</b>'
+    +' · 예상 회수율 <b>'+(collectRate(q.b.conflict)*100).toFixed(0)+'%</b>';
+}
+
+function renderContracts(){
+  $('arPill').textContent='미수금 '+money(state.ar);
+  const sel=$('contractBrand'), cur=sel.value;
+  sel.innerHTML=state.brands.map(b=>'<option value="'+b.id+'">'+b.name+'</option>').join('');
+  if(cur) sel.value=cur;
+  const open=state.contracts.filter(c=>c.balance>0), closed=state.contracts.filter(c=>c.balance<=0).slice(0,6);
+  const rowOf=c=>{
+    const b=state.brands.find(x=>x.id===c.brand)||state.brands[0];
+    const tone=c.status==='부실'?'bad':c.balance>0?(c.days<=30?'warn':''):'good';
+    return '<div class="row"><div class="row-hd"><b>'+c.name+'</b><span class="pill '+tone+'">'+c.status+'</span></div>'
+      +'<div class="sub" style="margin-top:6px">총액 '+moneyFull(c.amount)+' · 선금 '+c.deposit+'% · 잔금 <b class="'+(c.balance>0?'bad-t':'good-t')+'">'+moneyFull(c.balance)+'</b>'
+      +(c.balance>0?' · 회수까지 '+c.days+'일 · 부실위험 '+(c.risk*100).toFixed(0)+'%':'')+'</div>'
+      +(c.balance>0?'<div class="btn-row" style="margin-top:10px">'
+        +'<button class="btn good sm" data-collect="'+c.id+'">'+(c.days>0?'조기정산 (-7%)':'즉시 회수')+'</button>'
+        +'<button class="btn sm" data-extend="'+c.id+'">30일 연장</button></div>':'')
+      +'</div>';
+  };
+  $('contracts').innerHTML = state.contracts.length
+    ? (open.map(rowOf).join('') + (closed.length?'<div class="sub" style="margin:8px 0 2px">종결 계약</div>'+closed.map(rowOf).join(''):''))
+    : '<div class="empty">등록된 계약이 없습니다. 위에서 첫 계약을 체결해 보세요.</div>';
+  document.querySelectorAll('[data-collect]').forEach(el=>el.onclick=()=>collect(el.dataset.collect));
+  document.querySelectorAll('[data-extend]').forEach(el=>el.onclick=()=>extendContract(el.dataset.extend));
+  renderContractPreview();
+}
+
+function fxChips(ef){
+  const out=[];
+  if(ef.cash)  out.push((ef.cash>0?'현금 +':'현금 ')+money(ef.cash));
+  if(ef.ar)    out.push('미수금 '+signed(ef.ar));
+  if(ef.brand) out.push('브랜드 '+(ef.brand>0?'+':'')+ef.brand);
+  if(ef.rep)   out.push('평판 '+(ef.rep>0?'+':'')+ef.rep);
+  if(ef.conflict) out.push('충돌 '+(ef.conflict>0?'+':'')+ef.conflict);
+  if(ef.margin) out.push('마진 '+(ef.margin>0?'+':'')+ef.margin+'%p');
+  if(ef.equity) out.push('지분 '+ef.equity+'%');
+  if(ef.loan)   out.push('차입 +'+money(ef.loan));
+  if(ef.arCollect) out.push('채권 회수 '+(ef.arCollect*100).toFixed(0)+'%');
+  if(ef.arRisk) out.push('부도 위험');
+  if(ef.staffLoss) out.push(STAFF[ef.staffLoss].name+' -1');
+  return out.map(t=>'<em>'+t+'</em>').join('');
+}
+
+function renderEvents(){
+  const active=state.events.filter(e=>!e.done);
+  $('eventCount').textContent=active.length+'건';
+  const soon=active.reduce((a,e)=>Math.min(a,e.deadline), 99);
+  $('eventDeadline').textContent = active.length ? '최단 기한 '+soon+'개월' : '대기 중 사건 없음';
+  $('events').innerHTML = active.length ? active.map(e=>
+    '<article class="event'+(e.deadline<=1?' urgent':'')+'">'
+      +'<div class="event-hd"><h3>'+e.title+'</h3><span class="pill '+(e.deadline<=1?'bad':'gold')+'">'+e.tag+' · '+e.deadline+'개월</span></div>'
+      +'<p class="sub">'+e.desc+'</p>'
+      +'<div class="choices">'+e.choices.map((c,i)=>
+        '<button class="choice" data-ev="'+e.id+'" data-ci="'+i+'"><b>'+c[0]+'</b><span class="fx">'+fxChips(c[1])+'</span></button>').join('')
+      +'</div></article>').join('')
+    : '<div class="empty">지금은 처리할 사건이 없습니다. 다음 달에 새 사건이 발생합니다.</div>';
+  $('eventMini').innerHTML = active.length ? active.slice(0,3).map(e=>
+    '<div class="row"><div class="row-hd"><b>'+e.title+'</b><span class="pill '+(e.deadline<=1?'bad':'')+'">'+e.deadline+'개월</span></div>'
+    +'<div class="sub" style="margin-top:5px">'+e.desc+'</div></div>').join('')
+    : '<div class="empty">활성 사건 없음</div>';
+  document.querySelectorAll('[data-ev]').forEach(el=>el.onclick=()=>resolveEvent(el.dataset.ev, Number(el.dataset.ci)));
+}
+
+function renderFinance(){
+  const g=grade(), limit=loanLimit(), rate=interestRate();
+  $('creditPanel').innerHTML='<div class="stats">'
+    +[['신용등급', g.g],['신용점수', creditScore()+'점'],['부채', money(state.debt)],
+      ['연이자율', (rate*100).toFixed(1)+'%'],['월 이자', money(state.debt*rate/12)],['추가 한도', money(limit)]]
+      .map(x=>'<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'
+    +'<p class="sub" style="margin-top:10px">등급이 오르면 금리가 내려가고 미수금 회수율이 '+(g.collect>=0?'+':'')+(g.collect*100).toFixed(0)+'%p 조정됩니다.</p>';
+
+  const valuation=Math.max(20000, Math.round(netWorth()*1.6 + state.revenue*10));
+  const p=Number($('equityPct').value)||5;
+  $('eqLabel').textContent=p+'%';
+  $('equityPanel').innerHTML='<div class="stats">'
+    +[['보유 지분', state.equity+'%'],['기업가치', money(valuation)],['조달 예상', money(valuation*p/100)]]
+      .map(x=>'<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'
+    +'<p class="sub" style="margin-top:10px">지분은 40% 아래로 내려갈 수 없습니다. 기업가치는 순자산과 매출로 산정됩니다.</p>';
+
+  $('staffPanel').innerHTML='<div class="list">'+Object.keys(STAFF).map(k=>{
+    const s=STAFF[k], n=state.staff[k]||0;
+    return '<div class="row"><div class="row-hd"><b>'+s.name+' · '+n+'명</b><span class="pill">월 '+money(s.cost*n)+'</span></div>'
+      +'<div class="sub" style="margin-top:5px">'+s.desc+' · 정원 '+s.cap+'명 · 채용비 '+money(s.cost*2)+'</div>'
+      +'<div class="btn-row" style="margin-top:9px"><button class="btn good sm" data-hire="'+k+'">채용</button>'
+      +'<button class="btn bad sm" data-fire="'+k+'">감원</button></div></div>';
+  }).join('')+'</div><p class="sub" style="margin-top:10px">총 인건비 <b class="gold-t">'+moneyFull(payroll())+'</b> / 월</p>';
+  document.querySelectorAll('[data-hire]').forEach(el=>el.onclick=()=>hire(el.dataset.hire));
+  document.querySelectorAll('[data-fire]').forEach(el=>el.onclick=()=>fire(el.dataset.fire));
+}
+
+function renderArchive(){
+  const got=Object.keys(state.achievements).length;
+  $('achvCount').textContent=got+' / '+ACHIEVEMENTS.length;
+  $('achv').innerHTML=ACHIEVEMENTS.map(a=>
+    '<div class="'+(state.achievements[a.id]?'got':'')+'"><span class="'+(state.achievements[a.id]?'gold-t':'')+'">'+icon(a.icon,28)+'</span>'
+    +'<div><b>'+a.name+'</b><span>'+a.desc+'</span></div></div>').join('');
+  const s=state.stats;
+  $('career').innerHTML=[
+    ['난이도', DIFFICULTY[state.difficulty].label],['진행 개월', s.months+'개월'],
+    ['누적 매출', money(s.totalRevenue)],['최고 월순익', money(s.bestProfit)],
+    ['처리 사건', s.eventsResolved+'건'],['체결 계약', s.contracts+'건'],
+    ['부실 발생', s.defaults+'건'],['차입 횟수', s.loans+'회']
+  ].map(x=>'<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('');
+
+  let main='없음',b1='없음',b2='없음';
+  try{
+    main=localStorage.getItem(SAVE)?'정상':'없음';
+    b1=localStorage.getItem(BACK1)?'정상':'없음';
+    b2=localStorage.getItem(BACK2)?'정상':'없음';
+  }catch(e){main='차단'}
+  $('saveStatus').innerHTML=[
+    ['본 저장', main],['백업 1', b1],['백업 2', b2],
+    ['이전 버전', state.migratedFrom||'없음'],
+    ['저장 시각', state.lastSaved?new Date(state.lastSaved).toLocaleTimeString('ko-KR'):'미저장']
+  ].map(x=>'<div class="stat"><span>'+x[0]+'</span><b style="font-size:16px">'+x[1]+'</b></div>').join('');
+}
+
+function renderLog(){
+  $('log').innerHTML=state.logs.slice(0,60).map(l=>'<div><em>'+(l.m||0)+'M</em><span>'+l.t+'</span></div>').join('')
+    || '<div class="empty">기록 없음</div>';
+}
+
+function render(){
+  renderHUD(); renderStats(); renderChart(); renderBrands();
+  renderContracts(); renderEvents(); renderFinance(); renderArchive(); renderLog();
+}
+
+/* ---------- 모달 ---------- */
+function showMonthReport(d){
+  if(!d){openModal('<h2>분기 결산</h2><p class="sub" style="margin:8px 0 14px">3개월을 자동 진행했습니다.</p>'
+    +'<div class="stats">'+[['현재','' +state.month+'개월'],['매출',money(state.revenue)],['순익',money(state.profit)],
+      ['현금',money(state.cash)],['미수금',money(state.ar)],['순자산',money(netWorth())]]
+      .map(x=>'<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'
+    +'<div class="btn-row" style="margin-top:16px"><button class="btn gold block" onclick="closeModal()">계속</button></div>');return}
+  const c=CYCLES[state.cycle.phase];
+  openModal('<div class="eyebrow">Monthly Report</div><h2>'+state.month+'개월차 결산</h2>'
+    +'<p class="sub" style="margin:8px 0 14px">시장 국면 <b class="'+(c.tone==='good'?'good-t':c.tone==='bad'?'bad-t':'gold-t')+'">'+c.label+'</b> (배수 '+d.cm.toFixed(2)+'배) · '+c.desc+'</p>'
+    +'<div class="stats">'+[
+      ['매출', money(d.rev)], ['매출총이익', money(d.rev? (d.profit+d.ad+d.pay+d.interest):0)],
+      ['광고비', '-'+money(d.ad)], ['인건비', '-'+money(d.pay)], ['이자', '-'+money(d.interest)],
+      ['순익', money(d.profit)], ['미수금 회수', money(d.collected)], ['부실', d.defaulted?'-'+money(d.defaulted):'없음'],
+      ['현금 잔고', money(state.cash)], ['순자산', money(netWorth())]
+    ].map(x=>'<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'
+    +(d.emergency?'<p class="sub bad-t" style="margin-top:12px">현금이 마이너스로 떨어져 긴급 대출 '+moneyFull(d.emergency)+'이 자동 실행됐습니다.</p>':'')
+    +'<div class="btn-row" style="margin-top:16px"><button class="btn gold block" onclick="closeModal()">계속</button></div>');
+}
+
+function showEnding(){
+  const win=state.ending==='win';
+  openModal('<div class="eyebrow">'+(win?'Victory':'Game Over')+'</div>'
+    +'<h2 class="'+(win?'gold-t':'bad-t')+'" style="font-size:26px">'+(win?'제국 완성':'파산')+'</h2>'
+    +'<p class="sub" style="margin:10px 0 14px">'+(win
+      ? '목표 순자산 '+moneyFull(state.goal)+'을 '+state.month+'개월 만에 달성했습니다. 채널을 통제했고, 미수금을 이겼습니다.'
+      : '현금이 고갈되고 추가 차입도 막혔습니다. '+state.month+'개월 만에 제국이 무너졌습니다.')+'</p>'
+    +'<div class="stats">'+[['최종 순자산',money(netWorth())],['진행 개월',state.month+'개월'],
+      ['누적 매출',money(state.stats.totalRevenue)],['업적',Object.keys(state.achievements).length+'/'+ACHIEVEMENTS.length]]
+      .map(x=>'<div class="stat"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join('')+'</div>'
+    +'<div class="btn-row" style="margin-top:16px">'
+    +'<button class="btn gold" onclick="newGamePrompt()">새 제국 시작</button>'
+    +'<button class="btn" onclick="closeModal()">기록 둘러보기</button></div>');
+}
+
+function newGamePrompt(){
+  openModal('<div class="eyebrow">New Game</div><h2>새 제국을 시작합니다</h2>'
+    +'<p class="sub" style="margin:8px 0 14px">현재 저장 데이터는 삭제됩니다. 난이도에 따라 시작 자본·부채·금리·사건 빈도·목표가 달라집니다.</p>'
+    +'<div class="list">'+Object.keys(DIFFICULTY).map(k=>{const d=DIFFICULTY[k];
+      return '<button class="row" style="text-align:left;cursor:pointer;width:100%;border:1px solid var(--line);color:inherit" data-diff="'+k+'">'
+        +'<div class="row-hd"><b>'+d.label+'</b><span class="pill gold">목표 '+money(d.goal)+'</span></div>'
+        +'<div class="sub" style="margin-top:5px">시작 현금 '+money(d.cash)+' · 부채 '+money(d.debt)+' · 기준금리 '+(d.rate*100).toFixed(1)+'% · 사건 빈도 '+(d.eventRate*100).toFixed(0)+'%</div></button>';
+    }).join('')+'</div>'
+    +'<div class="btn-row" style="margin-top:14px"><button class="btn ghost block" onclick="closeModal()">취소</button></div>');
+  document.querySelectorAll('[data-diff]').forEach(el=>el.onclick=()=>{
+    try{[SAVE,BACK1,BACK2].forEach(k=>localStorage.removeItem(k))}catch(e){}
+    state=defaultState(el.dataset.diff); save(); closeModal(); render(); go('dashboard');
+    toast('새 제국 시작 · '+DIFFICULTY[el.dataset.diff].label,'ok');
+  });
+}
+
+/* ---------- 저장 입출력 ---------- */
+async function exportJSON(){
+  const payload=pack(state), filename='kim_seongtae_v10_save.json';
+  /* Artifact 뷰어에서는 페이지가 직접 파일을 내려받을 수 없어 downloads 런타임을 쓴다.
+     로컬 파일이나 자체 호스팅으로 열었을 때는 일반 blob 링크로 되돌아간다. */
+  const dl = (window.claude && window.claude.use) ? await window.claude.use('downloads').catch(()=>null) : null;
+  if(dl){
+    try{ await dl.save({filename, data:payload}); toast('저장 파일 내보내기 완료','ok') }
+    catch(e){ toast(e && e.code==='declined' ? '내보내기를 취소했습니다' : '내보내기를 사용할 수 없습니다','err') }
+    return;
+  }
+  const blob=new Blob([payload],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast('JSON 내보내기 완료','ok');
+}
+function importJSON(file){
+  const r=new FileReader();
+  r.onload=()=>{try{state=unpack(r.result); state.version=VERSION; save(); render(); toast('복구 완료','ok')}
+    catch(e){toast('복구 실패 — 파일 검증 오류','err')}};
+  r.readAsText(file);
+}
+
+/* ============================================================
+   7) 라우팅 · 초기화
+   ============================================================ */
+function go(p){
+  PAGES.forEach(x=>$('page-'+x.id).classList.toggle('active', x.id===p));
+  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active', b.dataset.page===p));
+  if(location.hash!=='#/'+p) location.hash='#/'+p;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function buildNav(){
+  const html=PAGES.map(p=>'<button data-page="'+p.id+'">'+icon(p.icon)+'<span>'+p.name+'</span></button>').join('');
+  $('nav').innerHTML=html; $('mnav').innerHTML=html;
+  document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));
+}
+
+buildNav();
+$('runMonth').onclick   = ()=>simulate(false);
+$('runQuarter').onclick = runQuarter;
+$('addContract').onclick= addContract;
+$('takeLoan').onclick   = takeLoan;
+$('repayLoan').onclick  = repayLoan;
+$('raiseRound').onclick = raiseRound;
+$('saveNow').onclick    = ()=>{save(); render(); toast('저장 완료','ok')};
+$('exportBtn').onclick  = exportJSON;
+$('importBtn').onclick  = ()=>$('importFile').click();
+$('importFile').onchange= e=>e.target.files[0] && importJSON(e.target.files[0]);
+$('resetBtn').onclick   = newGamePrompt;
+
+$('volatility').oninput = e=>$('volLabel').textContent=e.target.value;
+$('adSpend').oninput    = e=>$('adLabel').textContent=money(Number(e.target.value))+'원';
+$('equityPct').oninput  = ()=>renderFinance();
+['contractBrand','contractAmount','contractDeposit','contractTerm'].forEach(id=>{
+  $(id).oninput = renderContractPreview; $(id).onchange = renderContractPreview;
+});
+window.addEventListener('hashchange', ()=>{
+  const p=(location.hash||'#/dashboard').replace('#/','');
+  if(PAGES.some(x=>x.id===p)) go(p);
+});
+
+$('volLabel').textContent=$('volatility').value;
+$('adLabel').textContent=money(Number($('adSpend').value))+'원';
+const initial=(location.hash||'#/dashboard').replace('#/','');
+go(PAGES.some(x=>x.id===initial)?initial:'dashboard');
+render(); save();
+if(state.ending) showEnding();
+</script>
+</body>
+</html>
