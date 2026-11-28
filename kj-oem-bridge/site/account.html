@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ja" data-lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCENT BRIDGE | マイページ</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Gowun+Batang:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ECE6DA;--surface:#F4F0E8;--ink:#191714;--muted:#7A7266;--line:#C9BFAE;--accent:#9B4A2B;--accent-ink:#F4F0E8;--deep:#16140F;--ok:#2f5d50;--warn:#8a3b2e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.7;font-family:"Zen Kaku Gothic New","IBM Plex Sans KR",system-ui,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
+html[data-lang="ko"] body{word-break:keep-all;font-family:"IBM Plex Sans KR","Zen Kaku Gothic New",system-ui,sans-serif}
+html[data-lang="ko"] h1,html[data-lang="ko"] h2,html[data-lang="ko"] h3{font-family:"Gowun Batang","Shippori Mincho",serif}
+h1,h2,h3{font-family:"Shippori Mincho","Gowun Batang",serif;font-weight:600;line-height:1.35;margin:0}
+p{margin:0} a{color:inherit}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{font-family:"Shippori Mincho","Gowun Batang",serif;letter-spacing:.2em;font-size:15px;text-decoration:none;white-space:nowrap}
+.nav-r{display:flex;gap:10px;align-items:center}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:transparent;padding:5px 12px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+main{padding:36px 0 80px}
+.card{background:var(--surface);border:1px solid var(--line);padding:24px}
+.auth{max-width:440px;margin:0 auto}
+.tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:20px}
+.tabs button{flex:1;border:0;background:none;font:inherit;padding:12px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+form{display:grid;gap:12px}
+label{font-size:13px;color:var(--muted);display:grid;gap:5px}
+input,select,textarea{font:inherit;padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%;border-radius:2px}
+textarea{min-height:80px;resize:vertical}
+.btn{background:var(--accent);color:var(--accent-ink);border:1px solid var(--accent);font:inherit;font-size:15px;padding:10px 22px;cursor:pointer;border-radius:2px;text-decoration:none;display:inline-block}
+.btn:disabled{opacity:.5;cursor:wait}
+.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink);font:inherit;padding:8px 16px;cursor:pointer;border-radius:2px;font-size:14px;white-space:nowrap}
+.msg{font-size:14px;color:var(--warn);min-height:1.4em}
+.msg.ok{color:var(--ok)}
+.radio{display:flex;gap:16px;flex-wrap:wrap}
+.radio label{flex-direction:row;display:flex;gap:6px;align-items:center;color:var(--ink);font-size:14px}
+.radio input{width:auto}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.head p{color:var(--muted);font-size:14px}
+.sub{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.sub button{border:1px solid var(--line);background:transparent;font:inherit;font-size:14px;padding:7px 14px;cursor:pointer;border-radius:999px}
+.sub button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.list{display:grid;gap:14px}
+.req h3{font-size:17px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.st{font-family:"Zen Kaku Gothic New",sans-serif;font-size:12px;font-weight:500;padding:2px 10px;border-radius:999px;border:1px solid currentColor;color:var(--accent)}
+.st.won{color:var(--ok)} .st.lost{color:var(--muted)}
+.meta{font-size:13px;color:var(--muted);margin:6px 0 12px}
+.steps{display:flex;gap:4px;margin:10px 0 14px}
+.steps span{flex:1;height:4px;background:var(--line);border-radius:2px}
+.steps span.on{background:var(--accent)}
+.thread{border-top:1px solid var(--line);margin-top:14px;padding-top:12px;display:grid;gap:8px}
+.bubble{padding:10px 12px;border-radius:4px;font-size:14px;white-space:pre-wrap;max-width:85%}
+.bubble.me{background:#efe6d4;justify-self:end}
+.bubble.them{background:var(--bg);border:1px solid var(--line)}
+.bubble small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.quotes{display:grid;gap:8px;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:12px}
+.reply{display:flex;gap:8px;margin-top:6px}
+.reply textarea{min-height:44px}
+.empty{padding:36px;text-align:center;color:var(--muted);border:1px dashed var(--line)}
+.grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+[hidden]{display:none!important}
+@media (max-width:480px){.nav-r > a.ghost{display:none}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="/">SCENT BRIDGE</a>
+  <div class="nav-r">
+    <a class="ghost" href="/find" data-i18n="find" style="text-decoration:none"></a>
+    <div class="lang" role="group" aria-label="Language"><button type="button" data-set="ja" aria-pressed="true">日本語</button><button type="button" data-set="ko" aria-pressed="false">한국어</button></div>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <!-- 로그인 / 가입 -->
+  <section id="authBox" class="auth card" hidden>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tLogin" aria-selected="true" data-i18n="login"></button>
+      <button type="button" role="tab" id="tSignup" aria-selected="false" data-i18n="signup"></button>
+    </div>
+    <form id="fLogin" novalidate>
+      <label><span data-i18n="email"></span><input name="email" type="email" autocomplete="email" required></label>
+      <label><span data-i18n="password"></span><input name="password" type="password" autocomplete="current-password" required></label>
+      <p class="msg" id="mLogin" role="status"></p>
+      <button class="btn" type="submit" data-i18n="login"></button>
+    </form>
+    <form id="fSignup" novalidate hidden>
+      <div class="radio" role="radiogroup">
+        <label><input type="radio" name="role" value="brand" checked><span data-i18n="roleBrand"></span></label>
+        <label><input type="radio" name="role" value="maker"><span data-i18n="roleMaker"></span></label>
+        <label><input type="radio" name="role" value="influencer"><span data-i18n="roleInf"></span></label>
+      </div>
+      <fieldset id="infBox" hidden style="border:1px solid var(--line);padding:12px;display:grid;gap:10px;margin:0;min-width:0">
+        <legend style="font-size:13px;color:var(--muted);padding:0 6px" data-i18n="infLegend"></legend>
+        <label><span data-i18n="infPlat"></span><select name="platform"><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="youtube">YouTube</option><option value="x">X</option><option value="blog">Blog</option><option value="other">Other</option></select></label>
+        <label><span data-i18n="infHandle"></span><input name="handle" placeholder="@"></label>
+        <label><span data-i18n="infUrl"></span><input name="url" type="url" placeholder="https://"></label>
+        <label><span data-i18n="infFollowers"></span><input name="followers" inputmode="numeric" placeholder="12000"></label>
+        <div><span style="font-size:13px;color:var(--muted)" data-i18n="infCats"></span><div class="radio" id="infCats"></div></div>
+        <div><span style="font-size:13px;color:var(--muted)" data-i18n="infInts"></span><div class="radio" id="infInts"></div></div>
+      </fieldset>
+      <label><span data-i18n="company"></span><input name="company" autocomplete="organization" required></label>
+      <label><span data-i18n="name"></span><input name="name" autocomplete="name" required></label>
+      <label><span data-i18n="email"></span><input name="email" type="email" autocomplete="email" required></label>
+      <label><span data-i18n="pwNew"></span><input name="password" type="password" autocomplete="new-password" minlength="8" required></label>
+      <label><span data-i18n="country"></span><select name="country"><option value="JP" data-i18n="jp"></option><option value="KR" data-i18n="kr"></option><option value="ETC" data-i18n="etc"></option></select></label>
+      <label style="flex-direction:row;display:flex;gap:8px;align-items:flex-start;color:var(--ink)"><input type="checkbox" name="agree" style="width:auto;margin-top:5px"><span data-i18n="agree"></span></label>
+      <p class="msg" id="mSignup" role="status"></p>
+      <button class="btn" type="submit" data-i18n="signupBtn"></button>
+    </form>
+  </section>
+
+  <!-- 로그인 후 -->
+  <section id="appBox" hidden>
+    <div class="head">
+      <div><h1 id="hello"></h1><p id="who"></p></div>
+      <button type="button" class="ghost" id="logout" data-i18n="logout"></button>
+    </div>
+    <div class="sub" id="subnav">
+      <button type="button" data-v="reqs" aria-pressed="true" data-i18n="myReqs"></button>
+      <button type="button" data-v="collabs" aria-pressed="false" data-i18n="collabs" hidden></button>
+      <button type="button" data-v="creator" aria-pressed="false" data-i18n="creator" hidden></button>
+      <button type="button" data-v="profile" aria-pressed="false" data-i18n="profile"></button>
+    </div>
+    <div id="vReqs"></div>
+    <div id="vCollabs" hidden></div>
+    <div id="vCreator" hidden></div>
+    <div id="vProfile" class="grid2" hidden>
+      <form class="card" id="fProfile">
+        <h3 data-i18n="profile"></h3>
+        <label><span data-i18n="company"></span><input name="company"></label>
+        <label><span data-i18n="name"></span><input name="name"></label>
+        <label><span data-i18n="email"></span><input name="email" disabled></label>
+        <p class="msg" id="mProfile" role="status"></p>
+        <button class="btn" type="submit" data-i18n="save"></button>
+      </form>
+      <form class="card" id="fPw">
+        <h3 data-i18n="pwChange"></h3>
+        <label><span data-i18n="pwCur"></span><input name="current" type="password" autocomplete="current-password"></label>
+        <label><span data-i18n="pwNew"></span><input name="next" type="password" autocomplete="new-password" minlength="8"></label>
+        <p class="msg" id="mPw" role="status"></p>
+        <button class="btn" type="submit" data-i18n="save"></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<script src="/sb.js"></script>
+<script>
+const T = {
+ja:{title:"SCENT BRIDGE | マイページ",find:"メーカーを探す",login:"ログイン",signup:"新規登録",signupBtn:"登録する",email:"メールアドレス",password:"パスワード",pwNew:"パスワード（8文字以上）",pwCur:"現在のパスワード",pwChange:"パスワード変更",
+roleBrand:"日本のブランド・販売事業者",roleMaker:"韓国のメーカー",roleInf:"インフルエンサー",
+infLegend:"インフルエンサー情報（アカウント名とリンクは公開されません）",infPlat:"メインのプラットフォーム",infHandle:"アカウント名",infUrl:"プロフィールURL",infFollowers:"フォロワー数",infCats:"分野（複数可）",infInts:"関心のあること",
+cats:{fragrance:"香り",beauty:"美容",lifestyle:"ライフスタイル",fashion:"ファッション",interior:"インテリア"},ints:{own_brand:"自分の香りブランドを作りたい",collab:"ブランドのPR協業を受けたい"},
+collabs:"PR協業",creator:"クリエイター情報",offers:"届いた協業の打診",noOffers:"まだ打診はありません。プロフィールが承認されると、ブランドからの依頼が届きます。",
+noCollabs:"まだPR協業の依頼はありません。",collabCta:"インフルエンサーを探す",
+cst:{new:"受付",reviewing:"確認中",proposed:"打診中",accepted:"合意",done:"完了",lost:"終了"},
+pStatus:{pending:"審査中（ブランドにはまだ表示されません）",approved:"公開中（ID・規模・分野のみ表示）",hidden:"非公開"},pVer:"フォロワー数確認済み",pUnver:"フォロワー数未確認",
+product:"商品",budget:"予算",period:"時期",respond:"回答する",accept:"受ける",decline:"見送る",question:"質問がある",fee:"希望報酬",resNote:"コメント",responded:"回答しました。",yourRes:"あなたの回答",resTitle:"インフルエンサーの回答",
+ownBrandT:"自分の香りブランドを作る",ownBrandD:"韓国の小ロットOEMメーカーを探して、見積を依頼できます。依頼は「見積依頼」に残ります。",ownBrandCta:"メーカーを探す",company:"会社名・ブランド名",name:"ご担当者名",country:"国・地域",jp:"日本",kr:"韓国",etc:"その他",
+agree:"入力した情報を、マッチングのご連絡と見積のやり取りに使うことに同意します。",logout:"ログアウト",myReqs:"見積依頼",profile:"アカウント情報",save:"保存する",saved:"保存しました。",
+hello:n=>`${n} 様`,makerReqs:"届いた依頼",
+none:"まだ見積依頼はありません。",noneCta:"メーカーを探して依頼する",
+st:{new:"受付",reviewing:"確認中",matched:"メーカー打診中",quoted:"見積あり",sample:"サンプル進行中",won:"成約",lost:"終了"},
+picks:"選んだメーカー",qty:"数量",item:"品目",sent:"送信日",
+quotes:"届いた見積",qPrice:"単価",qMoq:"最小ロット",qLead:"納期",qNote:"備考",
+thread:"メッセージ",you:"あなた",staff:"SCENT BRIDGE",replyPh:"メッセージを入力",send:"送信",
+err:{bad_credentials:"メールアドレスまたはパスワードが違います。",email_taken:"このメールアドレスは登録済みです。",weak_password:"パスワードは8文字以上にしてください。",invalid_email:"メールアドレスの形式をご確認ください。",missing_fields:"必須項目をご入力ください。",bad_current:"現在のパスワードが違います。",too_many_attempts:"試行回数が多すぎます。10分後にお試しください。",network:"通信できませんでした。時間をおいてお試しください。",agree:"同意にチェックしてください。",default:"エラーが発生しました。"},
+notLinked:"メーカーアカウントの確認中です。運営が貴社の登録情報と紐づけると、日本のブランドからの依頼がここに届きます。",
+mk:{country:"依頼元",myQuote:"提出した見積",submitQuote:"見積を提出",submitted:"提出しました。"}},
+ko:{title:"SCENT BRIDGE | 마이페이지",find:"제조사 찾기",login:"로그인",signup:"회원가입",signupBtn:"가입하기",email:"이메일",password:"비밀번호",pwNew:"비밀번호 (8자 이상)",pwCur:"현재 비밀번호",pwChange:"비밀번호 변경",
+roleBrand:"일본 브랜드·판매 사업자",roleMaker:"한국 제조사",roleInf:"인플루언서",
+infLegend:"인플루언서 정보 (계정명과 링크는 공개되지 않습니다)",infPlat:"주 플랫폼",infHandle:"계정명",infUrl:"프로필 주소",infFollowers:"팔로워 수",infCats:"분야 (여러 개 가능)",infInts:"관심 있는 것",
+cats:{fragrance:"향",beauty:"뷰티",lifestyle:"라이프스타일",fashion:"패션",interior:"인테리어"},ints:{own_brand:"내 향 브랜드를 만들고 싶다",collab:"브랜드 홍보 협업을 받고 싶다"},
+collabs:"홍보 협업",creator:"크리에이터 정보",offers:"받은 협업 제안",noOffers:"아직 제안이 없습니다. 프로필이 승인되면 브랜드의 요청이 들어옵니다.",
+noCollabs:"아직 홍보 협업 요청이 없습니다.",collabCta:"인플루언서 찾기",
+cst:{new:"접수",reviewing:"검토 중",proposed:"제안 중",accepted:"합의",done:"완료",lost:"종료"},
+pStatus:{pending:"검토 중 (아직 브랜드에게 보이지 않음)",approved:"공개 중 (ID·규모·분야만 표시)",hidden:"비공개"},pVer:"팔로워 수 확인됨",pUnver:"팔로워 수 미확인",
+product:"상품",budget:"예산",period:"시기",respond:"답하기",accept:"수락",decline:"거절",question:"질문 있음",fee:"희망 보수",resNote:"메모",responded:"답했습니다.",yourRes:"내 답변",resTitle:"인플루언서 답변",
+ownBrandT:"내 향 브랜드 만들기",ownBrandD:"소량 생산이 되는 한국 OEM 제조사를 찾아 견적을 요청할 수 있습니다. 요청 기록은 '견적 요청'에 남습니다.",ownBrandCta:"제조사 찾기",company:"회사명·브랜드명",name:"담당자명",country:"국가",jp:"일본",kr:"한국",etc:"기타",
+agree:"입력한 정보를 매칭 연락과 견적 협의에 사용하는 데 동의합니다.",logout:"로그아웃",myReqs:"견적 요청",profile:"계정 정보",save:"저장",saved:"저장했습니다.",
+hello:n=>`${n} 님`,makerReqs:"받은 의뢰",
+none:"아직 견적 요청이 없습니다.",noneCta:"제조사를 찾아 요청하기",
+st:{new:"접수",reviewing:"검토 중",matched:"제조사 타진 중",quoted:"견적 도착",sample:"샘플 진행",won:"성사",lost:"종료"},
+picks:"고른 제조사",qty:"수량",item:"품목",sent:"요청일",
+quotes:"받은 견적",qPrice:"단가",qMoq:"최소 수량",qLead:"납기",qNote:"비고",
+thread:"메시지",you:"나",staff:"SCENT BRIDGE",replyPh:"메시지 입력",send:"보내기",
+err:{bad_credentials:"이메일 또는 비밀번호가 틀렸습니다.",email_taken:"이미 가입된 이메일입니다.",weak_password:"비밀번호는 8자 이상이어야 합니다.",invalid_email:"이메일 형식을 확인해 주세요.",missing_fields:"필수 항목을 입력해 주세요.",bad_current:"현재 비밀번호가 틀렸습니다.",too_many_attempts:"시도가 너무 많습니다. 10분 뒤에 다시 해 주세요.",network:"연결되지 않았습니다. 잠시 뒤 다시 해 주세요.",agree:"동의에 체크해 주세요.",default:"오류가 발생했습니다."},
+notLinked:"제조사 계정을 확인하고 있습니다. 운영팀이 귀사 정보와 연결하면 일본 브랜드의 의뢰가 여기로 들어옵니다.",
+mk:{country:"의뢰 국가",myQuote:"제출한 견적",submitQuote:"견적 제출",submitted:"제출했습니다."}}};
+const ORDER = ["new","reviewing","matched","quoted","sample","won"];
+const { api, me, el, fmt } = SB;
+const $ = id => document.getElementById(id);
+let lang = "ja", user = null, view = "reqs";
+const t = () => T[lang];
+const errText = e => t().err[e.message] || t().err[e.code === 0 ? "network" : "default"] || t().err.default;
+
+function infChecks(){
+  const mk = (box, name, obj) => { const sel = new Set([...document.querySelectorAll(`#${box} input:checked`)].map(i => i.value)); $(box).replaceChildren(...Object.entries(obj).map(([v, l]) => el("label", null, el("input", { type: "checkbox", name, value: v, checked: sel.has(v) }), el("span", null, l)))); };
+  mk("infCats", "cat", t().cats); mk("infInts", "int", t().ints);
+}
+document.querySelectorAll('#fSignup [name=role]').forEach(r => r.addEventListener("change", () => { $("infBox").hidden = document.querySelector('#fSignup [name=role]:checked').value !== "influencer"; }));
+function applyLang(){
+  document.documentElement.lang = lang; document.documentElement.dataset.lang = lang; document.title = t().title;
+  document.querySelectorAll("[data-i18n]").forEach(e => { const v = t()[e.dataset.i18n]; if (typeof v === "string") e.textContent = v; });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === lang)));
+  infChecks();
+  if (user) renderApp();
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.set; try { localStorage.setItem("sb-lang", lang); } catch(e){} applyLang(); }));
+
+function tab(which){
+  $("tLogin").setAttribute("aria-selected", String(which === "login")); $("tSignup").setAttribute("aria-selected", String(which === "signup"));
+  $("fLogin").hidden = which !== "login"; $("fSignup").hidden = which !== "signup";
+}
+$("tLogin").onclick = () => tab("login"); $("tSignup").onclick = () => tab("signup");
+
+async function busy(form, fn){ const b = form.querySelector("button[type=submit]"); b.disabled = true; try { await fn(); } finally { b.disabled = false; } }
+
+$("fLogin").addEventListener("submit", e => { e.preventDefault(); const f = new FormData(e.target);
+  busy(e.target, async () => { try { const d = await api("auth/login", { body: { email: f.get("email"), password: f.get("password") } }); user = d.user; show(); } catch (er) { $("mLogin").textContent = errText(er); } }); });
+
+$("fSignup").addEventListener("submit", e => { e.preventDefault(); const f = new FormData(e.target), m = $("mSignup");
+  if (!f.get("agree")) { m.textContent = t().err.agree; return; }
+  busy(e.target, async () => { try { const d = await api("auth/signup", { body: { role: f.get("role"), company: f.get("company"), name: f.get("name"), email: f.get("email"), password: f.get("password"), country: f.get("country"), lang, profile: f.get("role") === "influencer" ? { platform: f.get("platform"), handle: f.get("handle"), url: f.get("url"), followers: f.get("followers"), categories: f.getAll("cat"), interests: f.getAll("int"), country: f.get("country") } : undefined } }); user = d.user; show(); } catch (er) { m.textContent = errText(er); } }); });
+
+$("logout").onclick = async () => { await api("auth/logout", { method: "POST" }).catch(() => {}); user = null; show(); };
+
+document.querySelectorAll("#subnav button").forEach(b => b.onclick = () => { view = b.dataset.v; renderApp(); });
+
+$("fProfile").addEventListener("submit", e => { e.preventDefault(); const f = new FormData(e.target);
+  busy(e.target, async () => { try { const d = await api("auth/profile", { body: { company: f.get("company"), name: f.get("name"), lang } }); user = d.user; $("mProfile").className = "msg ok"; $("mProfile").textContent = t().saved; renderHead(); } catch (er) { $("mProfile").className = "msg"; $("mProfile").textContent = errText(er); } }); });
+$("fPw").addEventListener("submit", e => { e.preventDefault(); const f = new FormData(e.target);
+  busy(e.target, async () => { try { await api("auth/password", { body: { current: f.get("current"), next: f.get("next") } }); e.target.reset(); $("mPw").className = "msg ok"; $("mPw").textContent = t().saved; } catch (er) { $("mPw").className = "msg"; $("mPw").textContent = errText(er); } }); });
+
+function renderHead(){
+  $("hello").textContent = t().hello(user.name || user.email);
+  $("who").textContent = `${user.company} · ${user.email}`;
+}
+
+function thread(messages, mine, onSend){
+  const box = el("div", { class: "thread" }, el("b", { style: "font-size:13px;font-weight:500;color:var(--muted)" }, t().thread));
+  messages.forEach(m => box.append(el("div", { class: "bubble " + (m.from === mine ? "me" : "them") }, m.text, el("small", null, (m.from === mine ? t().you : t().staff) + " · " + fmt(m.at)))));
+  const ta = el("textarea", { placeholder: t().replyPh, "aria-label": t().replyPh });
+  const btn = el("button", { class: "ghost", type: "button" }, t().send);
+  btn.onclick = async () => { const v = ta.value.trim(); if (!v) return; btn.disabled = true; try { await onSend(v); await renderApp(); } catch (er) { alert(errText(er)); } finally { btn.disabled = false; } };
+  box.append(el("div", { class: "reply" }, ta, btn));
+  return box;
+}
+
+async function renderBrand(box){
+  const d = await api("me/requests");
+  if (!d.requests.length) { box.append(el("div", { class: "empty" }, el("p", null, t().none), el("p", { style: "margin-top:14px" }, el("a", { class: "btn", href: "/find" }, t().noneCta)))); return; }
+  const list = el("div", { class: "list" });
+  d.requests.forEach(r => {
+    const idx = ORDER.indexOf(r.status);
+    const steps = el("div", { class: "steps", "aria-hidden": "true" }, ORDER.map((s, i) => el("span", { class: i <= idx ? "on" : "" })));
+    const c = el("article", { class: "card req" },
+      el("h3", null, el("span", null, (r.item || r.picks.join(" / ") || r.id)), el("span", { class: "st " + r.status }, t().st[r.status] || r.status)),
+      el("p", { class: "meta" }, `${t().sent}: ${fmt(r.createdAt)} · ${t().picks}: ${r.picks.join(", ") || "-"} · ${t().qty}: ${r.qty || "-"}`),
+      r.status !== "lost" ? steps : null,
+      r.message ? el("p", { style: "white-space:pre-wrap;font-size:14px" }, r.message) : null);
+    if (r.quotes.length) {
+      const tb = el("table", null, el("tr", null, ["", t().qPrice, t().qMoq, t().qLead, t().qNote].map(h => el("th", null, h))));
+      r.quotes.forEach(q => tb.append(el("tr", null, [q.makerId, q.price, q.moq, q.lead, q.note].map(v => el("td", null, v || "-")))));
+      c.append(el("div", { class: "quotes" }, el("b", { style: "font-size:13px;font-weight:500;color:var(--muted)" }, t().quotes), tb));
+    }
+    c.append(thread(r.messages, "brand", text => api(`me/requests/${r.id}/message`, { body: { text } })));
+    list.append(c);
+  });
+  box.append(list);
+}
+
+async function renderMaker(box){
+  const d = await api("maker/requests");
+  if (!d.linked) { box.append(el("div", { class: "empty" }, t().notLinked)); return; }
+  if (!d.requests.length) { box.append(el("div", { class: "empty" }, t().none)); return; }
+  const list = el("div", { class: "list" });
+  d.requests.forEach(r => {
+    const c = el("article", { class: "card req" },
+      el("h3", null, el("span", null, r.item || r.id), el("span", { class: "st " + r.status }, t().st[r.status] || r.status)),
+      el("p", { class: "meta" }, `${t().sent}: ${fmt(r.createdAt)} · ${t().mk.country}: ${r.country || "JP"} · ${t().qty}: ${r.qty || "-"}`),
+      r.message ? el("p", { style: "white-space:pre-wrap;font-size:14px" }, r.message) : null);
+    const q = r.myQuote || {};
+    const f = el("form", { class: "grid2", style: "margin-top:14px" },
+      el("label", null, t().qPrice, el("input", { name: "price", value: q.price || "", placeholder: "₩3,500 / ¥390" })),
+      el("label", null, t().qMoq, el("input", { name: "moq", value: q.moq || "" })),
+      el("label", null, t().qLead, el("input", { name: "lead", value: q.lead || "" })),
+      el("label", null, t().qNote, el("input", { name: "note", value: q.note || "" })));
+    const m = el("p", { class: "msg ok" });
+    const sb = el("button", { class: "btn", type: "button" }, t().mk.submitQuote);
+    sb.onclick = async () => { const fd = new FormData(f); sb.disabled = true; try { await api(`maker/requests/${r.id}/quote`, { body: Object.fromEntries(fd) }); m.textContent = t().mk.submitted; } catch (er) { m.className = "msg"; m.textContent = errText(er); } finally { sb.disabled = false; } };
+    c.append(el("b", { style: "font-size:13px;font-weight:500;color:var(--muted);display:block;margin-top:12px" }, r.myQuote ? t().mk.myQuote : t().mk.submitQuote), f, el("div", { style: "margin-top:10px;display:flex;gap:12px;align-items:center" }, sb, m));
+    c.append(thread(r.messages, "maker", text => api(`maker/requests/${r.id}/message`, { body: { text } })));
+    list.append(c);
+  });
+  box.append(list);
+}
+
+async function renderBrandCollabs(box){
+  const d = await api("me/collabs");
+  if (!d.collabs.length) { box.append(el("div", { class: "empty" }, el("p", null, t().noCollabs), el("p", { style: "margin-top:14px" }, el("a", { class: "btn", href: "/creators#list" }, t().collabCta)))); return; }
+  const list = el("div", { class: "list" });
+  d.collabs.forEach(c => {
+    const card = el("article", { class: "card req" },
+      el("h3", null, el("span", null, c.product), el("span", { class: "st " + (c.status === "done" ? "won" : c.status) }, t().cst[c.status] || c.status)),
+      el("p", { class: "meta" }, `${t().sent}: ${fmt(c.createdAt)} · ${c.picks.join(", ") || "-"} · ${t().budget}: ${c.budget || "-"} · ${t().period}: ${c.period || "-"}`),
+      c.message ? el("p", { style: "white-space:pre-wrap;font-size:14px" }, c.message) : null);
+    if (c.responses.length) {
+      const tb = el("table", null, el("tr", null, ["", t().respond, t().fee, t().resNote].map(h => el("th", null, h))));
+      c.responses.forEach(x => tb.append(el("tr", null, [x.influencerId, t()[x.decision] || x.decision, x.fee || "-", x.note || "-"].map(v => el("td", null, v)))));
+      card.append(el("div", { class: "quotes" }, el("b", { style: "font-size:13px;font-weight:500;color:var(--muted)" }, t().resTitle), tb));
+    }
+    card.append(thread(c.messages, "brand", text => api(`me/collabs/${c.id}/message`, { body: { text } })));
+    list.append(card);
+  });
+  box.append(list);
+}
+
+async function renderOffers(box){
+  const d = await api("influencer/collabs");
+  if (!d.requests.length) { box.append(el("div", { class: "empty" }, t().noOffers)); return; }
+  const list = el("div", { class: "list" });
+  d.requests.forEach(c => {
+    const card = el("article", { class: "card req" },
+      el("h3", null, el("span", null, c.product), el("span", { class: "st " + c.status }, t().cst[c.status] || c.status)),
+      el("p", { class: "meta" }, `${t().sent}: ${fmt(c.createdAt)} · ${t().budget}: ${c.budget || "-"} · ${t().period}: ${c.period || "-"}`),
+      c.message ? el("p", { style: "white-space:pre-wrap;font-size:14px" }, c.message) : null);
+    const r0 = c.myResponse || {};
+    const dec = el("select", { name: "decision", "aria-label": t().respond }, ["accept", "decline", "question"].map(v => el("option", { value: v, selected: r0.decision === v }, t()[v])));
+    const fee = el("input", { name: "fee", value: r0.fee || "", placeholder: "¥30,000 / ₩300,000" });
+    const note = el("input", { name: "note", value: r0.note || "" });
+    const m = el("p", { class: "msg ok" });
+    const sb = el("button", { class: "btn", type: "button" }, t().respond);
+    sb.onclick = async () => { sb.disabled = true; try { await api(`influencer/collabs/${c.id}/respond`, { body: { decision: dec.value, fee: fee.value, note: note.value } }); m.textContent = t().responded; } catch (er) { m.className = "msg"; m.textContent = errText(er); } finally { sb.disabled = false; } };
+    card.append(el("b", { style: "font-size:13px;font-weight:500;color:var(--muted);display:block;margin-top:12px" }, c.myResponse ? t().yourRes : t().respond),
+      el("div", { class: "grid2", style: "margin-top:6px" }, el("label", null, t().respond, dec), el("label", null, t().fee, fee), el("label", null, t().resNote, note)),
+      el("div", { style: "margin-top:10px;display:flex;gap:12px;align-items:center" }, sb, m));
+    card.append(thread(c.messages, "influencer", text => api(`influencer/collabs/${c.id}/message`, { body: { text } })));
+    list.append(card);
+  });
+  box.append(list);
+}
+
+async function renderCreator(box){
+  const { profile: p } = await api("me/influencer");
+  if (!p) { box.append(el("div", { class: "empty" }, t().err.default)); return; }
+  const f = el("form", { class: "card", style: "display:grid;gap:12px;max-width:620px" },
+    el("p", { class: "meta" }, `${p.id} · ${t().pStatus[p.status] || p.status} · ${p.verified ? t().pVer : t().pUnver}`),
+    el("label", null, t().infPlat, el("select", { name: "platform" }, ["instagram", "tiktok", "youtube", "x", "blog", "other"].map(v => el("option", { value: v, selected: p.platform === v }, v)))),
+    el("label", null, t().infHandle, el("input", { name: "handle", value: p.handle || "" })),
+    el("label", null, t().infUrl, el("input", { name: "url", value: p.url || "" })),
+    el("label", null, t().infFollowers, el("input", { name: "followers", inputmode: "numeric", value: String(p.followers || "") })),
+    el("div", null, el("span", { style: "font-size:13px;color:var(--muted)" }, t().infCats), el("div", { class: "radio" }, Object.entries(t().cats).map(([v, l]) => el("label", null, el("input", { type: "checkbox", name: "cat", value: v, checked: (p.categories || []).includes(v) }), el("span", null, l))))),
+    el("div", null, el("span", { style: "font-size:13px;color:var(--muted)" }, t().infInts), el("div", { class: "radio" }, Object.entries(t().ints).map(([v, l]) => el("label", null, el("input", { type: "checkbox", name: "int", value: v, checked: (p.interests || []).includes(v) }), el("span", null, l))))),
+    el("label", null, t().fee, el("input", { name: "rate", value: p.rate || "" })),
+    el("label", null, "Bio", el("textarea", { name: "bio" }, p.bio || "")));
+  const m = el("p", { class: "msg ok" });
+  const sb = el("button", { class: "btn", type: "submit" }, t().save);
+  f.append(m, sb);
+  f.onsubmit = async e => { e.preventDefault(); const fd = new FormData(f); sb.disabled = true;
+    try { await api("me/influencer", { body: { platform: fd.get("platform"), handle: fd.get("handle"), url: fd.get("url"), followers: fd.get("followers"), categories: fd.getAll("cat"), interests: fd.getAll("int"), rate: fd.get("rate"), bio: fd.get("bio") } }); m.className = "msg ok"; m.textContent = t().saved; }
+    catch (er) { m.className = "msg"; m.textContent = errText(er); } finally { sb.disabled = false; } };
+  box.append(f);
+}
+
+async function renderApp(){
+  renderHead();
+  document.querySelector('#subnav [data-v="reqs"]').textContent = user.role === "maker" ? t().makerReqs : t().myReqs;
+  document.querySelector('#subnav [data-v="collabs"]').hidden = user.role === "maker";
+  document.querySelector('#subnav [data-v="collabs"]').textContent = user.role === "influencer" ? t().offers : t().collabs;
+  document.querySelector('#subnav [data-v="creator"]').hidden = user.role !== "influencer";
+  document.querySelectorAll("#subnav button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === view)));
+  $("vReqs").hidden = view !== "reqs"; $("vProfile").hidden = view !== "profile"; $("vCollabs").hidden = view !== "collabs"; $("vCreator").hidden = view !== "creator";
+  if (view === "collabs" || view === "creator") { const box = view === "collabs" ? $("vCollabs") : $("vCreator"); box.replaceChildren(); try { await (view === "creator" ? renderCreator(box) : user.role === "influencer" ? renderOffers(box) : renderBrandCollabs(box)); } catch (er) { if (er.code === 401) { user = null; show(); } else box.append(el("p", { class: "msg" }, errText(er))); } return; }
+  if (view === "profile") { const f = $("fProfile"); f.company.value = user.company || ""; f.name.value = user.name || ""; f.email.value = user.email; return; }
+  const box = $("vReqs"); box.replaceChildren();
+  if (user.role === "influencer") box.append(el("div", { class: "card", style: "margin-bottom:14px" }, el("h3", { style: "font-size:17px" }, t().ownBrandT), el("p", { class: "meta" }, t().ownBrandD), el("a", { class: "btn", href: "/find" }, t().ownBrandCta)));
+  try { await (user.role === "maker" ? renderMaker(box) : renderBrand(box)); } catch (er) { if (er.code === 401) { user = null; show(); } else box.append(el("p", { class: "msg" }, errText(er))); }
+}
+
+function show(){
+  $("authBox").hidden = !!user; $("appBox").hidden = !user;
+  if (user && user.role === "admin") { location.href = "/admin"; return; }
+  if (user) renderApp();
+}
+
+let saved = null; try { saved = localStorage.getItem("sb-lang"); } catch(e){}
+lang = saved || ((navigator.language || "").toLowerCase().startsWith("ko") ? "ko" : "ja"); if (!T[lang]) lang = "ja";
+if (location.hash === "#signup") tab("signup");
+if (new URLSearchParams(location.search).get("role") === "influencer") { const r = document.querySelector('#fSignup [name=role][value=influencer]'); r.checked = true; $("infBox").hidden = false; }
+applyLang();
+me().then(u => { user = u; show(); });
+</script>
+</body>
+</html>

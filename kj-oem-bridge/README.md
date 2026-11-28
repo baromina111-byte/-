@@ -1,0 +1,33 @@
+# SCENT BRIDGE (가칭) — 한일 향 제품 OEM 매칭
+
+한국 향 제품 OEM 제조사와 일본 소규모 브랜드를 연결한다. 처음에는 플랫폼이 아니라 **사람이 연결하는 중개소**로 운영하고, 조사와 문서 작업은 에이전트가 맡는다.
+
+## 배포 주소
+- 소개 페이지: https://scent-bridge.vercel.app/
+- 제조사 검색: https://scent-bridge.vercel.app/find
+- Vercel 프로젝트 `scent-bridge`가 이 저장소의 `kj-oem-bridge/site` 폴더를 배포한다.
+
+## 폴더 안내
+| 폴더 | 내용 |
+|---|---|
+| `ROUTINE.md` | 월~금 무엇을 하는지 (먼저 읽기) |
+| `agents/` | 에이전트 5명의 프롬프트. 복사해서 그대로 쓰면 된다 |
+| `data/manufacturers.csv` | 한국 제조사 DB |
+| `data/jp-brands.csv` | 일본 브랜드 영업 리스트와 진행 상태 |
+| `reports/` | 규제 가이드, 주간 시장 리포트, 매칭 리포트 |
+| `outbox/` | 보낼 메일 초안 (발송은 대표가 직접) |
+| `ops/` | 받은 의뢰(`inbox.md`), 주간 기록(`weekly-log.md`) |
+| `site/` | 한·일어 소개 페이지(`index.html`)와 제조사 검색 화면(`find.html`). 이 폴더만 배포한다 |
+| `scripts/build-directory.py` | 제조사 DB를 공개용 익명 데이터(`site/data.js`)로 바꾼다 |
+
+## 대표가 매일 하는 일
+1. 아침 보고 3줄을 읽는다.
+2. `outbox/`의 초안을 읽고 보낸다.
+3. 답장이 오면 `ops/inbox.md`에 붙여넣는다.
+
+## 4주 판정 기준
+발송 100통 누적 시점에 답장 10건, 유료 의뢰 1건. 미달이면 품목이나 타깃을 바꾼다.
+
+## 주의
+- DB의 값은 각 회사 홈페이지의 자가 기재다. 인증서와 수출 실적 원본은 검증하지 않았다.
+- 규제 내용은 `reports/regulation-guide.md` 기준이며, "미확인" 항목은 고객에게 단정하지 않는다.
