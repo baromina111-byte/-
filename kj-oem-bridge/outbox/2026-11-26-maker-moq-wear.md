@@ -22,7 +22,7 @@
 
 ## A. 양말 (5곳)
 
-## 1. 나비야삭스: 주문 문의 폼 https://www.nabiyasocks.com/#order
+## 1. 나비야삭스: 주문 문의 폼 https://www.nabiyasocks.com/#order ✅ 발송함(11/28 알림)
 제목: [일본 브랜드 소개 건] 양말 OEM 최소 수량·단가 문의
 
 안녕하세요, 나비야삭스 담당자님.
@@ -45,7 +45,7 @@ https://scent-bridge.vercel.app
 
 ---
 
-## 2. 제이지: 생산 문의 폼 https://jaygebro.com/production-inquiry-socks/
+## 2. 제이지: 생산 문의 폼 https://jaygebro.com/production-inquiry-socks/ ✅ 발송함(11/28 알림)
 제목: 일본 브랜드 소개를 위한 양말 소량 생산 조건 문의
 
 안녕하세요, 제이지 담당자님.
@@ -124,7 +124,7 @@ https://scent-bridge.vercel.app
 
 ## B. 의류 (4곳)
 
-## 6. (주)코리안프렌즈 (+82 FACTORY): info@koreanfriends.co.kr
+## 6. (주)코리안프렌즈 (+82 FACTORY): info@koreanfriends.co.kr ✅ 발송함(11/28 알림)
 제목: [일본 브랜드 소개 건] 티셔츠·맨투맨 OEM 최소 수량 문의
 
 안녕하세요, 코리안프렌즈 담당자님.
